@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "growling_man:block/regen_block"
+    }
+  }
+}

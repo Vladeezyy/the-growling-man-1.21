@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT License"
+
+[[mods]]
+modId="growling_man"
+version="1.0.1"
+displayName="The Growling Man"
+displayURL="https://www.curseforge.com/members/voxla/projects"
+logoFile="logo.png"
+credits="Created using mod maker MCreator, Mod made by Voxla, Directed by Lord0wnage, Creature/Entity Created by Boneworth"
+authors="Voxla, Lord0wnage, Bonesworth"
+description="This mod adds a horror entity to Minecraft named the Growling Man."
+
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.growling_man]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1]"
+    ordering="NONE"
+    side="BOTH"
+
+
+[[dependencies.growling_man]]
+    modId="geckolib"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
+

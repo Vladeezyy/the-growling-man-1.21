@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "growling_man:block/notexture",
+    "up": "growling_man:block/notexture",
+    "north": "growling_man:block/notexture",
+    "east": "growling_man:block/notexture",
+    "south": "growling_man:block/notexture",
+    "west": "growling_man:block/notexture",
+    "particle": "growling_man:block/notexture"
+  },
+  "render_type": "cutout"
+}

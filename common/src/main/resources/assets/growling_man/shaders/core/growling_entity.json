@@ -1,0 +1,16 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+  "depth": {
+    "func": "lequal",
+    "mask": true
+  },
+  "alpha": {
+    "func": "always"
+  },
+  "vertex": "minecraft:rendertype_entity_translucent", 
+  "fragment": "minecraft:rendertype_entity_translucent"
+}

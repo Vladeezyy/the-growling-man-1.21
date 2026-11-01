@@ -1,0 +1,366 @@
+{
+  "entity.player.marked": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_mark_player",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.step": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_step1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_step2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_step3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_step4",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_step5",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.death": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_death1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_death2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_death3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.erratic": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_erratic1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic4",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.hurt": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_hurt1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_hurt2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_hurt3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.sporadic": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_sporadic1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic4",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.gm_heartbeat_slow": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_heartbeat_slow",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.gm_heartbeat_fast": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_heartbeat_fast",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.gm_mental_breakdown": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_mtl1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_mtl2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_mtl3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.gm_clear_mind_fail": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_clear_mind_fail",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.ambient": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_idle1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_idle2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_idle3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_idle4",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.growl_main": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_growl_main",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.sporadic_limbs": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_sporadic_limbs1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_limbs2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_limbs3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.manifest": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_manifest",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.heartbeat_med": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_heartbeat_med",
+        "stream": false
+      }
+    ]
+  },
+  "entity.player.kills_too_much": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_kills_too_much",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.near": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_near1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_near2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_near3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_near4",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_near5",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.ambient_distant": {
+    "sounds": [
+      {
+        "name": "growling_man:ambient_distant1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:ambient_distant2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:ambient_distant3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.sporadic_limbs_distant": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_sporadic_limbs_distant1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_limbs_distant2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_limbs_distant3",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.growl_main_distant": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_growl_main_distant",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.erratic_distant": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_erratic_distant1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic_distant2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic_distant3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_erratic_distant4",
+        "stream": false
+      }
+    ]
+  },
+  "entity.growling_man.sporadic_distant": {
+    "sounds": [
+      {
+        "name": "growling_man:gm_sporadic_distant1",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_distant2",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_distant3",
+        "stream": false
+      },
+      {
+        "name": "growling_man:gm_sporadic_distant4",
+        "stream": false
+      }
+    ]
+  },
+  "ambient.distant": {
+    "sounds": [
+      {
+        "name": "growling_man:distant_ambient1",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient2",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient4",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient5",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient6",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient7",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient8",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient9",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient10",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient11",
+        "stream": true
+      },
+      {
+        "name": "growling_man:distant_ambient12",
+        "stream": true
+      }
+    ]
+  }
+}
