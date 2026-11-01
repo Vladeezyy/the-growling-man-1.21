@@ -43,7 +43,7 @@ public final class GrowlingManNeoForgeClient {
 		bus.addListener((RenderGuiEvent.Pre event) -> GMBus.post(new net.voxla.growlingman.port.bus.RenderGuiEvent.Pre(event.getGuiGraphics())));
 		bus.addListener((ScreenEvent.Render.Post event) -> GMBus.post(new net.voxla.growlingman.port.bus.ScreenEvent.Render.Post(event.getScreen(), event.getGuiGraphics())));
 		bus.addListener((ViewportEvent.ComputeFov event) -> {
-			var ours = new net.voxla.growlingman.port.bus.ViewportEvent.ComputeFov(event.getCamera(), event.getPartialTick(), event.getFOV(), event.usedConfiguredFov());
+			var ours = new net.voxla.growlingman.port.bus.ViewportEvent.ComputeFov(event.getCamera(), event.getPartialTick(), event.getFOV(), true);
 			GMBus.post(ours);
 			if (ours.getFOV() != event.getFOV())
 				event.setFOV((float) ours.getFOV());

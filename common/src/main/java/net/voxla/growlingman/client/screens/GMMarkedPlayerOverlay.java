@@ -1,8 +1,6 @@
 package net.voxla.growlingman.client.screens;
 
 import net.minecraft.client.renderer.RenderPipelines;
-import com.mojang.blaze3d.platform.DestFactor;
-import com.mojang.blaze3d.platform.SourceFactor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;

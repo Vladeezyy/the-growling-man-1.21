@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The client tells the server when the player opens or closes their inventory (client/InventoryScreenWatcher). 1.0.1 read
- * {@code Minecraft.getInstance().screen} in the server's player tick: on a dedicated server that class does not exist
+ * {@code Minecraft.getInstance().gui.screen()} in the server's player tick: on a dedicated server that class does not exist
  * (NoClassDefFoundError), and in a LAN world every player was checked against the host's screen.
  */
 public record InventoryScreenMessage(boolean open) implements CustomPacketPayload {

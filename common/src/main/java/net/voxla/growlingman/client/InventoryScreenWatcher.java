@@ -21,7 +21,7 @@ public final class InventoryScreenWatcher {
 			sent = false;
 			return;
 		}
-		boolean open = mc.screen instanceof InventoryScreen;
+		boolean open = mc.gui.screen() instanceof InventoryScreen;
 		if (open != sent) {
 			sent = open;
 			Platform.INSTANCE.sendToServer(new InventoryScreenMessage(open));

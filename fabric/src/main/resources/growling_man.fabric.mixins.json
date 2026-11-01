@@ -8,7 +8,7 @@
   ],
   "client": [
     "client.CameraMixin",
-    "client.GuiMixin"
+    "client.HudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

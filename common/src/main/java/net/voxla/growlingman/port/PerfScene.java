@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.GameType;
@@ -136,7 +137,7 @@ public final class PerfScene {
 			vars.IsMarked = 1;
 			vars.syncPlayerVariables(p);
 			for (int i = 0; i < 40; i++) {
-				Entity cow = EntityType.COW.create(level, EntitySpawnReason.COMMAND);
+				Entity cow = EntityTypes.COW.create(level, EntitySpawnReason.COMMAND);
 				int x = spawn.getX() + (i % 8) * 3 - 12, z = spawn.getZ() + (i / 8) * 3 + 6;
 				cow.snapTo(x + 0.5, level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z), z + 0.5);
 				level.addFreshEntity(cow);
@@ -176,15 +177,15 @@ public final class PerfScene {
 		if (!ENABLED)
 			return;
 		Minecraft mc = Minecraft.getInstance();
-		if (!opened && mc.screen instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
+		if (!opened && mc.gui.screen() instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
 			mc.options.onboardAccessibility = false;
 			mc.options.save();
-			mc.setScreen(new TitleScreen());
+			mc.gui.setScreen(new TitleScreen());
 			return;
 		}
-		if (!opened && mc.getOverlay() != null)
+		if (!opened && mc.gui.overlay() != null)
 			return;
-		if (!opened && mc.screen instanceof TitleScreen) {
+		if (!opened && mc.gui.screen() instanceof TitleScreen) {
 			opened = true;
 			mc.options.cloudStatus().set(CloudStatus.OFF);
 			mc.options.pauseOnLostFocus = false;
@@ -197,8 +198,8 @@ public final class PerfScene {
 		if (mc.player == null || mc.getSingleplayerServer() == null)
 			return;
 		mc.options.pauseOnLostFocus = false;
-		if (mc.screen instanceof PauseScreen)
-			mc.setScreen(null);
+		if (mc.gui.screen() instanceof PauseScreen)
+			mc.gui.setScreen(null);
 		tick++;
 		if (windowStart >= 0 && tick > windowStart) {
 			long[] times = mc.getSingleplayerServer().getTickTimesNanos();

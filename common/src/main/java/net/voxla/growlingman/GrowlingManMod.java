@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import net.minecraft.util.Tuple;
+import net.voxla.growlingman.port.Tuple;
 import net.voxla.growlingman.init.GrowlingManModBlockEntities;
 import net.voxla.growlingman.init.GrowlingManModBlocks;
 import net.voxla.growlingman.init.GrowlingManModEntities;

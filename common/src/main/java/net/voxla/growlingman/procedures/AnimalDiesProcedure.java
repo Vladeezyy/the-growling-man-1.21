@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -84,7 +85,7 @@ public class AnimalDiesProcedure {
 						soundx = x + (Math.random() > 0.6 ? Mth.nextInt(RandomSource.create(), -30, -10) : Mth.nextInt(RandomSource.create(), 10, 30));
 						soundz = z + (Math.random() > 0.6 ? Mth.nextInt(RandomSource.create(), -30, -10) : Mth.nextInt(RandomSource.create(), 10, 30));
 						if (world instanceof ServerLevel _level) {
-							LightningBolt entityToSpawn = (LightningBolt)EntityType.LIGHTNING_BOLT.create(_level, EntitySpawnReason.COMMAND);
+							LightningBolt entityToSpawn = (LightningBolt)EntityTypes.LIGHTNING_BOLT.create(_level, EntitySpawnReason.COMMAND);
 							entityToSpawn.snapTo(
 								Vec3.atBottomCenterOf(BlockPos.containing(soundx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)soundx, (int)soundz), soundz))
 							);

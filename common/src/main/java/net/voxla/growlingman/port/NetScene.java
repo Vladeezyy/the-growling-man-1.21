@@ -39,7 +39,7 @@ public final class NetScene {
 		if (mc.player == null || mc.getConnection() == null || mc.getSingleplayerServer() != null)
 			return;
 		mc.options.pauseOnLostFocus = false;
-		if (mc.screen instanceof DeathScreen)
+		if (mc.gui.screen() instanceof DeathScreen)
 			mc.player.respawn();
 		tick++;
 		if (tick > 40 && tick <= 300)
@@ -66,12 +66,12 @@ public final class NetScene {
 						"growling_man_dev set_spawn_timer 30", "growling_man_dev show_dev_overlay true"})
 					mc.player.connection.sendCommand(command);
 			}
-			case 80 -> mc.setScreen(new InventoryScreen(mc.player));
+			case 80 -> mc.gui.setScreen(new InventoryScreen(mc.player));
 			// the mark of the commands, seen before the night's mobs or the Growling Man end it (as in 1.0.1)
 			case 300 -> check("player variables synced (marked)", marked > 0, marked);
 			case 400 -> {
-				if (mc.screen instanceof InventoryScreen)
-					mc.setScreen(null);
+				if (mc.gui.screen() instanceof InventoryScreen)
+					mc.gui.setScreen(null);
 				mc.player.connection.sendCommand("summon growling_man:growling_man ^ ^ ^8");
 			}
 			case END -> {
@@ -92,7 +92,7 @@ public final class NetScene {
 			seen += count;
 			GrowlingManModVariables.PlayerVariables vars = GrowlingManModVariables.of(mc.player);
 			GrowlingManMod.LOGGER.info("[scene] t={} growling men {} health {} marked {} screen {} cym {} mtl {} inv {}", tick, count, mc.player.getHealth(), vars.IsMarked,
-					mc.screen == null ? "-" : mc.screen.getClass().getSimpleName(), vars.cym_overlay_opacity, vars.mtl_overlay_opacity, vars.gm_inv_opacity);
+					mc.gui.screen() == null ? "-" : mc.gui.screen().getClass().getSimpleName(), vars.cym_overlay_opacity, vars.mtl_overlay_opacity, vars.gm_inv_opacity);
 		}
 	}
 

@@ -87,7 +87,7 @@ public final class DevScene {
 	}
 
 	private static void shot(Minecraft mc, String name) {
-		Screenshot.grab(mc.gameDirectory, "scene_" + name + ".png", mc.getMainRenderTarget(), 1, c -> GrowlingManMod.LOGGER.info("[scene] " + c.getString()));
+		Screenshot.grab(mc.gameDirectory, "scene_" + name + ".png", mc.gameRenderer.mainRenderTarget(), 1, c -> GrowlingManMod.LOGGER.info("[scene] " + c.getString()));
 	}
 
 	private static List<EntityType<?>> modEntities() {
@@ -124,12 +124,12 @@ public final class DevScene {
 		});
 		// the mark in the inventory of a marked player
 		at(t += 5, mc -> server(mc, p -> p.setGameMode(GameType.SURVIVAL)));
-		at(t += 10, mc -> mc.setScreen(new InventoryScreen(mc.player)));
+		at(t += 10, mc -> mc.gui.setScreen(new InventoryScreen(mc.player)));
 		at(t += 15, mc -> {
 			shot(mc, "inventory_mark");
 			checkNoMissingTexture(mc, "inventory_mark");
 		});
-		at(t += 5, mc -> mc.setScreen(null));
+		at(t += 5, mc -> mc.gui.setScreen(null));
 		at(t += 2, mc -> server(mc, p -> p.setGameMode(GameType.CREATIVE)));
 		// the clear mind key: client -> server message
 		at(t += 5, mc -> Platform.INSTANCE.sendToServer(new ClearMindKeyMessage(0, 0)));
@@ -154,15 +154,15 @@ public final class DevScene {
 		if (!ENABLED)
 			return;
 		Minecraft mc = Minecraft.getInstance();
-		if (!opened && mc.screen instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
+		if (!opened && mc.gui.screen() instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
 			mc.options.onboardAccessibility = false;
 			mc.options.save();
-			mc.setScreen(new TitleScreen());
+			mc.gui.setScreen(new TitleScreen());
 			return;
 		}
-		if (!opened && mc.getOverlay() != null)
+		if (!opened && mc.gui.overlay() != null)
 			return;
-		if (!opened && mc.screen instanceof TitleScreen) {
+		if (!opened && mc.gui.screen() instanceof TitleScreen) {
 			opened = true;
 			org.lwjgl.glfw.GLFW.glfwSetWindowSize(mc.getWindow().handle(), 1600, 900);
 			mc.options.guiScale().set(3);
@@ -177,9 +177,9 @@ public final class DevScene {
 			return;
 		mc.options.pauseOnLostFocus = false;
 		mc.getTutorial().setStep(net.minecraft.client.tutorial.TutorialSteps.NONE);
-		mc.getToastManager().clear();
-		if (mc.screen instanceof PauseScreen)
-			mc.setScreen(null);
+		mc.gui.toastManager().clear();
+		if (mc.gui.screen() instanceof PauseScreen)
+			mc.gui.setScreen(null);
 		tick++;
 		for (Step step : STEPS) {
 			if (step.at() == tick) {
@@ -251,7 +251,7 @@ public final class DevScene {
 
 	private static void checkNoMissingTexture(Minecraft mc, String name) {
 		// 1.21.5+: the screenshot is read back from the GPU asynchronously
-		Screenshot.takeScreenshot(mc.getMainRenderTarget(), image -> {
+		Screenshot.takeScreenshot(mc.gameRenderer.mainRenderTarget(), image -> {
 			int magenta = 0;
 			try (image) {
 				for (int y = 0; y < image.getHeight(); y += 2)
