@@ -7,7 +7,7 @@
     "PlayerMixin"
   ],
   "client": [
-    "client.GameRendererMixin",
+    "client.CameraMixin",
     "client.GuiMixin"
   ],
   "injectors": {

@@ -126,7 +126,7 @@ public final class PerfScene {
 			level.getGameRules().set(GameRules.ADVANCE_TIME, false, level.getServer());
 			level.getGameRules().set(GameRules.ADVANCE_WEATHER, false, level.getServer());
 			level.getGameRules().set(GameRules.SPAWN_MOBS, false, level.getServer());
-			level.setDayTime(18000);
+			level.getServer().getCommands().performPrefixedCommand(level.getServer().createCommandSourceStack().withSuppressedOutput(), "time set 18000");
 			p.setGameMode(GameType.SURVIVAL);
 			p.setInvulnerable(true);
 			BlockPos spawn = level.getRespawnData().pos();
@@ -190,7 +190,7 @@ public final class PerfScene {
 			mc.options.pauseOnLostFocus = false;
 			mc.options.framerateLimit().set(260);
 			mc.options.enableVsync().set(false);
-			LevelSettings settings = new LevelSettings("gm_perf", GameType.SURVIVAL, false, Difficulty.NORMAL, true, new GameRules(net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS), WorldDataConfiguration.DEFAULT);
+			LevelSettings settings = new LevelSettings("gm_perf", GameType.SURVIVAL, new LevelSettings.DifficultySettings(Difficulty.NORMAL, false, false), true, WorldDataConfiguration.DEFAULT);
 			mc.createWorldOpenFlows().createFreshLevel("gm_perf", settings, new WorldOptions(20261101L, true, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
 			return;
 		}

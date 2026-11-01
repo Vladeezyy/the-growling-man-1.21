@@ -1,7 +1,7 @@
 package net.voxla.growlingman.entity.model;
 
-import software.bernie.geckolib.renderer.base.GeoRenderState;
-import software.bernie.geckolib.model.GeoModel;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.model.GeoModel;
 
 import net.minecraft.resources.Identifier;
 

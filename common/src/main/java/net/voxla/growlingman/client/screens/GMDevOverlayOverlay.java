@@ -38,15 +38,15 @@ public class GMDevOverlayOverlay {
 		}
 
 		if (GMDevOverlayDisplayOverlayIngameProcedure.execute(world)) {
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, MindClearageProcedure.execute(entity), 6, 17, -16724839, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevSpawnTimeProcedure.execute(world), 6, 35, -65434, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevSpawnChanceProcedure.execute(world), 6, 53, -3407821, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevEventsTimerProcedure.execute(entity), 6, 71, -26368, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevMarkedTimerProcedure.execute(entity), 6, 89, -10079233, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevAnimalsKilledProcedure.execute(entity), 6, 107, -3355648, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevAnimalKillCooldownthingProcedure.execute(entity), 6, 125, -6697984, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevBadActTimeProcedure.execute(entity), 6, 143, -3407668, false);
-			event.getGuiGraphics().drawString(Minecraft.getInstance().font, DevFirstDayPassedProcedure.execute(world), 6, 161, -3355444, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, MindClearageProcedure.execute(entity), 6, 17, -16724839, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevSpawnTimeProcedure.execute(world), 6, 35, -65434, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevSpawnChanceProcedure.execute(world), 6, 53, -3407821, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevEventsTimerProcedure.execute(entity), 6, 71, -26368, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevMarkedTimerProcedure.execute(entity), 6, 89, -10079233, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevAnimalsKilledProcedure.execute(entity), 6, 107, -3355648, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevAnimalKillCooldownthingProcedure.execute(entity), 6, 125, -6697984, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevBadActTimeProcedure.execute(entity), 6, 143, -3407668, false);
+			event.getGuiGraphics().text(Minecraft.getInstance().font, DevFirstDayPassedProcedure.execute(world), 6, 161, -3355444, false);
 		}
 	}
 }

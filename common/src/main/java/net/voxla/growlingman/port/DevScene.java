@@ -168,8 +168,8 @@ public final class DevScene {
 			mc.options.guiScale().set(3);
 			mc.options.cloudStatus().set(CloudStatus.OFF);
 			mc.options.pauseOnLostFocus = false;
-			mc.resizeDisplay();
-			LevelSettings settings = new LevelSettings(WORLD, GameType.CREATIVE, false, Difficulty.NORMAL, true, new GameRules(net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS), WorldDataConfiguration.DEFAULT);
+			mc.resizeGui();
+			LevelSettings settings = new LevelSettings(WORLD, GameType.CREATIVE, new LevelSettings.DifficultySettings(Difficulty.NORMAL, false, false), true, WorldDataConfiguration.DEFAULT);
 			mc.createWorldOpenFlows().createFreshLevel(WORLD, settings, new WorldOptions(20261017L, false, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
 			return;
 		}
@@ -198,7 +198,7 @@ public final class DevScene {
 		ServerLevel level = player.level();
 		BlockPos spawn = level.getRespawnData().pos();
 		stage = new BlockPos(spawn.getX(), 150, spawn.getZ());
-		level.setDayTime(6000);
+		level.getServer().getCommands().performPrefixedCommand(level.getServer().createCommandSourceStack().withSuppressedOutput(), "time set 6000");
 		level.getGameRules().set(GameRules.ADVANCE_TIME, false, level.getServer());
 		level.getGameRules().set(GameRules.ADVANCE_WEATHER, false, level.getServer());
 		level.getGameRules().set(GameRules.SPAWN_MOBS, false, level.getServer());

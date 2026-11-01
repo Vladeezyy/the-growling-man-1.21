@@ -8,9 +8,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.voxla.growlingman.entity.GrowlingManEntity;
 import net.voxla.growlingman.entity.model.GrowlingManModel;
-import software.bernie.geckolib.constant.dataticket.DataTicket;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.constant.dataticket.DataTicket;
+import com.geckolib.renderer.GeoEntityRenderer;
+import com.geckolib.renderer.base.GeoRenderState;
 
 /**
  * 1.0.1 drew the model twice: once with an empty texture and once, in a render layer, with the entity's texture in a

@@ -36,11 +36,11 @@ public class RegenBlockOnTickUpdateProcedure {
 						}
 					}).getValue(world, BlockPos.containing(x, y, z), "BlockName").toLowerCase(Locale.ENGLISH)))).defaultBlockState();
 					BlockState _bso = world.getBlockState(_bp);
-					for (Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
-						Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+					for (Property.Value<?> entry : _bso.getValues().toList()) {
+						Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.property().getName());
 						if (_property != null && _bs.getValue(_property) != null) {
 							try {
-								_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.getValue());
+								_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.value());
 							} catch (Exception var16) {
 							}
 						}
@@ -93,11 +93,11 @@ public class RegenBlockOnTickUpdateProcedure {
 					}
 				}).getValue(world, BlockPos.containing(x, y, z), "BlockName").toLowerCase(Locale.ENGLISH)))).defaultBlockState();
 				BlockState _bso = world.getBlockState(_bp);
-				for (Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
-					Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+				for (Property.Value<?> entry : _bso.getValues().toList()) {
+					Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.property().getName());
 					if (_property != null && _bs.getValue(_property) != null) {
 						try {
-							_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.getValue());
+							_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.value());
 						} catch (Exception var15) {
 						}
 					}
@@ -114,11 +114,11 @@ public class RegenBlockOnTickUpdateProcedure {
 			BlockPos _bp = BlockPos.containing(x, y, z);
 			BlockState _bs = Blocks.AIR.defaultBlockState();
 			BlockState _bso = world.getBlockState(_bp);
-			for (Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
-				Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+			for (Property.Value<?> entry : _bso.getValues().toList()) {
+				Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.property().getName());
 				if (_property != null && _bs.getValue(_property) != null) {
 					try {
-						_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.getValue());
+						_bs = (BlockState)_bs.setValue(_property, (Comparable)entry.value());
 					} catch (Exception var14) {
 					}
 				}

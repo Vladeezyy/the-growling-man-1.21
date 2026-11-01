@@ -27,6 +27,17 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.world.level.storage.LevelResource;
+
+import javax.annotation.Nullable;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.util.List;
 import net.minecraft.core.HolderLookup;
 
 import net.voxla.growlingman.GrowlingManMod;
@@ -156,8 +167,12 @@ public class GrowlingManModVariables {
 		public boolean HasOneDayPassed = false;
 		public boolean IsDaytime = false;
 		public double GMSpawnChance = 0.0;
-		// 1.21.5: saved data is described by a type with a codec; the file and its contents stay the same
-		public static final SavedDataType<WorldVariables> TYPE = new SavedDataType<>(DATA_NAME, WorldVariables::new, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), null);
+		// 26.1: saved data lives in data/<namespace>/ of the dimension (vanilla type: a no-op data fix, the one the Rats port uses); a world from an older version still has the
+		// file where 1.21 kept it, which the game's own file fix does not move, so it is read once from there
+		public static final SavedDataType<WorldVariables> TYPE = new SavedDataType<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, DATA_NAME), () -> {
+			CompoundTag legacy = legacyData(Platform.INSTANCE.currentServer(), DATA_NAME);
+			return legacy != null ? load(legacy, null) : new WorldVariables();
+		}, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), DataFixTypes.SAVED_DATA_WANDERING_TRADER);
 
 		public static WorldVariables load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 			WorldVariables data = new WorldVariables();
@@ -201,8 +216,12 @@ public class GrowlingManModVariables {
 		public double GMSpawnTimer = 0.0;
 		public boolean gmdev_overlay = false;
 		public double GMCanKillPlayerTimer = 0.0;
-		// 1.21.5: saved data is described by a type with a codec; the file and its contents stay the same
-		public static final SavedDataType<MapVariables> TYPE = new SavedDataType<>(DATA_NAME, MapVariables::new, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), null);
+		// 26.1: saved data lives in data/<namespace>/ of the dimension (vanilla type: a no-op data fix, the one the Rats port uses); a world from an older version still has the
+		// file where 1.21 kept it, which the game's own file fix does not move, so it is read once from there
+		public static final SavedDataType<MapVariables> TYPE = new SavedDataType<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, DATA_NAME), () -> {
+			CompoundTag legacy = legacyData(Platform.INSTANCE.currentServer(), DATA_NAME);
+			return legacy != null ? load(legacy, null) : new MapVariables();
+		}, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), DataFixTypes.SAVED_DATA_WANDERING_TRADER);
 
 		public static MapVariables load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 			MapVariables data = new MapVariables();
@@ -238,6 +257,23 @@ public class GrowlingManModVariables {
 				return clientSide;
 			}
 		}
+	}
+
+	/** The contents of a saved data file of 1.21 (world/data/<name>.dat, or where 26.1's file fix moves the data folder), or null. */
+	static CompoundTag legacyData(@Nullable net.minecraft.server.MinecraftServer server, String name) {
+		if (server == null)
+			return null;
+		Path root = server.getWorldPath(LevelResource.ROOT);
+		for (Path file : List.of(root.resolve("data").resolve(name + ".dat"), root.resolve("dimensions/minecraft/overworld/data/minecraft").resolve(name + ".dat"))) {
+			if (Files.isRegularFile(file)) {
+				try {
+					return NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap()).getCompoundOrEmpty("data");
+				} catch (IOException e) {
+					GrowlingManMod.LOGGER.warn("Could not read the old saved data {}", file, e);
+				}
+			}
+		}
+		return null;
 	}
 
 	// 1.21.5: SavedData has no save(CompoundTag) of its own any more

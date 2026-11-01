@@ -2,14 +2,14 @@ package net.voxla.growlingman.entity;
 
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.animation.object.PlayState;
-import software.bernie.geckolib.animation.RawAnimation;
-import software.bernie.geckolib.animation.state.AnimationTest;
-import software.bernie.geckolib.animatable.manager.AnimatableManager;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.constant.DataTickets;
+import com.geckolib.util.GeckoLibUtil;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.GeoEntity;
+import com.geckolib.constant.DataTickets;
 import net.voxla.growlingman.port.GeoAnims;
 import net.minecraft.server.level.ServerLevel;
 

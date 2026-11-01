@@ -2,7 +2,7 @@ package net.voxla.growlingman.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
@@ -39,7 +39,7 @@ public final class GrowlingManFabricClient implements ClientModInitializer {
 				EntityRendererRegistry.register(type, provider);
 			}
 		}));
-		GMBus.post(new RegisterKeyMappingsEvent(KeyBindingHelper::registerKeyBinding));
+		GMBus.post(new RegisterKeyMappingsEvent(KeyMappingHelper::registerKeyMapping));
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
 			GMBus.post(new ClientTickEvent.Post());
@@ -47,7 +47,7 @@ public final class GrowlingManFabricClient implements ClientModInitializer {
 			if (minecraft.getSingleplayerServer() == null && ++configCheck % 20 == 0)
 				TomlConfigFile.reloadIfChanged();
 		});
-		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> ScreenEvents.afterRender(screen)
+		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> ScreenEvents.afterExtract(screen)
 				.register((s, guiGraphics, mouseX, mouseY, partialTick) -> GMBus.post(new ScreenEvent.Render.Post(s, guiGraphics))));
 	}
 

@@ -15,7 +15,7 @@ repositories {
 dependencies {
     // mixins live in common, both loaders ship Mixin at runtime
     compileOnly 'net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7'
-    compileOnly "software.bernie.geckolib:geckolib-common-${minecraft_version}:${geckolib_version}"
+    compileOnly("maven.modrinth:geckolib:${geckolib_version}") { transitive = false } // GeckoLib 26.x: Modrinth only, its classes are the same on both loaders
 }
 
 configurations {

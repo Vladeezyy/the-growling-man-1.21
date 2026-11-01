@@ -39,7 +39,7 @@ public class GMSpawningTimerProcedure {
 					GrowlingManModVariables.WorldVariables.get(var6).syncData(var6);
 				}
 
-				if (var6.getLevelData().getDayTime() > 24000L && !GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed) {
+				if (((Level) var6).getOverworldClockTime() > 24000L && !GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed) {
 					GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed = true;
 					GrowlingManModVariables.WorldVariables.get(var6).syncData(var6);
 				}

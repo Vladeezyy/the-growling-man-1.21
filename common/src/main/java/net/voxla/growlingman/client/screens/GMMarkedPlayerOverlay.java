@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import com.mojang.blaze3d.platform.DestFactor;
 import com.mojang.blaze3d.platform.SourceFactor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public class GMMarkedPlayerOverlay {
 			}
 
 			if (ShowMarkConditionProcedure.execute(entity)) {
-				GuiGraphics guiGraphics = event.getGuiGraphics();
+				GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
 				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, MARK_TEXTURE, guiLeft + 126, guiTop + 57, 0.0F, 0.0F, 46, 18, 46, 18);
 			}
 		}

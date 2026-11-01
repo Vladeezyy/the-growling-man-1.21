@@ -2,7 +2,7 @@ package net.voxla.growlingman.client.screens;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.voxla.growlingman.port.bus.Dist;
@@ -33,7 +33,7 @@ public class ClearMindKeybindOverlayOverlay {
 
 		if (ClearMindKeybindOverlayDisplayOverlayIngameProcedure.execute(world, x, y, z, entity)) {
 			Minecraft mc = Minecraft.getInstance();
-			GuiGraphics guiGraphics = event.getGuiGraphics();
+			GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
 			var poseStack = guiGraphics.pose();
 			String text = MindClearKeyLangRtnProcedure.execute();
 			Font font = mc.font;
@@ -43,7 +43,7 @@ public class ClearMindKeybindOverlayOverlay {
 			float ys = 280.0F / scale;
 			poseStack.pushMatrix();
 			poseStack.scale(scale, scale);
-			guiGraphics.drawString(font, text, (int)xs, (int)ys, 0xFFFFFFFF, true);
+			guiGraphics.text(font, text, (int)xs, (int)ys, 0xFFFFFFFF, true);
 			poseStack.popMatrix();
 		}
 	}

@@ -7,8 +7,8 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.core.Registry;
@@ -147,13 +147,13 @@ public final class FabricPlatform implements Platform {
 
 	@Override
 	public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<T> type, StreamCodec<RegistryFriendlyByteBuf, T> codec, Consumer<T> handler) {
-		PayloadTypeRegistry.playS2C().register(type, codec);
+		PayloadTypeRegistry.clientboundPlay().register(type, codec);
 		CLIENTBOUND.add(new Clientbound<>(type, handler));
 	}
 
 	@Override
 	public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<T> type, StreamCodec<RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ServerPlayer> handler) {
-		PayloadTypeRegistry.playC2S().register(type, codec);
+		PayloadTypeRegistry.serverboundPlay().register(type, codec);
 		// Fabric API calls server receivers on the server thread
 		ServerPlayNetworking.registerGlobalReceiver(type, (payload, context) -> handler.accept(payload, context.player()));
 	}
@@ -184,7 +184,7 @@ public final class FabricPlatform implements Platform {
 	@Override
 	public <M extends AbstractContainerMenu> MenuType<M> menuType(MenuFactory<M> factory) {
 		// the extra data travels as bytes and is read back with the client's registries
-		return new ExtendedScreenHandlerType<>((int id, Inventory inventory, byte[] data) -> factory.create(id, inventory,
+		return new ExtendedMenuType<>((int id, Inventory inventory, byte[] data) -> factory.create(id, inventory,
 				new RegistryFriendlyByteBuf(Unpooled.wrappedBuffer(data), inventory.player.registryAccess())), ByteBufCodecs.BYTE_ARRAY);
 	}
 
@@ -194,7 +194,7 @@ public final class FabricPlatform implements Platform {
 		extraData.accept(buf);
 		byte[] data = new byte[buf.readableBytes()];
 		buf.readBytes(data);
-		player.openMenu(new ExtendedScreenHandlerFactory<byte[]>() {
+		player.openMenu(new ExtendedMenuProvider<byte[]>() {
 			@Override
 			public byte[] getScreenOpeningData(ServerPlayer opener) {
 				return data;

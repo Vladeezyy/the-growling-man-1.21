@@ -1,12 +1,12 @@
 package net.voxla.growlingman.port;
 
-import software.bernie.geckolib.renderer.base.GeoRenderState;
-import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.animation.state.AnimationTest;
-import software.bernie.geckolib.animation.object.PlayState;
-import software.bernie.geckolib.animation.RawAnimation;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.model.GeoModel;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animatable.GeoAnimatable;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;

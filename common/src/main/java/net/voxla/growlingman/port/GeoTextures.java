@@ -1,7 +1,7 @@
 package net.voxla.growlingman.port;
 
-import software.bernie.geckolib.renderer.base.GeoRenderState;
-import software.bernie.geckolib.constant.dataticket.DataTicket;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.constant.dataticket.DataTicket;
 
 import net.minecraft.resources.Identifier;
 

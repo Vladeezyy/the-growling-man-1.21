@@ -60,7 +60,7 @@ configurations {
 }
 
 dependencies {
-    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+    implementation "maven.modrinth:geckolib:${geckolib_version}"
 }
 
 // neoforge.mods.toml comes from src/main/templates with the gradle properties

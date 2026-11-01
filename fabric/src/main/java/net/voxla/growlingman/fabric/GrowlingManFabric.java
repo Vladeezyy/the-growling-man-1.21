@@ -2,7 +2,7 @@ package net.voxla.growlingman.fabric;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -42,13 +42,13 @@ public final class GrowlingManFabric implements ModInitializer {
 			if (++configCheck % 20 == 0)
 				TomlConfigFile.reloadIfChanged();
 		});
-		ServerTickEvents.END_WORLD_TICK.register(level -> GMBus.post(new LevelTickEvent.Post(level)));
+		ServerTickEvents.END_LEVEL_TICK.register(level -> GMBus.post(new LevelTickEvent.Post(level)));
 		CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) -> GMBus.post(new RegisterCommandsEvent(dispatcher, selection, context)));
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> !GMBus.post(new LivingIncomingDamageEvent(entity, source, amount)));
 		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, amount) -> !GMBus.post(new LivingDeathEvent(entity, source)));
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> GMBus.post(new PlayerEvent.PlayerLoggedInEvent(handler.getPlayer())));
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> GMBus.post(new PlayerEvent.Clone(newPlayer, oldPlayer, !alive)));
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> GMBus.post(new PlayerEvent.PlayerRespawnEvent(newPlayer, alive)));
-		ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> GMBus.post(new PlayerEvent.PlayerChangedDimensionEvent(player)));
+		ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) -> GMBus.post(new PlayerEvent.PlayerChangedDimensionEvent(player)));
 	}
 }
