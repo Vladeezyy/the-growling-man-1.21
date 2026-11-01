@@ -6,14 +6,14 @@
 
 **He stalks you, and he is drawn to sorrow and grief.**
 
-[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.11-3c8527)](https://www.minecraft.net)
+[![Minecraft 1.21.11](https://img.shields.io/badge/Minecraft-1.21.11-3c8527)](https://www.minecraft.net)
 [![NeoForge 21.1](https://img.shields.io/badge/NeoForge-21.11.48%2B-e0682b)](https://neoforged.net)
-[![Fabric 1.21.1](https://img.shields.io/badge/Fabric-Loader%200.19.5%2B-dbd0b4)](https://fabricmc.net)
-[![GeckoLib 4.9](https://img.shields.io/badge/requires-GeckoLib%204.9%2B-8a2be2)](https://modrinth.com/mod/geckolib)
+[![Fabric 1.21.11](https://img.shields.io/badge/Fabric-Loader%200.19.5%2B-dbd0b4)](https://fabricmc.net)
+[![GeckoLib 5.4.5](https://img.shields.io/badge/requires-GeckoLib%205.4.5%2B-8a2be2)](https://modrinth.com/mod/geckolib)
 [![License LGPL-3.0](https://img.shields.io/badge/license-LGPL--3.0-blue)](LICENSE)
 
 An unofficial port of **[The Growling Man](https://www.curseforge.com/minecraft/mc-mods/the-growling-man)** 1.0.1
-by **Voxla** (directed by Lord0wnage, creature by Bonesworth) from Forge 1.20.1 to **NeoForge and Fabric 1.21.1**.
+by **Voxla** (directed by Lord0wnage, creature by Bonesworth) from Forge 1.20.1 to **NeoForge and Fabric 1.21.11**.
 
 <img src="docs/images/growling_man.jpg" width="49%" alt="The Growling Man">
 <img src="docs/images/overlays.jpg" width="49%" alt="Mental breakdown">
@@ -33,13 +33,13 @@ killing many animals quickly — and goes on a rampage during raids. When he sta
 ## Installation
 
 **NeoForge**
-1. Install **NeoForge 21.1.197** or newer for Minecraft **1.21.1**.
-2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (4.9 or newer, NeoForge 1.21.1) into `mods`.
+1. Install **NeoForge 21.11.48** or newer for Minecraft **1.21.11**.
+2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 or newer, NeoForge 1.21.11) into `mods`.
 3. Put `the-growling-man-neoforge-1.0.1.1+1.21.1.jar` from the [releases](../../releases) into `mods`.
 
 **Fabric**
-1. Install **Fabric Loader 0.19.5** or newer for Minecraft **1.21.1** and **[Fabric API](https://modrinth.com/mod/fabric-api)**.
-2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (4.9 or newer, Fabric 1.21.1) into `mods`.
+1. Install **Fabric Loader 0.19.5** or newer for Minecraft **1.21.11** and **[Fabric API](https://modrinth.com/mod/fabric-api)**.
+2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 or newer, Fabric 1.21.11) into `mods`.
 3. Put `the-growling-man-fabric-1.0.1.1+1.21.1.jar` from the [releases](../../releases) into `mods`.
 
 Needed on both the client and the server. The music and jumpscare sounds use the "Jukebox/Note Blocks" volume.
@@ -86,13 +86,13 @@ only from its official pages.
 ## Установка
 
 **NeoForge**
-1. Установите **NeoForge 21.1.197** или новее для Minecraft **1.21.1**.
-2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (4.9 или новее, NeoForge 1.21.1).
+1. Установите **NeoForge 21.11.48** или новее для Minecraft **1.21.11**.
+2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 или новее, NeoForge 1.21.11).
 3. Положите в `mods` `the-growling-man-neoforge-1.0.1.1+1.21.1.jar` из [релизов](../../releases).
 
 **Fabric**
-1. Установите **Fabric Loader 0.19.5** или новее для Minecraft **1.21.1** и **[Fabric API](https://modrinth.com/mod/fabric-api)**.
-2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (4.9 или новее, Fabric 1.21.1).
+1. Установите **Fabric Loader 0.19.5** или новее для Minecraft **1.21.11** и **[Fabric API](https://modrinth.com/mod/fabric-api)**.
+2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 или новее, Fabric 1.21.11).
 3. Положите в `mods` `the-growling-man-fabric-1.0.1.1+1.21.1.jar` из [релизов](../../releases).
 
 Нужен и на клиенте, и на сервере. Громкость музыки и скримеров — ползунок «Музыкальные блоки».
