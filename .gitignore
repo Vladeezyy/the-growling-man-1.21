@@ -11,3 +11,6 @@ prodtest/*.out
 neoforge/run/
 fabric/run/
 fabric/run-prod/
+run-net/
+neoforge/run-net/
+fabric/run-net/

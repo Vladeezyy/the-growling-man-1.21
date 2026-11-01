@@ -31,6 +31,17 @@ neoForge {
             client()
             systemProperty 'growling_man.scene', project.findProperty('scene') ?: 'true'
         }
+        // tools/nettest.sh: the dev server in run-net and a client scene (port/NetScene) that joins it
+        netServer {
+            server()
+            programArgument '--nogui'
+            gameDirectory = project.file('run-net')
+        }
+        netClient {
+            client()
+            systemProperty 'growling_man.netscene', 'true'
+            programArguments.addAll('--quickPlayMultiplayer', 'localhost:25565')
+        }
         // Server tick check (port/PerfScene): overworld and nether spawning, 20 Lurkers; -Pjfr: run/perf.jfr
         perf {
             client()

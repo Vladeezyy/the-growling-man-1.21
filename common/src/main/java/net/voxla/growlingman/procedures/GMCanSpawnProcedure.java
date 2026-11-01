@@ -1,13 +1,13 @@
 package net.voxla.growlingman.procedures;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementHolder;
 
 import java.util.Comparator;
 import javax.annotation.Nullable;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.voxla.growlingman.network.InventoryScreenMessage;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -913,7 +913,7 @@ public class GMCanSpawnProcedure {
 				}
 
 				if (Math.random() > 0.6) {
-					if (Minecraft.getInstance().screen instanceof InventoryScreen
+					if (InventoryScreenMessage.isOpen(entity)
 						&& (
 							GrowlingManModVariables.of(entity)
 											.IsMarked
@@ -977,7 +977,7 @@ public class GMCanSpawnProcedure {
 							}
 						}
 					}
-				} else if (Minecraft.getInstance().screen instanceof InventoryScreen
+				} else if (InventoryScreenMessage.isOpen(entity)
 					&& (
 						GrowlingManModVariables.of(entity)
 										.IsMarked
@@ -1058,7 +1058,7 @@ public class GMCanSpawnProcedure {
 					}
 				}
 
-				if (Minecraft.getInstance().screen instanceof InventoryScreen
+				if (InventoryScreenMessage.isOpen(entity)
 					&& GrowlingManModVariables.of(entity)
 							.InvNumb
 						< 3.0) {
@@ -1070,7 +1070,7 @@ public class GMCanSpawnProcedure {
 						_vars.InvNumb = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
-				} else if (!(Minecraft.getInstance().screen instanceof InventoryScreen)
+				} else if (!(InventoryScreenMessage.isOpen(entity))
 					&& GrowlingManModVariables.of(entity)
 							.InvNumb
 						> 0.0) {
@@ -1082,7 +1082,7 @@ public class GMCanSpawnProcedure {
 					}
 				}
 
-				if (!(Minecraft.getInstance().screen instanceof InventoryScreen)
+				if (!(InventoryScreenMessage.isOpen(entity))
 					&& GrowlingManModVariables.of(entity)
 							.gm_inv_ap
 						> 0.0) {
@@ -1096,7 +1096,7 @@ public class GMCanSpawnProcedure {
 					}
 				}
 
-				if (Minecraft.getInstance().screen instanceof InventoryScreen
+				if (InventoryScreenMessage.isOpen(entity)
 					&& GrowlingManModVariables.of(entity)
 							.gm_inv_opacity
 						< 600.0
@@ -1111,7 +1111,7 @@ public class GMCanSpawnProcedure {
 						_vars.gm_inv_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
-				} else if (!(Minecraft.getInstance().screen instanceof InventoryScreen)
+				} else if (!(InventoryScreenMessage.isOpen(entity))
 					&& GrowlingManModVariables.of(entity)
 							.gm_inv_opacity
 						!= 0.0) {
@@ -1123,7 +1123,7 @@ public class GMCanSpawnProcedure {
 					}
 				}
 
-				if (Minecraft.getInstance().screen instanceof InventoryScreen
+				if (InventoryScreenMessage.isOpen(entity)
 					&& GrowlingManModVariables.of(entity)
 							.gm_inv_opacity
 						>= 300.0) {

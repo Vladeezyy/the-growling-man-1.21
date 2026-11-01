@@ -12,6 +12,7 @@ import net.voxla.growlingman.init.GrowlingManModItems;
 import net.voxla.growlingman.init.GrowlingManModMobEffects;
 import net.voxla.growlingman.init.GrowlingManModSounds;
 import net.voxla.growlingman.network.ClearMindKeyMessage;
+import net.voxla.growlingman.network.InventoryScreenMessage;
 import net.voxla.growlingman.network.GrowlingManModVariables;
 import net.voxla.growlingman.port.bus.EventIndex;
 import net.voxla.growlingman.port.bus.EventPriority;
@@ -41,6 +42,7 @@ public class GrowlingManMod {
 		GrowlingManModMobEffects.REGISTRY.getRegistryKey();
 		GrowlingManModVariables.registerPackets();
 		ClearMindKeyMessage.register();
+		InventoryScreenMessage.register();
 		EventIndex.register();
 		GMBus.add(ServerTickEvent.Post.class, EventPriority.NORMAL, GrowlingManMod::tick);
 	}

@@ -6,8 +6,10 @@ public final class ClientEventIndex {
 	}
 
 	public static void register() {
+		GMBus.add(ClientTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.client.InventoryScreenWatcher::onClientTick);
 		GMBus.add(ClientTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.init.GrowlingManModKeyMappings.KeyEventListener::onClientTick);
 		GMBus.add(ClientTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.port.DevScene::onClientTick);
+		GMBus.add(ClientTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.port.NetScene::onClientTick);
 		GMBus.add(ClientTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.port.PerfScene::onClientTick);
 		GMBus.add(EntityRenderersEvent.RegisterRenderers.class, EventPriority.NORMAL, net.voxla.growlingman.init.GrowlingManModEntityRenderers::registerEntityRenderers);
 		GMBus.add(RegisterKeyMappingsEvent.class, EventPriority.NORMAL, net.voxla.growlingman.init.GrowlingManModKeyMappings::registerKeyMappings);

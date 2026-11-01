@@ -44,6 +44,19 @@ loom {
             vmArg "-Dgrowling_man.scene=${project.findProperty('scene') ?: 'true'}"
             runDir('run')
         }
+        // tools/nettest.sh LOADER=fabric
+        netServer {
+            server()
+            name 'NetServer'
+            runDir('run-net')
+        }
+        netClient {
+            client()
+            name 'NetClient'
+            vmArg '-Dgrowling_man.netscene=true'
+            programArgs '--quickPlayMultiplayer', 'localhost:25565', '--username', 'Dev'
+            runDir('run')
+        }
         // tools/perf.sh LOADER=fabric
         perf {
             client()
