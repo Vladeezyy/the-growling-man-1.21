@@ -35,12 +35,12 @@ killing many animals quickly — and goes on a rampage during raids. When he sta
 **NeoForge**
 1. Install **NeoForge 21.11.48** or newer for Minecraft **1.21.11**.
 2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 or newer, NeoForge 1.21.11) into `mods`.
-3. Put `the-growling-man-neoforge-1.0.1.1+1.21.1.jar` from the [releases](../../releases) into `mods`.
+3. Put `the-growling-man-neoforge-1.0.1.1+1.21.11.jar` from the [releases](../../releases) into `mods`.
 
 **Fabric**
 1. Install **Fabric Loader 0.19.5** or newer for Minecraft **1.21.11** and **[Fabric API](https://modrinth.com/mod/fabric-api)**.
 2. Put **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 or newer, Fabric 1.21.11) into `mods`.
-3. Put `the-growling-man-fabric-1.0.1.1+1.21.1.jar` from the [releases](../../releases) into `mods`.
+3. Put `the-growling-man-fabric-1.0.1.1+1.21.11.jar` from the [releases](../../releases) into `mods`.
 
 Needed on both the client and the server. The music and jumpscare sounds use the "Jukebox/Note Blocks" volume.
 
@@ -88,12 +88,12 @@ only from its official pages.
 **NeoForge**
 1. Установите **NeoForge 21.11.48** или новее для Minecraft **1.21.11**.
 2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 или новее, NeoForge 1.21.11).
-3. Положите в `mods` `the-growling-man-neoforge-1.0.1.1+1.21.1.jar` из [релизов](../../releases).
+3. Положите в `mods` `the-growling-man-neoforge-1.0.1.1+1.21.11.jar` из [релизов](../../releases).
 
 **Fabric**
 1. Установите **Fabric Loader 0.19.5** или новее для Minecraft **1.21.11** и **[Fabric API](https://modrinth.com/mod/fabric-api)**.
 2. Положите в `mods` **[GeckoLib](https://modrinth.com/mod/geckolib)** (5.4.5 или новее, Fabric 1.21.11).
-3. Положите в `mods` `the-growling-man-fabric-1.0.1.1+1.21.1.jar` из [релизов](../../releases).
+3. Положите в `mods` `the-growling-man-fabric-1.0.1.1+1.21.11.jar` из [релизов](../../releases).
 
 Нужен и на клиенте, и на сервере. Громкость музыки и скримеров — ползунок «Музыкальные блоки».
 
