@@ -6,8 +6,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.neoforge.event.TickEvent;
 import net.voxla.growlingman.port.bus.Event;
+import net.voxla.growlingman.port.bus.LevelTickEvent;
 import net.voxla.growlingman.port.bus.SubscribeEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
 import net.voxla.growlingman.configuration.GrowlingManConfigConfiguration;
@@ -16,10 +16,8 @@ import net.voxla.growlingman.network.GrowlingManModVariables;
 @EventBusSubscriber
 public class GMSpawningTimerProcedure {
 	@SubscribeEvent
-	public static void onWorldTick(TickEvent.LevelTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			execute(event, event.level);
-		}
+	public static void onWorldTick(LevelTickEvent.Post event) {
+		execute(event, event.getLevel());
 	}
 
 	public static void execute(LevelAccessor world) {

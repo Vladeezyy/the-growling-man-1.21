@@ -35,7 +35,8 @@ def ifpresent(s):
         if local and local[-1] != '_setval':
             body = re.sub(r'\b_setval\b', local[-1], body)
         out.append(s[i:m.start()])
-        out.append('{\n' + ' ' * 0 + '%s.PlayerVariables _vars = %s.of(%s);' % (V, V, m.group(1)) + body + '}')
+        indent = re.match(r'\t*', s[s.rfind('\n', 0, m.start()) + 1:]).group(0)
+        out.append('{\n' + indent + '\t%s.PlayerVariables _vars = %s.of(%s);' % (V, V, m.group(1)) + body + '}')
         i = j + tail.end()
     out.append(s[i:])
     return ''.join(out)

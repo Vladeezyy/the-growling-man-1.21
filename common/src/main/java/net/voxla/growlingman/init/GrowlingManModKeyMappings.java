@@ -1,12 +1,11 @@
 package net.voxla.growlingman.init;
 
-import net.neoforged.neoforge.network.PacketDistributor;
-
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.voxla.growlingman.port.bus.Dist;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.event.TickEvent;
+import net.voxla.growlingman.port.bus.ClientTickEvent;
+import net.voxla.growlingman.port.bus.RegisterKeyMappingsEvent;
+import net.voxla.growlingman.port.platform.Platform;
 import net.voxla.growlingman.port.bus.SubscribeEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
 import net.voxla.growlingman.GrowlingManMod;
@@ -20,12 +19,12 @@ public class GrowlingManModKeyMappings {
 		public void setDown(boolean isDown) {
 			super.setDown(isDown);
 			if (this.isDownOld != isDown && isDown) {
-				PacketDistributor.sendToServer(new ClearMindKeyMessage(0, 0));
+				Platform.INSTANCE.sendToServer(new ClearMindKeyMessage(0, 0));
 				ClearMindKeyMessage.pressAction(Minecraft.getInstance().player, 0, 0);
 				GrowlingManModKeyMappings.CLEAR_MIND_KEY_LASTPRESS = System.currentTimeMillis();
 			} else if (this.isDownOld != isDown && !isDown) {
 				int dt = (int)(System.currentTimeMillis() - GrowlingManModKeyMappings.CLEAR_MIND_KEY_LASTPRESS);
-				PacketDistributor.sendToServer(new ClearMindKeyMessage(1, dt));
+				Platform.INSTANCE.sendToServer(new ClearMindKeyMessage(1, dt));
 				ClearMindKeyMessage.pressAction(Minecraft.getInstance().player, 1, dt);
 			}
 
@@ -42,7 +41,7 @@ public class GrowlingManModKeyMappings {
 	@EventBusSubscriber(Dist.CLIENT)
 	public static class KeyEventListener {
 		@SubscribeEvent
-		public static void onClientTick(TickEvent.ClientTickEvent event) {
+		public static void onClientTick(ClientTickEvent.Post event) {
 			if (Minecraft.getInstance().screen == null) {
 				GrowlingManModKeyMappings.CLEAR_MIND_KEY.consumeClick();
 			}

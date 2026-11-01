@@ -28,7 +28,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.locale.Language;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.BlockPos;
-import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.voxla.growlingman.configuration.GrowlingManConfigConfiguration;
+import net.voxla.growlingman.init.GrowlingManModMobEffects;
+import net.voxla.growlingman.network.ClearMindKeyMessage;
+import net.voxla.growlingman.network.GrowlingManModVariables;
+import net.voxla.growlingman.port.platform.Platform;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.Screenshot;
@@ -43,13 +49,13 @@ import java.util.ArrayList;
 
 /**
  * Port check scene ({@code ./gradlew runScene}), inert unless {@code growling_man.scene} is set: creates a new world,
- * lines up every entity of the mod (AI off), screenshots them, the items in the creative tab and the Lurker book, checks
- * the screen for missing (magenta) textures and every name for a translation, logs {@code [scene] CHECK / DONE}, quits.
+ * puts the Growling Man in front of the player (AI off), screenshots it, the HUD overlays and the mark in the inventory,
+ * sends the clear mind key to the server, checks the screen for missing (magenta) textures and every name for a translation, logs {@code [scene] CHECK / DONE}, quits.
  */
 @EventBusSubscriber(value = Dist.CLIENT)
 public final class DevScene {
 	private static final boolean ENABLED = System.getProperty("growling_man.scene") != null;
-	private static final String WORLD = "ml_scene";
+	private static final String WORLD = "gm_scene";
 	private record Step(int at, Consumer<Minecraft> action) {
 	}
 	private static final List<Step> STEPS = new ArrayList<>();
@@ -96,38 +102,44 @@ public final class DevScene {
 		int t = 40;
 		at(t, mc -> server(mc, DevScene::build));
 		at(t += 60, mc -> {
-			GrowlingManMod.LOGGER.info("[scene] player effects " + mc.player.getActiveEffects() + " fog " + PortUtil.data(mc.player).getDouble("InsanityFog")
-					+ " stage " + net.voxla.growlingman.network.GrowlingManModVariables.of(mc.player).InsanityStage + " time " + mc.level.getDayTime());
 			shot(mc, "entities");
 			checkNoMissingTexture(mc, "entities");
 		});
-		at(t += 5, mc -> server(mc, p -> p.teleportTo(p.serverLevel(), stage.getX() + 9.5, stage.getY() + 1.6, stage.getZ() - 3.5, 0f, 10f)));
+		at(t += 5, mc -> server(mc, p -> p.teleportTo(p.serverLevel(), stage.getX() + 0.5, stage.getY() + 1.6, stage.getZ() - 3.5, 0f, 10f)));
 		at(t += 20, mc -> shot(mc, "entities_close"));
+		// the HUD overlays: marked, "clear your mind", mental breakdown
 		at(t += 5, mc -> server(mc, p -> {
-			p.getInventory().clearContent();
-			int slot = 0;
-			for (Item item : BuiltInRegistries.ITEM)
-				if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(GrowlingManMod.MODID) && slot < 36)
-					p.getInventory().setItem(slot++, new ItemStack(item));
+			GrowlingManModVariables.PlayerVariables vars = GrowlingManModVariables.of(p);
+			vars.IsMarked = 1;
+			vars.cym_overlay_opacity = 200;
+			vars.mtl_overlay_opacity = 200;
+			vars.syncPlayerVariables(p);
+			p.addEffect(new MobEffectInstance(GrowlingManModMobEffects.MENTAL_BREAKDOWN.holder(), 400, 0));
 		}));
-		at(t += 10, mc -> mc.setScreen(new CreativeModeInventoryScreen(mc.player, mc.player.connection.enabledFeatures(), true)));
-		at(t += 15, mc -> {
-			shot(mc, "inventory");
-			checkNoMissingTexture(mc, "inventory");
-		});
-		at(t += 5, mc -> mc.setScreen(null));
-		at(t += 5, mc -> server(mc, p -> {
-			p.getInventory().selected = 0;
-			for (int i = 0; i < 36; i++)
-				if (BuiltInRegistries.ITEM.getKey(p.getInventory().getItem(i).getItem()).getPath().equals("lurker_book"))
-					p.getInventory().setItem(0, p.getInventory().getItem(i).copy());
-		}));
-		at(t += 10, mc -> mc.gameMode.useItem(mc.player, net.minecraft.world.InteractionHand.MAIN_HAND));
 		at(t += 20, mc -> {
-			shot(mc, "lurker_book");
-			check("the Lurker book opens its screen", mc.screen != null && !(mc.screen instanceof PauseScreen), mc.screen);
+			check("player variables reach the client", GrowlingManModVariables.of(mc.player).IsMarked > 0 && GrowlingManModVariables.of(mc.player).cym_overlay_opacity > 0,
+					GrowlingManModVariables.of(mc.player).IsMarked);
+			shot(mc, "overlays");
+			checkNoMissingTexture(mc, "overlays");
+		});
+		// the mark in the inventory of a marked player
+		at(t += 5, mc -> server(mc, p -> p.setGameMode(GameType.SURVIVAL)));
+		at(t += 10, mc -> mc.setScreen(new InventoryScreen(mc.player)));
+		at(t += 15, mc -> {
+			shot(mc, "inventory_mark");
+			checkNoMissingTexture(mc, "inventory_mark");
 		});
 		at(t += 5, mc -> mc.setScreen(null));
+		at(t += 2, mc -> server(mc, p -> p.setGameMode(GameType.CREATIVE)));
+		// the clear mind key: client -> server message
+		at(t += 5, mc -> Platform.INSTANCE.sendToServer(new ClearMindKeyMessage(0, 0)));
+		at(t += 10, mc -> server(mc, p -> check("the clear mind key reaches the server (holding breath)", GrowlingManModVariables.of(p).IsHoldingBreath, "not holding")));
+		at(t += 5, mc -> Platform.INSTANCE.sendToServer(new ClearMindKeyMessage(1, 500)));
+		at(t += 10, mc -> server(mc, p -> check("releasing the key reaches the server", !GrowlingManModVariables.of(p).IsHoldingBreath, "still holding")));
+		at(t += 5, mc -> {
+			java.nio.file.Path config = Platform.INSTANCE.configDir().resolve(GrowlingManConfigConfiguration.FILE_NAME);
+			check("the config file is written with the defaults", java.nio.file.Files.exists(config) && GrowlingManConfigConfiguration.GM_SPAWNTIME_MIN.get() == 60.0, config);
+		});
 		at(t += 5, DevScene::checkTranslations);
 		at(t += 10, mc -> {
 			GrowlingManMod.LOGGER.info("[scene] DONE " + (checks - failures) + "/" + checks + (failures == 0 ? " passed" : " (" + failures + " failed)"));
@@ -231,7 +243,10 @@ public final class DevScene {
 		for (EntityType<?> type : modEntities())
 			if (!language.has(type.getDescriptionId()))
 				missing.add(type.getDescriptionId());
-		check("translations: every item and entity name in " + mc.options.languageCode, missing.isEmpty(), missing);
+		for (String key : List.of(GrowlingManModMobEffects.MENTAL_BREAKDOWN.get().getDescriptionId(), "key.growling_man.clear_mind_key"))
+			if (!language.has(key))
+				missing.add(key);
+		check("translations: every item, entity, effect and key name in " + mc.options.languageCode, missing.isEmpty(), missing);
 	}
 
 	private static void checkNoMissingTexture(Minecraft mc, String name) {

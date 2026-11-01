@@ -11,7 +11,7 @@ public class SetMarkedCommandProcedure {
 		if (entity != null) {
 			double _setval = DoubleArgumentType.getDouble(arguments, "mark_number");
 			{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+				GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 				_vars.IsMarked = _setval;
 				_vars.syncPlayerVariables(entity);
 			}

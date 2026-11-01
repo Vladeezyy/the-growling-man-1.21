@@ -142,13 +142,13 @@ public class AnimalDiesProcedure {
 					&& Math.random() > 0.93) {
 					double _setval = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.AnimalsKilled = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
 					_setval = 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.IsMarked = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
@@ -158,13 +158,13 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 						.AnimalsKilled
 					+ 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.AnimalsKilled = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
 				_setval = 7200.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.AnimalsKilledResetWait = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
@@ -309,13 +309,13 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 					>= 60.0) {
 				double _setval = 0.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.AnimalsKilled = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
 				_setval = 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.IsMarked = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
@@ -334,7 +334,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 							.AnimalsKilledShortTime
 						+ 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.AnimalsKilledShortTime = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
@@ -479,13 +479,13 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 						>= 19.0) {
 					double _setval = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.AnimalsKilledShortTime = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
 					_setval = 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.IsMarked = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
@@ -503,7 +503,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 							.AnimalsKilledShortTime
 						+ 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.AnimalsKilledShortTime = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
@@ -570,13 +570,13 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 						>= 2.0) {
 					double _setval = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.AnimalsKilledShortTime = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
 					_setval = 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 						_vars.IsMarked = _setval;
 						_vars.syncPlayerVariables(sourceentity);
 					}
@@ -593,7 +593,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 						.AnimalsKilledShortTime
 					+ 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.AnimalsKilledShortTime = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
@@ -2620,13 +2620,13 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourc
 					>= (Double)GrowlingManConfigConfiguration.ANIMALS_KILLED_QUICKLY_TO_GET_MARKED.get() - 1.0) {
 				double _setval = 0.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.AnimalsKilledShortTime = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}
 				_setval = 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(sourceentity);
 					_vars.IsMarked = _setval;
 					_vars.syncPlayerVariables(sourceentity);
 				}

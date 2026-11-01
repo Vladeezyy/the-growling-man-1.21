@@ -9,7 +9,6 @@ import net.minecraft.world.entity.EntityType.Builder;
 import net.voxla.growlingman.port.bus.EntityAttributeCreationEvent;
 import net.voxla.growlingman.port.bus.SubscribeEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
-import net.voxla.growlingman.port.bus.FMLCommonSetupEvent;
 import net.voxla.growlingman.port.platform.Registrar;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.voxla.growlingman.port.platform.RegistryEntry;
@@ -30,11 +29,6 @@ public class GrowlingManModEntities {
 
 	private static <T extends Entity> RegistryEntry<EntityType<?>, EntityType<T>> register(String registryname, Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(registryname));
-	}
-
-	@SubscribeEvent
-	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> GrowlingManEntity.init());
 	}
 
 	@SubscribeEvent

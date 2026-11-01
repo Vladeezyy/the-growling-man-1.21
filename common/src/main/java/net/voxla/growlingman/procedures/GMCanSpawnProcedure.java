@@ -430,7 +430,7 @@ public class GMCanSpawnProcedure {
 					<= 0.0) {
 					double _setval = 12000.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.GMEventsTimer = _setval;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -443,7 +443,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.GMEventsTimer
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.GMEventsTimer = _setval;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -629,7 +629,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						.ScreenShakeTimer
 					- 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 					_vars.ScreenShakeTimer = _setval;
 					_vars.syncPlayerVariables(entity);
 				}
@@ -672,7 +672,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.HoldingBreathTimer
 						+ 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.HoldingBreathTimer = _setval;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -685,7 +685,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						>= 150.0) {
 					double _setval = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.HoldingBreathTimer = _setval;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -711,7 +711,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.HoldingBreathTimer
 						- 5.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.HoldingBreathTimer = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -725,7 +725,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.HoldingBreathTimer
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.HoldingBreathTimer = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -795,7 +795,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						.IsMarked
 					+ 1.0;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 					_vars.IsMarked = _setvalx;
 					_vars.syncPlayerVariables(entity);
 				}
@@ -822,7 +822,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					double _setvalx = GrowlingManModVariables.of(entity)
 						.HoldingBreathTimer;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.cym_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -833,7 +833,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.cym_overlay_opacity
 						- 25.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.cym_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -847,7 +847,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.cym_overlay_opacity
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.cym_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -856,7 +856,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					< 0.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.cym_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -877,7 +877,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.mtl_overlay_opacity
 						+ 25.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.mtl_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -896,7 +896,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.mtl_overlay_opacity
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.mtl_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -906,7 +906,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					&& !(entity instanceof LivingEntity _livEnt169 && _livEnt169.hasEffect(GrowlingManModMobEffects.MENTAL_BREAKDOWN.holder()))) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.mtl_overlay_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -937,7 +937,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							== 1.0) {
 						double _setvalx = 10.0;
 						{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+							GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 							_vars.gm_inv_ap = _setvalx;
 							_vars.syncPlayerVariables(entity);
 						}
@@ -1013,7 +1013,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						== 1.0) {
 					double _setvalx = 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.gm_inv_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1066,7 +1066,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.InvNumb
 						+ 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.InvNumb = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1076,7 +1076,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						> 0.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.InvNumb = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1090,7 +1090,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.gm_inv_ap
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.gm_inv_ap = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1107,7 +1107,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.gm_inv_opacity
 						+ 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.gm_inv_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1117,7 +1117,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						!= 0.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.gm_inv_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1137,7 +1137,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.gm_inv_opacity = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1321,7 +1321,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							<= 0.0) {
 							double _setvalxx = 12000.0;
 							{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+								GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 								_vars.GMEventsTimer = _setvalxx;
 								_vars.syncPlayerVariables(entity);
 							}
@@ -1334,7 +1334,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 									.GMEventsTimer
 								- 1.0;
 							{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+								GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 								_vars.GMEventsTimer = _setvalxx;
 								_vars.syncPlayerVariables(entity);
 							}
@@ -1349,7 +1349,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.AnimalsKilledResetWait
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.AnimalsKilledResetWait = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1362,7 +1362,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.BadActionTimer
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.BadActionTimer = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1381,7 +1381,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					)) {
 					double _setvalx = 96000.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.BadActionTimer = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1395,7 +1395,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						> 2.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.IsMarked = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1432,7 +1432,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						> 0.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.AnimalsKilled = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1446,7 +1446,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						> 0.0) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.AnimalsKilledShortTime = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1458,7 +1458,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						== 0.0) {
 						double _setvalx = 1.0;
 						{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+							GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 							_vars.IsMarked = _setvalx;
 							_vars.syncPlayerVariables(entity);
 						}
@@ -1472,7 +1472,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 								.RaidTime
 							+ 1.0;
 						{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+							GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 							_vars.RaidTime = _setvalx;
 							_vars.syncPlayerVariables(entity);
 						}
@@ -1483,7 +1483,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 						>= 24000.0) {
 						double _setvalx = 0.0;
 						{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+							GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 							_vars.RaidTime = _setvalx;
 							_vars.syncPlayerVariables(entity);
 						}
@@ -1667,7 +1667,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 								<= 0.0) {
 								double _setvalxx = 12000.0;
 								{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+									GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 									_vars.GMEventsTimer = _setvalxx;
 									_vars.syncPlayerVariables(entity);
 								}
@@ -1680,7 +1680,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 										.GMEventsTimer
 									- 1.0;
 								{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+									GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 									_vars.GMEventsTimer = _setvalxx;
 									_vars.syncPlayerVariables(entity);
 								}
@@ -1695,7 +1695,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 							.RaidTime
 						- 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.RaidTime = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1708,7 +1708,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					&& Math.random() > 0.87) {
 					double _setvalx = 1.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.IsMarked = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}
@@ -1721,7 +1721,7 @@ GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entit
 					&& Math.random() > 0.9) {
 					double _setvalx = 0.0;
 					{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+						GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 						_vars.BadActionTimer = _setvalx;
 						_vars.syncPlayerVariables(entity);
 					}

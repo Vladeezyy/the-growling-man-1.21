@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.voxla.growlingman.CustomRenderTypes;
 import net.voxla.growlingman.entity.GrowlingManEntity;
 import net.voxla.growlingman.entity.model.GrowlingManModel;
@@ -52,10 +53,7 @@ public class GrowlingManRenderer extends GeoEntityRenderer<GrowlingManEntity> {
 								partialTick,
 								packedLight,
 								LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
-								1.0F,
-								1.0F,
-								1.0F,
-								alpha
+								FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F)
 							);
 					}
 				}

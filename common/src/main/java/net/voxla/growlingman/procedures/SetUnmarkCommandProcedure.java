@@ -11,7 +11,7 @@ public class SetUnmarkCommandProcedure {
 		if (entity != null) {
 			double _setval = DoubleArgumentType.getDouble(arguments, "unmark_number");
 			{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+				GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 				_vars.BadActionTimer = _setval;
 				_vars.syncPlayerVariables(entity);
 			}

@@ -7,12 +7,9 @@ public final class EventIndex {
 
 	public static void register() {
 		GMBus.add(EntityAttributeCreationEvent.class, EventPriority.NORMAL, net.voxla.growlingman.init.GrowlingManModEntities::registerAttributes);
-		GMBus.add(EntityJoinLevelEvent.class, EventPriority.NORMAL, net.voxla.growlingman.port.GMEntities::onJoin);
-		GMBus.add(EntityLeaveLevelEvent.class, EventPriority.NORMAL, net.voxla.growlingman.port.GMEntities::onLeave);
-		GMBus.add(FMLCommonSetupEvent.class, EventPriority.NORMAL, net.voxla.growlingman.init.GrowlingManModEntities::init);
+		GMBus.add(LevelTickEvent.Post.class, EventPriority.NORMAL, net.voxla.growlingman.procedures.GMSpawningTimerProcedure::onWorldTick);
 		GMBus.add(LivingDeathEvent.class, EventPriority.NORMAL, net.voxla.growlingman.procedures.AnimalDiesProcedure::onEntityDeath);
 		GMBus.add(LivingDeathEvent.class, EventPriority.NORMAL, net.voxla.growlingman.procedures.PlayerDiesNearGMProcedure::onEntityDeath);
-		GMBus.add(LivingEvent.LivingTickEvent.class, EventPriority.NORMAL, net.voxla.growlingman.init.EntityAnimationFactory::onEntityTick);
 		GMBus.add(LivingIncomingDamageEvent.class, EventPriority.NORMAL, net.voxla.growlingman.procedures.AttackedByGMProcedure::onEntityAttacked);
 		GMBus.add(PlayerEvent.Clone.class, EventPriority.NORMAL, net.voxla.growlingman.network.GrowlingManModVariables.EventBusVariableHandlers::clonePlayer);
 		GMBus.add(PlayerEvent.PlayerChangedDimensionEvent.class, EventPriority.NORMAL, net.voxla.growlingman.network.GrowlingManModVariables.EventBusVariableHandlers::onPlayerChangedDimension);

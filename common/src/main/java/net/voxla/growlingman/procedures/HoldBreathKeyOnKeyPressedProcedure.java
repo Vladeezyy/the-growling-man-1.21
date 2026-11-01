@@ -10,7 +10,7 @@ public class HoldBreathKeyOnKeyPressedProcedure {
 				.IsHoldingBreath) {
 				boolean _setval = true;
 				{
-GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+					GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
 					_vars.IsHoldingBreath = _setval;
 					_vars.syncPlayerVariables(entity);
 				}

@@ -22,8 +22,8 @@ public class GMMarkedPlayerOverlay {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void eventHandler(ScreenEvent.Render.Post event) {
 		if (event.getScreen() instanceof InventoryScreen invScreen) {
-			int guiLeft = invScreen.getGuiLeft();
-			int guiTop = invScreen.getGuiTop();
+			int guiLeft = invScreen.leftPos;
+			int guiTop = invScreen.topPos;
 			Player entity = Minecraft.getInstance().player;
 			if (entity == null) {
 				return;

@@ -1,6 +1,5 @@
 package net.voxla.growlingman.entity;
 
-import net.voxla.growlingman.port.bus.RegisterSpawnPlacementsEvent;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -568,6 +567,17 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		}
 	}
 
+	@Override
+	public void tick() {
+		// 1.0.1 did this in a LivingTickEvent listener for every living entity (EntityAnimationFactory)
+		String animation = this.getSyncedAnimation();
+		if (!animation.equals("undefined")) {
+			this.setAnimation("undefined");
+			this.animationprocedure = animation;
+		}
+		super.tick();
+	}
+
 	public void baseTick() {
 		super.baseTick();
 		GrowlingManTickHandlerProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
@@ -580,9 +590,6 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		double y = this.getY();
 		double z = this.getZ();
 		return super.getDefaultDimensions(p_33597_).scale((float)GrowlingManBoundingBoxScaleProcedure.execute(world, x, y, z, this));
-	}
-
-	public static void init(RegisterSpawnPlacementsEvent event) {
 	}
 
 	public static Builder createAttributes() {

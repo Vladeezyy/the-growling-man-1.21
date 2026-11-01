@@ -102,4 +102,28 @@ public abstract class ViewportEvent extends Event {
 			this.blue = blue;
 		}
 	}
+
+	/** The field of view of the frame (degrees); setFOV changes it */
+	public static class ComputeFov extends ViewportEvent {
+		private final boolean usedConfiguredFov;
+		private double fov;
+
+		public ComputeFov(Camera camera, double partialTick, double fov, boolean usedConfiguredFov) {
+			super(camera, partialTick);
+			this.fov = fov;
+			this.usedConfiguredFov = usedConfiguredFov;
+		}
+
+		public double getFOV() {
+			return this.fov;
+		}
+
+		public void setFOV(double fov) {
+			this.fov = fov;
+		}
+
+		public boolean usedConfiguredFOV() {
+			return this.usedConfiguredFov;
+		}
+	}
 }

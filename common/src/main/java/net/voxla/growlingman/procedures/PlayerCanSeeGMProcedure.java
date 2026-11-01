@@ -125,7 +125,6 @@ public class PlayerCanSeeGMProcedure {
 			}
 
 			if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 150.0, 150.0, 150.0), e -> true).isEmpty() && entity instanceof GrowlingManEntity) {
-				_center = new Vec3(x, y, z);
 
 				for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(75.0), e -> true)
 					.stream()

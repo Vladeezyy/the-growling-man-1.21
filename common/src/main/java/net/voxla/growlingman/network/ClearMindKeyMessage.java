@@ -12,11 +12,11 @@ import net.voxla.growlingman.port.platform.Platform;
 import net.voxla.growlingman.procedures.HoldBreathKeyOnKeyPressedProcedure;
 import net.voxla.growlingman.procedures.HoldBreathKeyOnKeyReleasedProcedure;
 
-public record ClearMindKeyMessage(int type, int pressedms) implements CustomPacketPayload {
+public record ClearMindKeyMessage(int eventType, int pressedms) implements CustomPacketPayload {
 	public static final Type<ClearMindKeyMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "key_clear_mind"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, ClearMindKeyMessage> STREAM_CODEC = StreamCodec.of(
 		(RegistryFriendlyByteBuf buffer, ClearMindKeyMessage message) -> {
-			buffer.writeInt(message.type);
+			buffer.writeInt(message.eventType);
 			buffer.writeInt(message.pressedms);
 		},
 		(RegistryFriendlyByteBuf buffer) -> new ClearMindKeyMessage(buffer.readInt(), buffer.readInt())
@@ -28,7 +28,7 @@ public record ClearMindKeyMessage(int type, int pressedms) implements CustomPack
 	}
 
 	public static void handleData(ClearMindKeyMessage message, ServerPlayer player) {
-		pressAction(player, message.type, message.pressedms);
+		pressAction(player, message.eventType, message.pressedms);
 	}
 
 	public static void pressAction(Player entity, int type, int pressedms) {

@@ -506,7 +506,6 @@ public class GrowlingManTickHandlerProcedure {
 					}
 				}
 
-				_center = new Vec3(x, y, z);
 
 				for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.5), e -> true)
 					.stream()
@@ -1387,7 +1386,6 @@ public class GrowlingManTickHandlerProcedure {
 				}
 			}
 
-			_center = new Vec3(x, y, z);
 
 			for (Entity entityiteratorxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(75.0), e -> true)
 				.stream()
