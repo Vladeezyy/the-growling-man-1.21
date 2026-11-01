@@ -164,7 +164,7 @@ public final class DevScene {
 			return;
 		if (!opened && mc.gui.screen() instanceof TitleScreen) {
 			opened = true;
-			org.lwjgl.glfw.GLFW.glfwSetWindowSize(mc.getWindow().handle(), 1600, 900);
+			mc.getWindow().setWindowed(1600, 900);
 			mc.options.guiScale().set(3);
 			mc.options.cloudStatus().set(CloudStatus.OFF);
 			mc.options.pauseOnLostFocus = false;

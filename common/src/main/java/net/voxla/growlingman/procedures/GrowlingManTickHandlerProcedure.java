@@ -1470,12 +1470,7 @@ public class GrowlingManTickHandlerProcedure {
 								new Vec3(x, y, z),
 								Vec2.ZERO,
 								_levelxxxxxxxxxxxxx,
-								net.minecraft.server.permissions.LevelBasedPermissionSet.OWNER,
-								"",
-								Component.literal(""),
-								_levelxxxxxxxxxxxxx.getServer(),
-								null
-							)
+								net.minecraft.server.permissions.LevelBasedPermissionSet.OWNER, Component.literal(""), _levelxxxxxxxxxxxxx.getServer())
 							.withSuppressedOutput(),
 						"/particle block "
 							+ BuiltInRegistries.BLOCK.getKey(world.getBlockState(BlockPos.containing(x, y - 1.0, z)).getBlock()).toString()

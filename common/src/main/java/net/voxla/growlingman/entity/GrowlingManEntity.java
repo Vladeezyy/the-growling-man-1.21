@@ -530,7 +530,7 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 	}
 
 	private PlayState attackingPredicate(AnimationTest<GrowlingManEntity> event) {
-		if (this.getAttackAnim(event.getDataOrDefault(DataTickets.PARTIAL_TICK, 0.0F)) > 0.0F && !this.swinging) {
+		if (this.getSwingAnimation(event.getDataOrDefault(DataTickets.PARTIAL_TICK, 0.0F)) > 0.0F && !this.swinging) {
 			this.swinging = true;
 			this.lastSwing = this.level().getGameTime();
 		}

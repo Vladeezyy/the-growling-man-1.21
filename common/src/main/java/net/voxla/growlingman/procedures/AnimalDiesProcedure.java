@@ -75,8 +75,7 @@ public class AnimalDiesProcedure {
 								.getCommands()
 								.performPrefixedCommand(
 									new CommandSourceStack(
-											CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, LevelBasedPermissionSet.OWNER, "", Component.literal(""), _level.getServer(), null
-										)
+											CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, LevelBasedPermissionSet.OWNER, Component.literal(""), _level.getServer())
 										.withSuppressedOutput(),
 									"/weather thunder 180"
 								);

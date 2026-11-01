@@ -71,7 +71,7 @@ public final class GrowlingManNeoForge {
 		}
 		builder.pop();
 		ModConfigSpec spec = builder.build();
-		container.registerConfig(ModConfig.Type.COMMON, spec, GrowlingManConfigConfiguration.FILE_NAME);
+		container.registerConfig(ModConfig.Type.LOCAL, spec, GrowlingManConfigConfiguration.FILE_NAME);
 		modBus.addListener((ModConfigEvent event) -> {
 			if (event.getConfig().getSpec() == spec && !(event instanceof ModConfigEvent.Unloading))
 				copy.forEach(Runnable::run);

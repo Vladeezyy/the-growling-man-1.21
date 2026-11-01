@@ -13,7 +13,7 @@ import net.voxla.growlingman.network.ClearMindKeyMessage;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class GrowlingManModKeyMappings {
-	public static final KeyMapping CLEAR_MIND_KEY = new KeyMapping("key.growling_man.clear_mind_key", 88, KeyMapping.Category.MISC) {
+	public static final KeyMapping CLEAR_MIND_KEY = new KeyMapping("key.growling_man.clear_mind_key", com.mojang.blaze3d.platform.InputConstants.KEY_X, KeyMapping.Category.MISC) {
 		private boolean isDownOld = false;
 
 		public void setDown(boolean isDown) {

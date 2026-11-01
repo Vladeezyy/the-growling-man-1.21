@@ -129,7 +129,7 @@ public final class PerfScene {
 			level.getGameRules().set(GameRules.SPAWN_MOBS, false, level.getServer());
 			level.getServer().getCommands().performPrefixedCommand(level.getServer().createCommandSourceStack().withSuppressedOutput(), "time set 18000");
 			p.setGameMode(GameType.SURVIVAL);
-			p.setInvulnerable(true);
+			p.setPermanentlyInvulnerable(true);
 			BlockPos spawn = level.getRespawnData().pos();
 			int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, spawn.getX(), spawn.getZ());
 			p.teleportTo(level, spawn.getX() + 0.5, y + 1, spawn.getZ() + 0.5, java.util.Set.of(), 0, 10, true);

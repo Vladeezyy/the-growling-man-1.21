@@ -42,7 +42,7 @@ public class RegenBlockBlock extends Block implements SimpleWaterloggedBlock, En
 				.strength(70.0F)
 				.noCollision()
 				.noOcclusion()
-				.pushReaction(PushReaction.BLOCK)
+				.pushReaction(PushReaction.IMMOVEABLE)
 				.isRedstoneConductor((bs, br, bp) -> false)
 		);
 		this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(WATERLOGGED, false));
