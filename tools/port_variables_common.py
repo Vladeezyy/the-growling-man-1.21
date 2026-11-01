@@ -9,6 +9,7 @@ import sys
 src, tpl, out = sys.argv[1:4]
 s = open(src).read()
 t = open(tpl).read()
+OR = 'getDoubleOr(' in t
 
 
 def body(text, name):
@@ -42,14 +43,21 @@ for name, ind in (('WorldVariables', '\t\t'), ('MapVariables', '\t\t'), ('Player
     i, j, k = body(t, name)
     b = t[j:k]
     b = re.sub(r'\n\t\tpublic (double|boolean|String) \w+ = [^;]+;', '', b)
-    b = re.sub(r'\n\t\t\t(nbt\.put\w+\("\w+", \w+\);|\w+ = nbt\.get\w+\("\w+"\);)', '', b)
+    b = re.sub(r'\n\t\t\t(output\.put\w+\("\w+", \w+\);|\w+ = input\.get\w+\("\w+"(?:, [^)]*)?\);)', '', b)
+    b = re.sub(r'\n\t\t\t(nbt\.put\w+\("\w+", \w+\);|\w+ = nbt\.get\w+\("\w+"(?:, [^)]*)?\);)', '', b)
     decl = ''.join('\n%spublic %s %s = %s;' % (ind, ty, n, v) for ty, n, v in fs)
-    reads = ''.join('\n\t\t\t%s = nbt.get%s("%s");' % (n, T[ty], n) for ty, n, v in fs)
+    if OR:  # 1.21.5+: getDoubleOr(key, default)
+        reads = ''.join('\n\t\t\t%s = nbt.get%sOr("%s", %s);' % (n, T[ty], n, {'double': '0', 'boolean': 'false', 'String': '""'}[ty]) for ty, n, v in fs)
+    else:
+        reads = ''.join('\n\t\t\t%s = nbt.get%s("%s");' % (n, T[ty], n) for ty, n, v in fs)
     writes = ''.join('\n\t\t\tnbt.put%s("%s", %s);' % (T[ty], n, n) for ty, n, v in fs)
     if name == 'PlayerVariables':
         b = decl + b
         b = b.replace('CompoundTag nbt = new CompoundTag();', 'CompoundTag nbt = new CompoundTag();' + writes, 1)
         b = re.sub(r'(public void deserializeNBT\([^)]*\) \{)', lambda m: m.group(1) + reads, b, 1)
+        # 1.21.6+: the attachment is also saved through ValueOutput / ValueInput
+        b = re.sub(r'(public void serialize\(ValueOutput output\) \{)', lambda m: m.group(1) + writes.replace('nbt.', 'output.'), b, 1)
+        b = re.sub(r'(public void deserialize\(ValueInput input\) \{)', lambda m: m.group(1) + reads.replace('nbt.', 'input.'), b, 1)
     else:
         b = re.sub(r'(public static final String DATA_NAME = "\w+";)', lambda m: m.group(1) + '\n' + decl, b, 1)
         b = re.sub(r'(public void read\(CompoundTag nbt, HolderLookup\.Provider lookupProvider\) \{)', lambda m: m.group(1) + reads, b, 1)
