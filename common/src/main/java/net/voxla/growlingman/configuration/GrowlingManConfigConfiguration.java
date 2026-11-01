@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class GrowlingManConfigConfiguration {
    public static final Builder BUILDER = new Builder();
-   public static final ForgeConfigSpec SPEC = BUILDER.build();
+   private static final Builder PUSH = BUILDER.push("Growling Man Config");
    public static final ConfigValue<Double> GM_SPAWNTIME_MIN = BUILDER.comment(
          "a random number is generated between min and max for the spawn time, the spawn numbers are in seconds so set how many seconds you want it to take for him to spawn on min and max, WARNING do not make max time lower than min time otherwise it will cause bugs or crash the game"
       )
@@ -38,8 +38,6 @@ public class GrowlingManConfigConfiguration {
       )
       .define("Amount Of Quick Animal Kills Needed To Get Marked", 6.0);
 
-   static {
-      BUILDER.push("Growling Man Config");
-      BUILDER.pop();
-   }
+   private static final Builder POP = BUILDER.pop();
+   public static final ForgeConfigSpec SPEC = BUILDER.build();
 }
