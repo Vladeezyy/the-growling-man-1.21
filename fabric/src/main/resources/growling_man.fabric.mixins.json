@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.voxla.growlingman.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FishingHookMixin",
+    "FurnaceResultSlotMixin",
+    "ItemEntityMixin",
+    "LivingEntityMixin",
+    "PlayerMixin",
+    "ResultSlotMixin",
+    "ServerLevelMixin"
+  ],
+  "client": [
+    "client.ClientLevelMixin",
+    "client.EffectRenderingInventoryScreenMixin",
+    "client.FogRendererMixin",
+    "client.GuiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

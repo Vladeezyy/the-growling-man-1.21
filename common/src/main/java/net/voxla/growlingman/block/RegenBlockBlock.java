@@ -32,88 +32,88 @@ import net.voxla.growlingman.block.entity.RegenBlockBlockEntity;
 import net.voxla.growlingman.procedures.RegenBlockOnTickUpdateProcedure;
 
 public class RegenBlockBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
-   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-   public RegenBlockBlock() {
-      super(
-         Properties.of()
-            .instrument(NoteBlockInstrument.BASEDRUM)
-            .sound(SoundType.WOOL)
-            .strength(70.0F)
-            .noCollission()
-            .noOcclusion()
-            .pushReaction(PushReaction.BLOCK)
-            .isRedstoneConductor((bs, br, bp) -> false)
-      );
-      this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(WATERLOGGED, false));
-   }
+	public RegenBlockBlock() {
+		super(
+			Properties.of()
+				.instrument(NoteBlockInstrument.BASEDRUM)
+				.sound(SoundType.WOOL)
+				.strength(70.0F)
+				.noCollission()
+				.noOcclusion()
+				.pushReaction(PushReaction.BLOCK)
+				.isRedstoneConductor((bs, br, bp) -> false)
+		);
+		this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(WATERLOGGED, false));
+	}
 
-   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidstate) {
-      return true;
-   }
+	public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidstate) {
+		return true;
+	}
 
-   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-      return adjacentBlockState.getBlock() == this ? true : super.skipRendering(state, adjacentBlockState, side);
-   }
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return adjacentBlockState.getBlock() == this ? true : super.skipRendering(state, adjacentBlockState, side);
+	}
 
-   public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-      return 15;
-   }
+	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+		return 15;
+	}
 
-   public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-      return Shapes.empty();
-   }
+	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return Shapes.empty();
+	}
 
-   public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-      return Shapes.empty();
-   }
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return Shapes.empty();
+	}
 
-   protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-      builder.add(new Property[]{WATERLOGGED});
-   }
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+		builder.add(new Property[]{WATERLOGGED});
+	}
 
-   public BlockState getStateForPlacement(BlockPlaceContext context) {
-      boolean flag = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
-      return (BlockState)this.defaultBlockState().setValue(WATERLOGGED, flag);
-   }
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		boolean flag = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
+		return (BlockState)this.defaultBlockState().setValue(WATERLOGGED, flag);
+	}
 
-   public FluidState getFluidState(BlockState state) {
-      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-   }
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+	}
 
-   public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-      if ((Boolean)state.getValue(WATERLOGGED)) {
-         world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
-      }
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+		if ((Boolean)state.getValue(WATERLOGGED)) {
+			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+		}
 
-      return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
-   }
+		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
+	}
 
-   public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
-      super.onPlace(blockstate, world, pos, oldState, moving);
-      world.scheduleTick(pos, this, 100);
-   }
+	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+		super.onPlace(blockstate, world, pos, oldState, moving);
+		world.scheduleTick(pos, this, 100);
+	}
 
-   public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
-      super.tick(blockstate, world, pos, random);
-      int x = pos.getX();
-      int y = pos.getY();
-      int z = pos.getZ();
-      RegenBlockOnTickUpdateProcedure.execute(world, x, y, z);
-      world.scheduleTick(pos, this, 100);
-   }
+	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
+		super.tick(blockstate, world, pos, random);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		RegenBlockOnTickUpdateProcedure.execute(world, x, y, z);
+		world.scheduleTick(pos, this, 100);
+	}
 
-   public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-      return worldIn.getBlockEntity(pos) instanceof MenuProvider menuProvider ? menuProvider : null;
-   }
+	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+		return worldIn.getBlockEntity(pos) instanceof MenuProvider menuProvider ? menuProvider : null;
+	}
 
-   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-      return new RegenBlockBlockEntity(pos, state);
-   }
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new RegenBlockBlockEntity(pos, state);
+	}
 
-   public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
-      super.triggerEvent(state, world, pos, eventID, eventParam);
-      BlockEntity blockEntity = world.getBlockEntity(pos);
-      return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
-   }
+	public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
+		super.triggerEvent(state, world, pos, eventID, eventParam);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
+	}
 }

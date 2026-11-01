@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["Voxla", "Lord0wnage", "Bonesworth"],
+  "contributors": ["Vladeezyy (port to NeoForge and Fabric)"],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-growling-man",
+    "sources": "${mod_sources}",
+    "issues": "${mod_issues}"
+  },
+  "license": "${license}",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["net.voxla.growlingman.fabric.GrowlingManFabric"],
+    "client": ["net.voxla.growlingman.fabric.GrowlingManFabricClient"]
+  },
+  "mixins": ["growling_man.fabric.mixins.json"],
+  "accessWidener": "growling_man.accesswidener",
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "geckolib": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=${java_version}"
+  }
+}

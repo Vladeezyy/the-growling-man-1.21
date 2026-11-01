@@ -6,15 +6,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.voxla.growlingman.procedures.MentalBreakdownOnEffectActiveTickProcedure;
 
 public class MentalBreakdownMobEffect extends MobEffect {
-   public MentalBreakdownMobEffect() {
-      super(MobEffectCategory.HARMFUL, -16777216);
-   }
+	public MentalBreakdownMobEffect() {
+		super(MobEffectCategory.HARMFUL, -16777216);
+	}
 
-   public void applyEffectTick(LivingEntity entity, int amplifier) {
-      MentalBreakdownOnEffectActiveTickProcedure.execute(entity.level(), entity.getX(), entity.getY(), entity.getZ(), entity);
-   }
+	public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+		MentalBreakdownOnEffectActiveTickProcedure.execute(entity.level(), entity.getX(), entity.getY(), entity.getZ(), entity);
+		return super.applyEffectTick(entity, amplifier);
+	}
 
-   public boolean isDurationEffectTick(int duration, int amplifier) {
-      return true;
-   }
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+		return true;
+	}
 }

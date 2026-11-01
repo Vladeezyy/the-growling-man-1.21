@@ -1,43 +1,44 @@
 package net.voxla.growlingman.init;
 
+import net.minecraft.core.registries.Registries;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType.Builder;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.voxla.growlingman.port.bus.EntityAttributeCreationEvent;
+import net.voxla.growlingman.port.bus.SubscribeEvent;
+import net.voxla.growlingman.port.bus.EventBusSubscriber;
+import net.voxla.growlingman.port.bus.FMLCommonSetupEvent;
+import net.voxla.growlingman.port.platform.Registrar;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.voxla.growlingman.port.platform.RegistryEntry;
 import net.voxla.growlingman.entity.GrowlingManEntity;
 
-@EventBusSubscriber(bus = Bus.MOD)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class GrowlingManModEntities {
-   public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "growling_man");
-   public static final RegistryObject<EntityType<GrowlingManEntity>> GROWLING_MAN = register(
-      "growling_man",
-      Builder.of(GrowlingManEntity::new, MobCategory.MONSTER)
-         .setShouldReceiveVelocityUpdates(true)
-         .setTrackingRange(256)
-         .setUpdateInterval(3)
-         .setCustomClientFactory(GrowlingManEntity::new)
-         .sized(0.7F, 2.8F)
-   );
+	public static final Registrar<EntityType<?>> REGISTRY = Registrar.create(Registries.ENTITY_TYPE, "growling_man");
+	public static final RegistryEntry<EntityType<?>, EntityType<GrowlingManEntity>> GROWLING_MAN = register(
+		"growling_man",
+		Builder.of(GrowlingManEntity::new, MobCategory.MONSTER)
+			
+			.clientTrackingRange(256)
+			.updateInterval(3)
+			
+			.sized(0.7F, 2.8F)
+	);
 
-   private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, Builder<T> entityTypeBuilder) {
-      return REGISTRY.register(registryname, () -> entityTypeBuilder.build(registryname));
-   }
+	private static <T extends Entity> RegistryEntry<EntityType<?>, EntityType<T>> register(String registryname, Builder<T> entityTypeBuilder) {
+		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(registryname));
+	}
 
-   @SubscribeEvent
-   public static void init(FMLCommonSetupEvent event) {
-      event.enqueueWork(() -> GrowlingManEntity.init());
-   }
+	@SubscribeEvent
+	public static void init(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> GrowlingManEntity.init());
+	}
 
-   @SubscribeEvent
-   public static void registerAttributes(EntityAttributeCreationEvent event) {
-      event.put((EntityType)GROWLING_MAN.get(), GrowlingManEntity.createAttributes().build());
-   }
+	@SubscribeEvent
+	public static void registerAttributes(EntityAttributeCreationEvent event) {
+		event.put((EntityType)GROWLING_MAN.get(), GrowlingManEntity.createAttributes().build());
+	}
 }

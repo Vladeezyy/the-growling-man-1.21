@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:clock"
+      "id": "minecraft:clock"
     },
     "title": {
       "translate": "advancements.marked_for_death.title"

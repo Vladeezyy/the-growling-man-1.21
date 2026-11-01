@@ -1,0 +1,84 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    // -Pneo_version=21.1.197 checks the oldest supported NeoForge
+    version = project.findProperty('neo_version')
+
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        configureEach {
+            gameDirectory = project.file('run')
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        // Scripted scene (port/DevScene): opens run/saves/ml_scene, screenshots, quits (tools/scenetest.sh)
+        scene {
+            client()
+            systemProperty 'growling_man.scene', project.findProperty('scene') ?: 'true'
+        }
+        // Server tick check (port/PerfScene): overworld and nether spawning, 20 Lurkers; -Pjfr: run/perf.jfr
+        perf {
+            client()
+            systemProperty 'growling_man.perf', 'true'
+            if (project.hasProperty('jfr')) {
+                jvmArguments.add '-XX:StartFlightRecording=filename=perf.jfr,settings=profile'
+            }
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+}
+
+// neoforge.mods.toml comes from src/main/templates with the gradle properties
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version_range      : neo_version_range,
+            geckolib_version_range : geckolib_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+            mod_credits            : mod_credits,
+            mod_issues             : mod_issues,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['-Xmaxerrs', '100000']
+}

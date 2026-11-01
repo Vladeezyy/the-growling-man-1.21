@@ -7,13 +7,14 @@ import net.minecraft.world.entity.Entity;
 import net.voxla.growlingman.network.GrowlingManModVariables;
 
 public class SetMarkedCommandProcedure {
-   public static void execute(CommandContext<CommandSourceStack> arguments, Entity entity) {
-      if (entity != null) {
-         double _setval = DoubleArgumentType.getDouble(arguments, "mark_number");
-         entity.getCapability(GrowlingManModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-            capability.IsMarked = _setval;
-            capability.syncPlayerVariables(entity);
-         });
-      }
-   }
+	public static void execute(CommandContext<CommandSourceStack> arguments, Entity entity) {
+		if (entity != null) {
+			double _setval = DoubleArgumentType.getDouble(arguments, "mark_number");
+			{
+GrowlingManModVariables.PlayerVariables _vars = GrowlingManModVariables.of(entity);
+				_vars.IsMarked = _setval;
+				_vars.syncPlayerVariables(entity);
+			}
+		}
+	}
 }

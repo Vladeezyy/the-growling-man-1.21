@@ -11,84 +11,81 @@ import net.voxla.growlingman.entity.GrowlingManEntity;
 import net.voxla.growlingman.network.GrowlingManModVariables;
 
 public class AI17ghostProcedure {
-   public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-      if (entity != null) {
-         boolean CanBeSeen = false;
-         if (world.isClientSide()) {
-            if (!entity.isInvisible()) {
-               entity.setInvisible(true);
-            }
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity != null) {
+			boolean CanBeSeen = false;
+			if (world.isClientSide()) {
+				if (!entity.isInvisible()) {
+					entity.setInvisible(true);
+				}
 
-            Vec3 _center = new Vec3(x, y, z);
+				Vec3 _center = new Vec3(x, y, z);
 
-            for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(25.0), e -> true)
-               .stream()
-               .sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-               .toList()) {
-               if (entityiterator instanceof Player
-                  && ((GrowlingManModVariables.PlayerVariables)entityiterator.getCapability(GrowlingManModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-                           .orElse(new GrowlingManModVariables.PlayerVariables()))
-                        .gm_inv_opacity
-                     > 0.0
-                  && entityiterator.getDisplayName()
-                     .getString()
-                     .equals(entity instanceof GrowlingManEntity _datEntS ? _datEntS.getEntityData().get(GrowlingManEntity.DATA_GhostTarget) : "")) {
-                  if (entity.isInvisible()) {
-                     entity.setInvisible(false);
-                  }
-                  break;
-               }
-            }
-         }
+				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(25.0), e -> true)
+					.stream()
+					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+					.toList()) {
+					if (entityiterator instanceof Player
+						&& GrowlingManModVariables.of(entityiterator)
+								.gm_inv_opacity
+							> 0.0
+						&& entityiterator.getDisplayName()
+							.getString()
+							.equals(entity instanceof GrowlingManEntity _datEntS ? _datEntS.getEntityData().get(GrowlingManEntity.DATA_GhostTarget) : "")) {
+						if (entity.isInvisible()) {
+							entity.setInvisible(false);
+						}
+						break;
+					}
+				}
+			}
 
-         Vec3 _center = new Vec3(x, y, z);
+			Vec3 _center = new Vec3(x, y, z);
 
-         for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(5.0), e -> true)
-            .stream()
-            .sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-            .toList()) {
-            if (entityiteratorx instanceof Player
-               && entityiteratorx.getDisplayName()
-                  .getString()
-                  .equals(entity instanceof GrowlingManEntity _datEntSx ? _datEntSx.getEntityData().get(GrowlingManEntity.DATA_GhostTarget) : "")) {
-               entity.lookAt(
-                  Anchor.EYES,
-                  new Vec3(
-                     entityiteratorx.getX(),
-                     entityiteratorx.getY() + entityiteratorx.getBbHeight() - entityiteratorx.getBbHeight() / 4.0F,
-                     entityiteratorx.getZ()
-                  )
-               );
-               if ((
-                     ((GrowlingManModVariables.PlayerVariables)entityiteratorx.getCapability(GrowlingManModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-                                 .orElse(new GrowlingManModVariables.PlayerVariables()))
-                              .gm_inv_opacity
-                           <= 0.0
-                        || ((GrowlingManModVariables.PlayerVariables)entityiteratorx.getCapability(GrowlingManModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-                                 .orElse(new GrowlingManModVariables.PlayerVariables()))
-                              .gm_inv_opacity
-                           >= 297.0
-                  )
-                  && !entity.level().isClientSide()) {
-                  entity.discard();
-               }
-               break;
-            }
-         }
+			for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(5.0), e -> true)
+				.stream()
+				.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+				.toList()) {
+				if (entityiteratorx instanceof Player
+					&& entityiteratorx.getDisplayName()
+						.getString()
+						.equals(entity instanceof GrowlingManEntity _datEntSx ? _datEntSx.getEntityData().get(GrowlingManEntity.DATA_GhostTarget) : "")) {
+					entity.lookAt(
+						Anchor.EYES,
+						new Vec3(
+							entityiteratorx.getX(),
+							entityiteratorx.getY() + entityiteratorx.getBbHeight() - entityiteratorx.getBbHeight() / 4.0F,
+							entityiteratorx.getZ()
+						)
+					);
+					if ((
+							GrowlingManModVariables.of(entityiteratorx)
+										.gm_inv_opacity
+									<= 0.0
+								|| GrowlingManModVariables.of(entityiteratorx)
+										.gm_inv_opacity
+									>= 297.0
+						)
+						&& !entity.level().isClientSide()) {
+						entity.discard();
+					}
+					break;
+				}
+			}
 
-         if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0), e -> true).isEmpty() && !entity.level().isClientSide()) {
-            entity.discard();
-         }
+			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0), e -> true).isEmpty() && !entity.level().isClientSide()) {
+				entity.discard();
+			}
 
-         if (world.getLevelData().getGameTime() % 20L == 1L
-            && (entity instanceof GrowlingManEntity _datEntI ? (Integer)_datEntI.getEntityData().get(GrowlingManEntity.DATA_Transparency) : 0) < 360
-            && entity instanceof GrowlingManEntity _datEntSetI) {
-            _datEntSetI.getEntityData()
-               .set(
-                  GrowlingManEntity.DATA_Transparency,
-                  (entity instanceof GrowlingManEntity _datEntIx ? (Integer)_datEntIx.getEntityData().get(GrowlingManEntity.DATA_Transparency) : 0) + 1
-               );
-         }
-      }
-   }
+			if (world.getLevelData().getGameTime() % 20L == 1L
+				&& (entity instanceof GrowlingManEntity _datEntI ? (Integer)_datEntI.getEntityData().get(GrowlingManEntity.DATA_Transparency) : 0) < 360
+				&& entity instanceof GrowlingManEntity _datEntSetI) {
+				_datEntSetI.getEntityData()
+					.set(
+						GrowlingManEntity.DATA_Transparency,
+						(entity instanceof GrowlingManEntity _datEntIx ? (Integer)_datEntIx.getEntityData().get(GrowlingManEntity.DATA_Transparency) : 0) + 1
+					);
+			}
+		}
+	}
 }

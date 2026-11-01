@@ -17,110 +17,109 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.voxla.growlingman.init.GrowlingManModBlockEntities;
 
 public class RegenBlockBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-   private NonNullList<ItemStack> stacks = NonNullList.withSize(0, ItemStack.EMPTY);
-   private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(0, ItemStack.EMPTY);
+	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
-   public RegenBlockBlockEntity(BlockPos position, BlockState state) {
-      super((BlockEntityType)GrowlingManModBlockEntities.REGEN_BLOCK.get(), position, state);
-   }
+	public RegenBlockBlockEntity(BlockPos position, BlockState state) {
+		super((BlockEntityType)GrowlingManModBlockEntities.REGEN_BLOCK.get(), position, state);
+	}
 
-   public void load(CompoundTag compound) {
-      super.load(compound);
-      if (!this.tryLoadLootTable(compound)) {
-         this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-      }
+	public void load(CompoundTag compound) {
+		super.load(compound);
+		if (!this.tryLoadLootTable(compound)) {
+			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+		}
 
-      ContainerHelper.loadAllItems(compound, this.stacks);
-   }
+		ContainerHelper.loadAllItems(compound, this.stacks);
+	}
 
-   public void saveAdditional(CompoundTag compound) {
-      super.saveAdditional(compound);
-      if (!this.trySaveLootTable(compound)) {
-         ContainerHelper.saveAllItems(compound, this.stacks);
-      }
-   }
+	public void saveAdditional(CompoundTag compound) {
+		super.saveAdditional(compound);
+		if (!this.trySaveLootTable(compound)) {
+			ContainerHelper.saveAllItems(compound, this.stacks);
+		}
+	}
 
-   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-      return ClientboundBlockEntityDataPacket.create(this);
-   }
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
 
-   public CompoundTag getUpdateTag() {
-      return this.saveWithFullMetadata();
-   }
+	public CompoundTag getUpdateTag() {
+		return this.saveWithFullMetadata(world.registryAccess());
+	}
 
-   public int getContainerSize() {
-      return this.stacks.size();
-   }
+	public int getContainerSize() {
+		return this.stacks.size();
+	}
 
-   public boolean isEmpty() {
-      for (ItemStack itemstack : this.stacks) {
-         if (!itemstack.isEmpty()) {
-            return false;
-         }
-      }
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.stacks) {
+			if (!itemstack.isEmpty()) {
+				return false;
+			}
+		}
 
-      return true;
-   }
+		return true;
+	}
 
-   public Component getDefaultName() {
-      return Component.literal("regen_block");
-   }
+	public Component getDefaultName() {
+		return Component.literal("regen_block");
+	}
 
-   public int getMaxStackSize() {
-      return 1;
-   }
+	public int getMaxStackSize() {
+		return 1;
+	}
 
-   public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-      return ChestMenu.threeRows(id, inventory);
-   }
+	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
+		return ChestMenu.threeRows(id, inventory);
+	}
 
-   public Component getDisplayName() {
-      return Component.literal("Regen Block");
-   }
+	public Component getDisplayName() {
+		return Component.literal("Regen Block");
+	}
 
-   protected NonNullList<ItemStack> getItems() {
-      return this.stacks;
-   }
+	protected NonNullList<ItemStack> getItems() {
+		return this.stacks;
+	}
 
-   protected void setItems(NonNullList<ItemStack> stacks) {
-      this.stacks = stacks;
-   }
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		this.stacks = stacks;
+	}
 
-   public boolean canPlaceItem(int index, ItemStack stack) {
-      return true;
-   }
+	public boolean canPlaceItem(int index, ItemStack stack) {
+		return true;
+	}
 
-   public int[] getSlotsForFace(Direction side) {
-      return IntStream.range(0, this.getContainerSize()).toArray();
-   }
+	public int[] getSlotsForFace(Direction side) {
+		return IntStream.range(0, this.getContainerSize()).toArray();
+	}
 
-   public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-      return this.canPlaceItem(index, stack);
-   }
+	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
+		return this.canPlaceItem(index, stack);
+	}
 
-   public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-      return true;
-   }
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+		return true;
+	}
 
-   public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-      return !this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER
-         ? this.handlers[facing.ordinal()].cast()
-         : super.getCapability(capability, facing);
-   }
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+		return !this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER
+			? this.handlers[facing.ordinal()].cast()
+			: super.getCapability(capability, facing);
+	}
 
-   public void setRemoved() {
-      super.setRemoved();
+	public void setRemoved() {
+		super.setRemoved();
 
-      for (LazyOptional<? extends IItemHandler> handler : this.handlers) {
-         handler.invalidate();
-      }
-   }
+		for (LazyOptional<? extends IItemHandler> handler : this.handlers) {
+			handler.invalidate();
+		}
+	}
 }
