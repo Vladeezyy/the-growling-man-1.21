@@ -2,7 +2,7 @@ package net.voxla.growlingman.procedures;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -28,7 +28,7 @@ public class DeManifestEventProcedure {
 							_level.playSound(
 								null,
 								BlockPos.containing(x, y + 1.5, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.manifest")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.manifest")),
 								SoundSource.HOSTILE,
 								2.0F,
 								1.0F
@@ -38,7 +38,7 @@ public class DeManifestEventProcedure {
 								x,
 								y + 1.5,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.manifest")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.manifest")),
 								SoundSource.HOSTILE,
 								2.0F,
 								1.0F,
@@ -57,7 +57,7 @@ public class DeManifestEventProcedure {
 							== 2
 						&& entity instanceof LivingEntity _entity
 						&& !_entity.level().isClientSide()) {
-						_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 200, false, false));
+						_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 200, false, false));
 					}
 
 					if ((entity instanceof GrowlingManEntity _datEntIxxxx ? (Integer)_datEntIxxxx.getEntityData().get(GrowlingManEntity.DATA_DeManifestTimer) : 0)
@@ -70,7 +70,7 @@ public class DeManifestEventProcedure {
 							_levelx.playSound(
 								null,
 								BlockPos.containing(x, y + 1.5, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("ambient.cave")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("ambient.cave")),
 								SoundSource.HOSTILE,
 								6.0F,
 								1.0F
@@ -80,7 +80,7 @@ public class DeManifestEventProcedure {
 								x,
 								y + 1.5,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("ambient.cave")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("ambient.cave")),
 								SoundSource.HOSTILE,
 								6.0F,
 								1.0F,

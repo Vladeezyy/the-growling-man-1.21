@@ -31,15 +31,15 @@ public class GMSpawningTimerProcedure {
 		if (world instanceof ServerLevel _origLevel) {
 			LevelAccessor var6 = _origLevel.getServer().getLevel(Level.OVERWORLD);
 			if (var6 != null) {
-				if (var6 instanceof Level _lvl0 && _lvl0.isDay() && !GrowlingManModVariables.WorldVariables.get(var6).IsDaytime) {
+				if (var6 instanceof Level _lvl0 && _lvl0.isBrightOutside() && !GrowlingManModVariables.WorldVariables.get(var6).IsDaytime) {
 					GrowlingManModVariables.WorldVariables.get(var6).IsDaytime = true;
 					GrowlingManModVariables.WorldVariables.get(var6).syncData(var6);
-				} else if (!(var6 instanceof Level _lvl1 && _lvl1.isDay()) && GrowlingManModVariables.WorldVariables.get(var6).IsDaytime) {
+				} else if (!(var6 instanceof Level _lvl1 && _lvl1.isBrightOutside()) && GrowlingManModVariables.WorldVariables.get(var6).IsDaytime) {
 					GrowlingManModVariables.WorldVariables.get(var6).IsDaytime = false;
 					GrowlingManModVariables.WorldVariables.get(var6).syncData(var6);
 				}
 
-				if (var6.dayTime() > 24000L && !GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed) {
+				if (var6.getLevelData().getDayTime() > 24000L && !GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed) {
 					GrowlingManModVariables.WorldVariables.get(var6).HasOneDayPassed = true;
 					GrowlingManModVariables.WorldVariables.get(var6).syncData(var6);
 				}

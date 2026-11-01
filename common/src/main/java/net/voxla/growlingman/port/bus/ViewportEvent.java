@@ -1,9 +1,7 @@
 package net.voxla.growlingman.port.bus;
 
-import com.mojang.blaze3d.shaders.FogShape;
-
 import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.world.level.material.FogType;
 
 public abstract class ViewportEvent extends Event {
 	private final Camera camera;
@@ -22,23 +20,21 @@ public abstract class ViewportEvent extends Event {
 		return this.partialTick;
 	}
 
-	/** The fog distances and shape; canceling the event applies the changed values */
-	public static class RenderFog extends ViewportEvent implements ICancellableEvent {
-		private final FogRenderer.FogMode mode;
+	/** The fog distances (1.21.6+: per fog type, the terrain fog is FogType.ATMOSPHERIC); listeners change them */
+	public static class RenderFog extends ViewportEvent {
+		private final FogType type;
 		private float nearPlaneDistance;
 		private float farPlaneDistance;
-		private FogShape fogShape;
 
-		public RenderFog(FogRenderer.FogMode mode, Camera camera, double partialTick, float near, float far, FogShape shape) {
+		public RenderFog(FogType type, Camera camera, double partialTick, float near, float far) {
 			super(camera, partialTick);
-			this.mode = mode;
+			this.type = type;
 			this.nearPlaneDistance = near;
 			this.farPlaneDistance = far;
-			this.fogShape = shape;
 		}
 
-		public FogRenderer.FogMode getMode() {
-			return this.mode;
+		public FogType getType() {
+			return this.type;
 		}
 
 		public float getNearPlaneDistance() {
@@ -55,14 +51,6 @@ public abstract class ViewportEvent extends Event {
 
 		public void setFarPlaneDistance(float distance) {
 			this.farPlaneDistance = distance;
-		}
-
-		public FogShape getFogShape() {
-			return this.fogShape;
-		}
-
-		public void setFogShape(FogShape shape) {
-			this.fogShape = shape;
 		}
 	}
 

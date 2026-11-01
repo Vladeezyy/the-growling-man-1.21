@@ -36,11 +36,11 @@ public class RegenBlockBlock extends Block implements SimpleWaterloggedBlock, En
 
 	public RegenBlockBlock() {
 		super(
-			Properties.of()
+			net.voxla.growlingman.port.platform.Registrar.blockProps()
 				.instrument(NoteBlockInstrument.BASEDRUM)
 				.sound(SoundType.WOOL)
 				.strength(70.0F)
-				.noCollission()
+				.noCollision()
 				.noOcclusion()
 				.pushReaction(PushReaction.BLOCK)
 				.isRedstoneConductor((bs, br, bp) -> false)
@@ -56,7 +56,7 @@ public class RegenBlockBlock extends Block implements SimpleWaterloggedBlock, En
 		return adjacentBlockState.getBlock() == this ? true : super.skipRendering(state, adjacentBlockState, side);
 	}
 
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+	public int getLightBlock(BlockState state) {
 		return 15;
 	}
 
@@ -81,12 +81,12 @@ public class RegenBlockBlock extends Block implements SimpleWaterloggedBlock, En
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+	protected BlockState updateShape(BlockState state, net.minecraft.world.level.LevelReader world, net.minecraft.world.level.ScheduledTickAccess ticks, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, net.minecraft.util.RandomSource random) {
 		if ((Boolean)state.getValue(WATERLOGGED)) {
-			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			ticks.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
-		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
+		return super.updateShape(state, world, ticks, currentPos, facing, facingPos, facingState, random);
 	}
 
 	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {

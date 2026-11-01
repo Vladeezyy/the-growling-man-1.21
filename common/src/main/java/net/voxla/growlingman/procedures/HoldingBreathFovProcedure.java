@@ -30,7 +30,7 @@ public class HoldingBreathFovProcedure {
 	public static void computeFOV(ViewportEvent.ComputeFov event) {
 		provider = event;
 		ClientLevel level = Minecraft.getInstance().level;
-		Entity entity = provider.getCamera().getEntity();
+		Entity entity = provider.getCamera().entity();
 		if (level != null && entity != null) {
 			Vec3 entPos = entity.getPosition((float)provider.getPartialTick());
 			execute(provider, level, entity, provider.getFOV());

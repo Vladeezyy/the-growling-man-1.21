@@ -4,7 +4,7 @@ import java.util.Comparator;
 import javax.annotation.Nullable;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -45,7 +45,7 @@ public class PlayerDiesNearGMProcedure {
 				&& (entity instanceof Player || entity instanceof ServerPlayer)
 				&& (
 					!world.getEntitiesOfClass(GrowlingManEntity.class, AABB.ofSize(new Vec3(x, y, z), 15.0, 15.0, 15.0), e -> true).isEmpty()
-						|| damagesource.is(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+						|| damagesource.is(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 				)
 				&& world.getEntitiesOfClass(GrowlingManEntity.class, AABB.ofSize(new Vec3(x, y, z), 15.0, 15.0, 15.0), e -> true).stream().sorted((new Object() {
 					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {

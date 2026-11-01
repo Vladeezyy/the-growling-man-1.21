@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,8 +49,8 @@ public class AttackedByGMProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 									: false;
 							}
 						}
@@ -62,8 +62,8 @@ public class AttackedByGMProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 									: false;
 							}
 						}
@@ -141,8 +141,8 @@ public class AttackedByGMProcedure {
 						entity.hurt(
 							new DamageSource(
 								world.registryAccess()
-									.registryOrThrow(Registries.DAMAGE_TYPE)
-									.getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+									.lookupOrThrow(Registries.DAMAGE_TYPE)
+									.getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 							),
 							(float)((entity instanceof LivingEntity _livEntx ? _livEntx.getMaxHealth() : -1.0F) * 1.2)
 						);
@@ -150,8 +150,8 @@ public class AttackedByGMProcedure {
 						entity.hurt(
 							new DamageSource(
 								world.registryAccess()
-									.registryOrThrow(Registries.DAMAGE_TYPE)
-									.getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+									.lookupOrThrow(Registries.DAMAGE_TYPE)
+									.getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 							),
 							(entity instanceof LivingEntity _livEntx ? _livEntx.getMaxHealth() : -1.0F) / 5.0F
 						);
@@ -160,8 +160,8 @@ public class AttackedByGMProcedure {
 					entity.hurt(
 						new DamageSource(
 							world.registryAccess()
-								.registryOrThrow(Registries.DAMAGE_TYPE)
-								.getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+								.lookupOrThrow(Registries.DAMAGE_TYPE)
+								.getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 						),
 						(entity instanceof LivingEntity _livEntx ? _livEntx.getMaxHealth() : -1.0F) / 5.0F
 					);
@@ -176,8 +176,8 @@ public class AttackedByGMProcedure {
 				entity.hurt(
 					new DamageSource(
 						world.registryAccess()
-							.registryOrThrow(Registries.DAMAGE_TYPE)
-							.getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+							.lookupOrThrow(Registries.DAMAGE_TYPE)
+							.getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 					),
 					70.0F
 				);
@@ -186,14 +186,14 @@ public class AttackedByGMProcedure {
 			if (entity instanceof LivingEntity _livEnt68 && _livEnt68.isBlocking() && sourceentity instanceof GrowlingManEntity) {
 				if ((entity instanceof LivingEntity _livEntx ? _livEntx.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
 					if (entity instanceof Player _player) {
-						_player.getCooldowns().addCooldown((entity instanceof LivingEntity _livEntxx ? _livEntxx.getMainHandItem() : ItemStack.EMPTY).getItem(), 50);
+						_player.getCooldowns().addCooldown(entity instanceof LivingEntity _livEntxx ? _livEntxx.getMainHandItem() : ItemStack.EMPTY, 50);
 					}
 
 					ItemStack _ist = entity instanceof LivingEntity _livEntxx ? _livEntxx.getMainHandItem() : ItemStack.EMPTY;
 					PortUtil.hurtAndBreak(_ist, 1, null);
 				} else if ((entity instanceof LivingEntity _livEntx ? _livEntx.getOffhandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
 					if (entity instanceof Player _player) {
-						_player.getCooldowns().addCooldown((entity instanceof LivingEntity _livEntxx ? _livEntxx.getOffhandItem() : ItemStack.EMPTY).getItem(), 50);
+						_player.getCooldowns().addCooldown(entity instanceof LivingEntity _livEntxx ? _livEntxx.getOffhandItem() : ItemStack.EMPTY, 50);
 					}
 
 					ItemStack _ist = entity instanceof LivingEntity _livEntxx ? _livEntxx.getOffhandItem() : ItemStack.EMPTY;

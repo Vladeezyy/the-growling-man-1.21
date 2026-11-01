@@ -2,7 +2,7 @@ package net.voxla.growlingman.procedures;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -86,7 +86,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 							_level.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_fast")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_fast")),
 								SoundSource.PLAYERS,
 								0.9F,
 								1.0F
@@ -96,7 +96,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_fast")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_fast")),
 								SoundSource.PLAYERS,
 								0.9F,
 								1.0F,
@@ -116,7 +116,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 						_levelx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_slow")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_slow")),
 							SoundSource.PLAYERS,
 							0.4F,
 							1.0F
@@ -126,7 +126,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_slow")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_slow")),
 							SoundSource.PLAYERS,
 							0.4F,
 							1.0F,
@@ -147,7 +147,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 						_levelxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_mental_breakdown")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_mental_breakdown")),
 							SoundSource.PLAYERS,
 							1.0F,
 							1.0F
@@ -157,7 +157,7 @@ public class MentalBreakdownOnEffectActiveTickProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_mental_breakdown")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_mental_breakdown")),
 							SoundSource.PLAYERS,
 							1.0F,
 							1.0F,

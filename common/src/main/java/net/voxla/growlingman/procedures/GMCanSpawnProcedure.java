@@ -11,7 +11,7 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.voxla.growlingman.network.InventoryScreenMessage;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +24,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -74,8 +74,8 @@ public class GMCanSpawnProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 									: false;
 							}
 						}
@@ -87,8 +87,8 @@ public class GMCanSpawnProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 									: false;
 							}
 						}
@@ -126,7 +126,7 @@ public class GMCanSpawnProcedure {
 								&& !world.getBlockState(BlockPos.containing(x + spawnx, y + YRepeater + 1.0, z + spawnz)).canOcclude()) {
 								if (world instanceof ServerLevel _level) {
 									Entity entityToSpawn = ((EntityType)GrowlingManModEntities.GROWLING_MAN.get())
-										.spawn(_level, BlockPos.containing(x + spawnx, y + YRepeater, z + spawnz), MobSpawnType.MOB_SUMMONED);
+										.spawn(_level, BlockPos.containing(x + spawnx, y + YRepeater, z + spawnz), EntitySpawnReason.MOB_SUMMONED);
 									if (entityToSpawn != null) {
 										entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
 									}
@@ -215,7 +215,7 @@ public class GMCanSpawnProcedure {
 														world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater,
 														z + spawnz
 													),
-													MobSpawnType.MOB_SUMMONED
+													EntitySpawnReason.MOB_SUMMONED
 												);
 											if (entityToSpawn != null) {
 												entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -273,7 +273,7 @@ public class GMCanSpawnProcedure {
 									.spawn(
 										_levelxx,
 										BlockPos.containing(x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz),
-										MobSpawnType.MOB_SUMMONED
+										EntitySpawnReason.MOB_SUMMONED
 									);
 								if (entityToSpawn != null) {
 									entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -342,7 +342,7 @@ public class GMCanSpawnProcedure {
 								&& !world.getBlockState(BlockPos.containing(x + spawnx, y + YRepeater + 1.0, z + spawnz)).canOcclude()) {
 								if (world instanceof ServerLevel _levelxxx) {
 									Entity entityToSpawn = ((EntityType)GrowlingManModEntities.GROWLING_MAN.get())
-										.spawn(_levelxxx, BlockPos.containing(x + spawnx, y + YRepeater, z + spawnz), MobSpawnType.MOB_SUMMONED);
+										.spawn(_levelxxx, BlockPos.containing(x + spawnx, y + YRepeater, z + spawnz), EntitySpawnReason.MOB_SUMMONED);
 									if (entityToSpawn != null) {
 										entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
 									}
@@ -402,7 +402,7 @@ public class GMCanSpawnProcedure {
 												- entity.getBbHeight() / 4.0F,
 											soundz
 										),
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient_distant")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient_distant")),
 										SoundSource.HOSTILE,
 										5.0F,
 										1.0F
@@ -414,7 +414,7 @@ public class GMCanSpawnProcedure {
 											+ entity.getBbHeight()
 											- entity.getBbHeight() / 4.0F,
 										soundz,
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient_distant")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient_distant")),
 										SoundSource.HOSTILE,
 										5.0F,
 										1.0F,
@@ -484,7 +484,7 @@ public class GMCanSpawnProcedure {
 													- entity.getBbHeight() / 4.0F,
 												soundz
 											),
-											(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:ambient.distant")),
+											(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:ambient.distant")),
 											SoundSource.HOSTILE,
 											5.0F,
 											1.0F
@@ -500,7 +500,7 @@ public class GMCanSpawnProcedure {
 												+ entity.getBbHeight()
 												- entity.getBbHeight() / 4.0F,
 											soundz,
-											(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:ambient.distant")),
+											(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:ambient.distant")),
 											SoundSource.HOSTILE,
 											5.0F,
 											1.0F,
@@ -527,7 +527,7 @@ public class GMCanSpawnProcedure {
 												- entity.getBbHeight() / 4.0F,
 											soundz
 										),
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient_distant")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient_distant")),
 										SoundSource.HOSTILE,
 										5.0F,
 										1.0F
@@ -543,7 +543,7 @@ public class GMCanSpawnProcedure {
 											+ entity.getBbHeight()
 											- entity.getBbHeight() / 4.0F,
 										soundz,
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient_distant")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient_distant")),
 										SoundSource.HOSTILE,
 										5.0F,
 										1.0F,
@@ -585,7 +585,7 @@ public class GMCanSpawnProcedure {
 										- entity.getBbHeight() / 4.0F,
 									soundz
 								),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.near")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.near")),
 								SoundSource.HOSTILE,
 								5.0F,
 								1.0F
@@ -601,7 +601,7 @@ public class GMCanSpawnProcedure {
 									+ entity.getBbHeight()
 									- entity.getBbHeight() / 4.0F,
 								soundz,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.near")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.near")),
 								SoundSource.HOSTILE,
 								5.0F,
 								1.0F,
@@ -642,8 +642,8 @@ public class GMCanSpawnProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 									: false;
 							}
 						}
@@ -655,8 +655,8 @@ public class GMCanSpawnProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 									: false;
 							}
 						}
@@ -748,7 +748,7 @@ public class GMCanSpawnProcedure {
 							_levelxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.marked")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.marked")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.8F
@@ -758,7 +758,7 @@ public class GMCanSpawnProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.marked")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.marked")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.8F,
@@ -772,7 +772,7 @@ public class GMCanSpawnProcedure {
 							_levelxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.2F
@@ -782,7 +782,7 @@ public class GMCanSpawnProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.2F,
@@ -803,10 +803,10 @@ public class GMCanSpawnProcedure {
 				if (!(
 						entity instanceof ServerPlayer _plr162
 							&& _plr162.level() instanceof ServerLevel
-							&& _plr162.getAdvancements().getOrStartProgress(_plr162.server.getAdvancements().get(ResourceLocation.parse("growling_man:marked_for_death"))).isDone()
+							&& _plr162.getAdvancements().getOrStartProgress(_plr162.level().getServer().getAdvancements().get(Identifier.parse("growling_man:marked_for_death"))).isDone()
 					)
 					&& entity instanceof ServerPlayer _player) {
-					AdvancementHolder _adv = _player.server.getAdvancements().get(ResourceLocation.parse("growling_man:marked_for_death"));
+					AdvancementHolder _adv = _player.level().getServer().getAdvancements().get(Identifier.parse("growling_man:marked_for_death"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 					if (!_ap.isDone()) {
 						for (String criteria : _ap.getRemainingCriteria()) {
@@ -947,7 +947,7 @@ public class GMCanSpawnProcedure {
 								.spawn(
 									_levelxxxxxxxxxx,
 									BlockPos.containing(x + entity.getLookAngle().x * 9.0, y, z + entity.getLookAngle().z * 9.0),
-									MobSpawnType.MOB_SUMMONED
+									EntitySpawnReason.MOB_SUMMONED
 								);
 							if (entityToSpawn != null) {
 								entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1027,7 +1027,7 @@ public class GMCanSpawnProcedure {
 									y,
 									z + entity.getLookAngle().x * 2.0 + entity.getLookAngle().z * 4.0
 								),
-								MobSpawnType.MOB_SUMMONED
+								EntitySpawnReason.MOB_SUMMONED
 							);
 						if (entityToSpawn != null) {
 							entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1150,8 +1150,8 @@ public class GMCanSpawnProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -1163,8 +1163,8 @@ public class GMCanSpawnProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -1235,7 +1235,7 @@ public class GMCanSpawnProcedure {
 															world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater,
 															z + spawnz
 														),
-														MobSpawnType.MOB_SUMMONED
+														EntitySpawnReason.MOB_SUMMONED
 													);
 												if (entityToSpawn != null) {
 													entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1294,7 +1294,7 @@ public class GMCanSpawnProcedure {
 											BlockPos.containing(
 												x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz
 											),
-											MobSpawnType.MOB_SUMMONED
+											EntitySpawnReason.MOB_SUMMONED
 										);
 									if (entityToSpawn != null) {
 										entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1405,7 +1405,7 @@ public class GMCanSpawnProcedure {
 							_levelxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie_villager.converted")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie_villager.converted")),
 								SoundSource.PLAYERS,
 								0.7F,
 								0.8F
@@ -1415,7 +1415,7 @@ public class GMCanSpawnProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie_villager.converted")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie_villager.converted")),
 								SoundSource.PLAYERS,
 								0.7F,
 								0.8F,
@@ -1496,8 +1496,8 @@ public class GMCanSpawnProcedure {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 										} else {
 											return _ent.level().isClientSide() && _ent instanceof Player _player
-												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 												: false;
 										}
 									}
@@ -1509,8 +1509,8 @@ public class GMCanSpawnProcedure {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 										} else {
 											return _ent.level().isClientSide() && _ent instanceof Player _player
-												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 												: false;
 										}
 									}
@@ -1581,7 +1581,7 @@ public class GMCanSpawnProcedure {
 																world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater,
 																z + spawnz
 															),
-															MobSpawnType.MOB_SUMMONED
+															EntitySpawnReason.MOB_SUMMONED
 														);
 													if (entityToSpawn != null) {
 														entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1640,7 +1640,7 @@ public class GMCanSpawnProcedure {
 												BlockPos.containing(
 													x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz
 												),
-												MobSpawnType.MOB_SUMMONED
+												EntitySpawnReason.MOB_SUMMONED
 											);
 										if (entityToSpawn != null) {
 											entityToSpawn.setDeltaMovement(0.0, 0.0, 0.0);
@@ -1738,7 +1738,7 @@ public class GMCanSpawnProcedure {
 						_levelxxxxxxxxxxxxxxxxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_clear_mind_fail")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_clear_mind_fail")),
 							SoundSource.PLAYERS,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -1748,7 +1748,7 @@ public class GMCanSpawnProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_clear_mind_fail")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_clear_mind_fail")),
 							SoundSource.PLAYERS,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -1768,7 +1768,7 @@ public class GMCanSpawnProcedure {
 						_levelxxxxxxxxxxxxxxxxxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_mental_breakdown")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_mental_breakdown")),
 							SoundSource.PLAYERS,
 							(float)(
 								GrowlingManModVariables.of(entity)
@@ -1782,7 +1782,7 @@ public class GMCanSpawnProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_mental_breakdown")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_mental_breakdown")),
 							SoundSource.PLAYERS,
 							(float)(
 								GrowlingManModVariables.of(entity)
@@ -1807,7 +1807,7 @@ public class GMCanSpawnProcedure {
 								_levelxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_fast")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_fast")),
 									SoundSource.PLAYERS,
 									(float)(
 										GrowlingManModVariables.of(entity)
@@ -1821,7 +1821,7 @@ public class GMCanSpawnProcedure {
 									x,
 									y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_fast")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_fast")),
 									SoundSource.PLAYERS,
 									(float)(
 										GrowlingManModVariables.of(entity)
@@ -1845,7 +1845,7 @@ public class GMCanSpawnProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.heartbeat_med")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.heartbeat_med")),
 									SoundSource.PLAYERS,
 									(float)(
 										GrowlingManModVariables.of(entity)
@@ -1859,7 +1859,7 @@ public class GMCanSpawnProcedure {
 									x,
 									y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.heartbeat_med")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.heartbeat_med")),
 									SoundSource.PLAYERS,
 									(float)(
 										GrowlingManModVariables.of(entity)
@@ -1880,7 +1880,7 @@ public class GMCanSpawnProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_slow")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_slow")),
 								SoundSource.PLAYERS,
 								(float)(
 									GrowlingManModVariables.of(entity)
@@ -1894,7 +1894,7 @@ public class GMCanSpawnProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.gm_heartbeat_slow")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.gm_heartbeat_slow")),
 								SoundSource.PLAYERS,
 								(float)(
 									GrowlingManModVariables.of(entity)

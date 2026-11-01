@@ -1,7 +1,7 @@
 package net.voxla.growlingman.procedures;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelAccessor;
@@ -17,20 +17,20 @@ public class GrowlingManBoundingBoxScaleProcedure {
 						&& !world.getBlockState(BlockPos.containing(x + 1.0, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 0.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x + 1.0, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).canOcclude() && world.getBlockState(BlockPos.containing(x + 1.0, y + 3.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
-									&& world.getBlockState(BlockPos.containing(x + 1.0, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
+									&& world.getBlockState(BlockPos.containing(x + 1.0, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 			)
 			&& !(entity instanceof GrowlingManEntity _datEntL18 && (Boolean)_datEntL18.getEntityData().get(GrowlingManEntity.DATA_HorizontalClimbing))) {
@@ -40,20 +40,20 @@ public class GrowlingManBoundingBoxScaleProcedure {
 						&& !world.getBlockState(BlockPos.containing(x - 1.0, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 0.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x - 1.0, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).canOcclude() && world.getBlockState(BlockPos.containing(x - 1.0, y + 3.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
-									&& world.getBlockState(BlockPos.containing(x - 1.0, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
+									&& world.getBlockState(BlockPos.containing(x - 1.0, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 			)
 			&& !(entity instanceof GrowlingManEntity _datEntL37 && (Boolean)_datEntL37.getEntityData().get(GrowlingManEntity.DATA_HorizontalClimbing))) {
@@ -63,20 +63,20 @@ public class GrowlingManBoundingBoxScaleProcedure {
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z + 1.0)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 0.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z + 1.0)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).canOcclude() && world.getBlockState(BlockPos.containing(x, y + 3.0, z + 1.0)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
-									&& world.getBlockState(BlockPos.containing(x, y + 3.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
+									&& world.getBlockState(BlockPos.containing(x, y + 3.0, z + 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 			)
 			&& !(entity instanceof GrowlingManEntity _datEntL56 && (Boolean)_datEntL56.getEntityData().get(GrowlingManEntity.DATA_HorizontalClimbing))) {
@@ -86,20 +86,20 @@ public class GrowlingManBoundingBoxScaleProcedure {
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z - 1.0)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 0.0, z)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 2.0, z)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 					|| !world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).canOcclude()
 						&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z - 1.0)).canOcclude()
 						&& (
 							world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).canOcclude() && world.getBlockState(BlockPos.containing(x, y + 3.0, z - 1.0)).canOcclude()
-								|| world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
-									&& world.getBlockState(BlockPos.containing(x, y + 3.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+								|| world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
+									&& world.getBlockState(BlockPos.containing(x, y + 3.0, z - 1.0)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						)
 			)
 			&& !(entity instanceof GrowlingManEntity _datEntL75 && (Boolean)_datEntL75.getEntityData().get(GrowlingManEntity.DATA_HorizontalClimbing))) {

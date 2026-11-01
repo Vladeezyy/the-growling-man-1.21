@@ -15,11 +15,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.WorldDataConfiguration;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.Difficulty;
@@ -87,7 +87,7 @@ public final class DevScene {
 	}
 
 	private static void shot(Minecraft mc, String name) {
-		Screenshot.grab(mc.gameDirectory, "scene_" + name + ".png", mc.getMainRenderTarget(), c -> GrowlingManMod.LOGGER.info("[scene] " + c.getString()));
+		Screenshot.grab(mc.gameDirectory, "scene_" + name + ".png", mc.getMainRenderTarget(), 1, c -> GrowlingManMod.LOGGER.info("[scene] " + c.getString()));
 	}
 
 	private static List<EntityType<?>> modEntities() {
@@ -105,7 +105,7 @@ public final class DevScene {
 			shot(mc, "entities");
 			checkNoMissingTexture(mc, "entities");
 		});
-		at(t += 5, mc -> server(mc, p -> p.teleportTo(p.serverLevel(), stage.getX() + 0.5, stage.getY() + 1.6, stage.getZ() - 3.5, 0f, 10f)));
+		at(t += 5, mc -> server(mc, p -> p.teleportTo(p.level(), stage.getX() + 0.5, stage.getY() + 1.6, stage.getZ() - 3.5, java.util.Set.of(), 0f, 10f, true)));
 		at(t += 20, mc -> shot(mc, "entities_close"));
 		// the HUD overlays: marked, "clear your mind", mental breakdown
 		at(t += 5, mc -> server(mc, p -> {
@@ -143,8 +143,8 @@ public final class DevScene {
 		at(t += 5, DevScene::checkTranslations);
 		at(t += 10, mc -> {
 			GrowlingManMod.LOGGER.info("[scene] DONE " + (checks - failures) + "/" + checks + (failures == 0 ? " passed" : " (" + failures + " failed)"));
-			mc.level.disconnect();
-			mc.disconnect(new TitleScreen());
+			mc.level.disconnect(net.minecraft.network.chat.Component.empty());
+			mc.disconnect(new TitleScreen(), false);
 			mc.stop();
 		});
 	}
@@ -164,12 +164,12 @@ public final class DevScene {
 			return;
 		if (!opened && mc.screen instanceof TitleScreen) {
 			opened = true;
-			org.lwjgl.glfw.GLFW.glfwSetWindowSize(mc.getWindow().getWindow(), 1600, 900);
+			org.lwjgl.glfw.GLFW.glfwSetWindowSize(mc.getWindow().handle(), 1600, 900);
 			mc.options.guiScale().set(3);
 			mc.options.cloudStatus().set(CloudStatus.OFF);
 			mc.options.pauseOnLostFocus = false;
 			mc.resizeDisplay();
-			LevelSettings settings = new LevelSettings(WORLD, GameType.CREATIVE, false, Difficulty.NORMAL, true, new GameRules(), WorldDataConfiguration.DEFAULT);
+			LevelSettings settings = new LevelSettings(WORLD, GameType.CREATIVE, false, Difficulty.NORMAL, true, new GameRules(net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS), WorldDataConfiguration.DEFAULT);
 			mc.createWorldOpenFlows().createFreshLevel(WORLD, settings, new WorldOptions(20261017L, false, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
 			return;
 		}
@@ -177,7 +177,7 @@ public final class DevScene {
 			return;
 		mc.options.pauseOnLostFocus = false;
 		mc.getTutorial().setStep(net.minecraft.client.tutorial.TutorialSteps.NONE);
-		mc.getToasts().clear();
+		mc.getToastManager().clear();
 		if (mc.screen instanceof PauseScreen)
 			mc.setScreen(null);
 		tick++;
@@ -195,13 +195,13 @@ public final class DevScene {
 
 	/** A grass platform in the sky at noon, every entity of the mod in rows facing the player. */
 	private static void build(ServerPlayer player) {
-		ServerLevel level = player.serverLevel();
-		BlockPos spawn = level.getSharedSpawnPos();
+		ServerLevel level = player.level();
+		BlockPos spawn = level.getRespawnData().pos();
 		stage = new BlockPos(spawn.getX(), 150, spawn.getZ());
 		level.setDayTime(6000);
-		level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, level.getServer());
-		level.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, level.getServer());
-		level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
+		level.getGameRules().set(GameRules.ADVANCE_TIME, false, level.getServer());
+		level.getGameRules().set(GameRules.ADVANCE_WEATHER, false, level.getServer());
+		level.getGameRules().set(GameRules.SPAWN_MOBS, false, level.getServer());
 		for (BlockPos pos : BlockPos.betweenClosed(stage.offset(-4, -1, -8), stage.offset(24, 6, 16)))
 			level.setBlock(pos, pos.getY() == stage.getY() - 1 ? Blocks.GRASS_BLOCK.defaultBlockState() : Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
 		List<EntityType<?>> types = modEntities();
@@ -209,15 +209,15 @@ public final class DevScene {
 		List<String> failed = new ArrayList<>();
 		for (int i = 0; i < types.size(); i++) {
 			try {
-				Entity entity = types.get(i).create(level);
+				Entity entity = types.get(i).create(level, EntitySpawnReason.COMMAND);
 				if (entity == null) {
 					failed.add(BuiltInRegistries.ENTITY_TYPE.getKey(types.get(i)).getPath());
 					continue;
 				}
-				entity.moveTo(stage.getX() + (i % 10) * 2.0 + 0.5, stage.getY(), stage.getZ() + (i / 10) * 3.0 + 2.5, 180f, 0f);
+				entity.snapTo(stage.getX() + (i % 10) * 2.0 + 0.5, stage.getY(), stage.getZ() + (i / 10) * 3.0 + 2.5, 180f, 0f);
 				entity.setYHeadRot(180f);
 				if (entity instanceof Mob mob) {
-					mob.finalizeSpawn(level, level.getCurrentDifficultyAt(stage), MobSpawnType.COMMAND, null);
+					mob.finalizeSpawn(level, level.getCurrentDifficultyAt(stage), EntitySpawnReason.COMMAND, null);
 					mob.setNoAi(true);
 					mob.setPersistenceRequired();
 				}
@@ -231,7 +231,7 @@ public final class DevScene {
 		GrowlingManMod.LOGGER.info("[scene] spawned {} entities", spawned);
 		player.getAbilities().flying = true;
 		player.onUpdateAbilities();
-		player.teleportTo(level, stage.getX() + 9.5, stage.getY() + 6, stage.getZ() - 6.5, 0f, 30f);
+		player.teleportTo(level, stage.getX() + 9.5, stage.getY() + 6, stage.getZ() - 6.5, java.util.Set.of(), 0f, 30f, true);
 	}
 
 	private static void checkTranslations(Minecraft mc) {
@@ -250,15 +250,20 @@ public final class DevScene {
 	}
 
 	private static void checkNoMissingTexture(Minecraft mc, String name) {
-		int magenta = 0;
-		try (NativeImage image = Screenshot.takeScreenshot(mc.getMainRenderTarget())) {
-			for (int pixel : image.getPixelsRGBA()) {
-				int r = pixel & 0xFF, g = pixel >> 8 & 0xFF, b = pixel >> 16 & 0xFF;
-				if (r > 200 && b > 200 && g < 40)
-					magenta++;
+		// 1.21.5+: the screenshot is read back from the GPU asynchronously
+		Screenshot.takeScreenshot(mc.getMainRenderTarget(), image -> {
+			int magenta = 0;
+			try (image) {
+				for (int y = 0; y < image.getHeight(); y += 2)
+					for (int x = 0; x < image.getWidth(); x += 2) {
+						int pixel = image.getPixel(x, y);
+						int r = pixel >> 16 & 0xFF, g = pixel >> 8 & 0xFF, b = pixel & 0xFF;
+						if (r > 200 && b > 200 && g < 40)
+							magenta++;
+					}
 			}
-		}
-		check(name + ": no missing texture on screen", magenta < 50, magenta + " magenta pixels");
+			check(name + ": no missing texture on screen", magenta < 15, magenta + " magenta pixels");
+		});
 	}
 
 	private DevScene() {

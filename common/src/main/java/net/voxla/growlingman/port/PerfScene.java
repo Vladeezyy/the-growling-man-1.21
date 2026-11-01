@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.WorldDataConfiguration;
@@ -122,28 +122,28 @@ public final class PerfScene {
 	static {
 		int t = 40;
 		at(t, mc -> server(mc, p -> {
-			ServerLevel level = p.serverLevel();
-			level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, level.getServer());
-			level.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, level.getServer());
-			level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
+			ServerLevel level = p.level();
+			level.getGameRules().set(GameRules.ADVANCE_TIME, false, level.getServer());
+			level.getGameRules().set(GameRules.ADVANCE_WEATHER, false, level.getServer());
+			level.getGameRules().set(GameRules.SPAWN_MOBS, false, level.getServer());
 			level.setDayTime(18000);
 			p.setGameMode(GameType.SURVIVAL);
 			p.setInvulnerable(true);
-			BlockPos spawn = level.getSharedSpawnPos();
+			BlockPos spawn = level.getRespawnData().pos();
 			int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, spawn.getX(), spawn.getZ());
-			p.teleportTo(level, spawn.getX() + 0.5, y + 1, spawn.getZ() + 0.5, 0, 10);
+			p.teleportTo(level, spawn.getX() + 0.5, y + 1, spawn.getZ() + 0.5, java.util.Set.of(), 0, 10, true);
 			GrowlingManModVariables.PlayerVariables vars = GrowlingManModVariables.of(p);
 			vars.IsMarked = 1;
 			vars.syncPlayerVariables(p);
 			for (int i = 0; i < 40; i++) {
-				Entity cow = EntityType.COW.create(level);
+				Entity cow = EntityType.COW.create(level, EntitySpawnReason.COMMAND);
 				int x = spawn.getX() + (i % 8) * 3 - 12, z = spawn.getZ() + (i / 8) * 3 + 6;
-				cow.moveTo(x + 0.5, level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z), z + 0.5);
+				cow.snapTo(x + 0.5, level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z), z + 0.5);
 				level.addFreshEntity(cow);
 			}
-			GrowlingManEntity man = GrowlingManModEntities.GROWLING_MAN.get().create(level);
-			man.moveTo(spawn.getX() + 12.5, y + 1, spawn.getZ() + 12.5);
-			man.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.COMMAND, null);
+			GrowlingManEntity man = GrowlingManModEntities.GROWLING_MAN.get().create(level, EntitySpawnReason.COMMAND);
+			man.snapTo(spawn.getX() + 12.5, y + 1, spawn.getZ() + 12.5);
+			man.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), EntitySpawnReason.COMMAND, null);
 			level.addFreshEntity(man);
 		}));
 		// chunks load, the entities settle
@@ -151,7 +151,7 @@ public final class PerfScene {
 		windows(t, "marked, a Growling Man, 40 cows");
 		t += 4 * (WINDOW + 20);
 		at(t, mc -> server(mc, p -> {
-			for (ServerLevel level : p.getServer().getAllLevels())
+			for (ServerLevel level : p.level().getServer().getAllLevels())
 				for (Entity e : level.getAllEntities())
 					if (e instanceof GrowlingManEntity)
 						e.discard();
@@ -165,8 +165,8 @@ public final class PerfScene {
 						r[1] / r[5], r[2] / r[5], r[3] / r[5], r[4] / r[5]));
 			}
 			GrowlingManMod.LOGGER.info("[perf] DONE");
-			mc.level.disconnect();
-			mc.disconnect(new TitleScreen());
+			mc.level.disconnect(net.minecraft.network.chat.Component.empty());
+			mc.disconnect(new TitleScreen(), false);
 			mc.stop();
 		});
 	}
@@ -190,7 +190,7 @@ public final class PerfScene {
 			mc.options.pauseOnLostFocus = false;
 			mc.options.framerateLimit().set(260);
 			mc.options.enableVsync().set(false);
-			LevelSettings settings = new LevelSettings("gm_perf", GameType.SURVIVAL, false, Difficulty.NORMAL, true, new GameRules(), WorldDataConfiguration.DEFAULT);
+			LevelSettings settings = new LevelSettings("gm_perf", GameType.SURVIVAL, false, Difficulty.NORMAL, true, new GameRules(net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS), WorldDataConfiguration.DEFAULT);
 			mc.createWorldOpenFlows().createFreshLevel("gm_perf", settings, new WorldOptions(20261101L, true, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
 			return;
 		}

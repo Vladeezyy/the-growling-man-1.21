@@ -4,7 +4,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.voxla.growlingman.GrowlingManMod;
@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * (NoClassDefFoundError), and in a LAN world every player was checked against the host's screen.
  */
 public record InventoryScreenMessage(boolean open) implements CustomPacketPayload {
-	public static final Type<InventoryScreenMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "inventory_screen"));
+	public static final Type<InventoryScreenMessage> TYPE = new Type<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, "inventory_screen"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, InventoryScreenMessage> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, InventoryScreenMessage::open, InventoryScreenMessage::new);
 	private static final Set<UUID> OPEN = ConcurrentHashMap.newKeySet();
 

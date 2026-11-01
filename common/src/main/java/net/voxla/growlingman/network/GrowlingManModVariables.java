@@ -6,6 +6,9 @@ import net.voxla.growlingman.port.bus.EventPriority;
 import net.voxla.growlingman.port.bus.GMBus;
 import net.voxla.growlingman.port.bus.ServerTickEvent;
 import net.voxla.growlingman.port.bus.PlayerEvent;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import net.voxla.growlingman.port.bus.FMLCommonSetupEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
 import net.voxla.growlingman.port.bus.SubscribeEvent;
@@ -17,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.codec.StreamCodec;
@@ -28,9 +31,14 @@ import net.minecraft.core.HolderLookup;
 
 import net.voxla.growlingman.GrowlingManMod;
 import net.voxla.growlingman.port.PortUtil;
+import net.voxla.growlingman.port.bus.EventBusSubscriber;
+import net.voxla.growlingman.port.bus.PlayerEvent;
+import net.voxla.growlingman.port.bus.SubscribeEvent;
 import net.voxla.growlingman.port.platform.Platform;
 
+import java.util.function.Supplier;
 
+@EventBusSubscriber
 public class GrowlingManModVariables {
 	/** port/PerfScene: sync packets sent */
 	public static int syncs;
@@ -61,7 +69,7 @@ public class GrowlingManModVariables {
 	}
 
 	/** The id of the player variables attachment (NeoForge and Fabric), as in 1.0.1 */
-	public static final ResourceLocation PLAYER_VARIABLES_ID = ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "player_variables");
+	public static final Identifier PLAYER_VARIABLES_ID = Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, "player_variables");
 
 	/** The player variables of an entity (NeoForge's {@code getData(PLAYER_VARIABLES)}) */
 	public static PlayerVariables of(Entity entity) {
@@ -148,6 +156,8 @@ public class GrowlingManModVariables {
 		public boolean HasOneDayPassed = false;
 		public boolean IsDaytime = false;
 		public double GMSpawnChance = 0.0;
+		// 1.21.5: saved data is described by a type with a codec; the file and its contents stay the same
+		public static final SavedDataType<WorldVariables> TYPE = new SavedDataType<>(DATA_NAME, WorldVariables::new, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), null);
 
 		public static WorldVariables load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 			WorldVariables data = new WorldVariables();
@@ -156,12 +166,11 @@ public class GrowlingManModVariables {
 		}
 
 		public void read(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-			HasOneDayPassed = nbt.getBoolean("HasOneDayPassed");
-			IsDaytime = nbt.getBoolean("IsDaytime");
-			GMSpawnChance = nbt.getDouble("GMSpawnChance");
+			HasOneDayPassed = nbt.getBooleanOr("HasOneDayPassed", false);
+			IsDaytime = nbt.getBooleanOr("IsDaytime", false);
+			GMSpawnChance = nbt.getDoubleOr("GMSpawnChance", 0);
 		}
 
-		@Override
 		public CompoundTag save(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
 			nbt.putBoolean("HasOneDayPassed", HasOneDayPassed);
 			nbt.putBoolean("IsDaytime", IsDaytime);
@@ -179,7 +188,7 @@ public class GrowlingManModVariables {
 
 		public static WorldVariables get(LevelAccessor world) {
 			if (world instanceof ServerLevel level) {
-				return level.getDataStorage().computeIfAbsent(new SavedData.Factory<>(WorldVariables::new, WorldVariables::load, null), DATA_NAME);
+				return level.getDataStorage().computeIfAbsent(TYPE);
 			} else {
 				return clientSide;
 			}
@@ -192,6 +201,8 @@ public class GrowlingManModVariables {
 		public double GMSpawnTimer = 0.0;
 		public boolean gmdev_overlay = false;
 		public double GMCanKillPlayerTimer = 0.0;
+		// 1.21.5: saved data is described by a type with a codec; the file and its contents stay the same
+		public static final SavedDataType<MapVariables> TYPE = new SavedDataType<>(DATA_NAME, MapVariables::new, CompoundTag.CODEC.xmap(tag -> load(tag, null), data -> data.save(new CompoundTag(), null)), null);
 
 		public static MapVariables load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 			MapVariables data = new MapVariables();
@@ -200,12 +211,11 @@ public class GrowlingManModVariables {
 		}
 
 		public void read(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-			GMSpawnTimer = nbt.getDouble("GMSpawnTimer");
-			gmdev_overlay = nbt.getBoolean("gmdev_overlay");
-			GMCanKillPlayerTimer = nbt.getDouble("GMCanKillPlayerTimer");
+			GMSpawnTimer = nbt.getDoubleOr("GMSpawnTimer", 0);
+			gmdev_overlay = nbt.getBooleanOr("gmdev_overlay", false);
+			GMCanKillPlayerTimer = nbt.getDoubleOr("GMCanKillPlayerTimer", 0);
 		}
 
-		@Override
 		public CompoundTag save(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
 			nbt.putDouble("GMSpawnTimer", GMSpawnTimer);
 			nbt.putBoolean("gmdev_overlay", gmdev_overlay);
@@ -223,19 +233,24 @@ public class GrowlingManModVariables {
 
 		public static MapVariables get(LevelAccessor world) {
 			if (world instanceof ServerLevelAccessor serverLevelAcc) {
-				return serverLevelAcc.getLevel().getServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(new SavedData.Factory<>(MapVariables::new, MapVariables::load, null), DATA_NAME);
+				return serverLevelAcc.getLevel().getServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(TYPE);
 			} else {
 				return clientSide;
 			}
 		}
 	}
 
+	// 1.21.5: SavedData has no save(CompoundTag) of its own any more
+	static CompoundTag saveData(SavedData data, HolderLookup.Provider lookupProvider) {
+		return data instanceof MapVariables mapVariables ? mapVariables.save(new CompoundTag(), lookupProvider) : ((WorldVariables) data).save(new CompoundTag(), lookupProvider);
+	}
+
 	public record SavedDataSyncMessage(int dataType, SavedData data) implements CustomPacketPayload {
-		public static final Type<SavedDataSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "saved_data_sync"));
+		public static final Type<SavedDataSyncMessage> TYPE = new Type<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, "saved_data_sync"));
 		public static final StreamCodec<RegistryFriendlyByteBuf, SavedDataSyncMessage> STREAM_CODEC = StreamCodec.of((RegistryFriendlyByteBuf buffer, SavedDataSyncMessage message) -> {
 			buffer.writeInt(message.dataType);
 			if (message.data != null)
-				buffer.writeNbt(message.data.save(new CompoundTag(), buffer.registryAccess()));
+				buffer.writeNbt(saveData(message.data, buffer.registryAccess()));
 		}, (RegistryFriendlyByteBuf buffer) -> {
 			int dataType = buffer.readInt();
 			CompoundTag nbt = buffer.readNbt();
@@ -260,9 +275,9 @@ public class GrowlingManModVariables {
 			HolderLookup.Provider registries = PortUtil.clientRegistries.get();
 			if (message.data != null && registries != null) {
 				if (message.dataType == 0)
-					MapVariables.clientSide.read(message.data.save(new CompoundTag(), registries), registries);
+					MapVariables.clientSide.read(saveData(message.data, registries), registries);
 				else
-					WorldVariables.clientSide.read(message.data.save(new CompoundTag(), registries), registries);
+					WorldVariables.clientSide.read(saveData(message.data, registries), registries);
 			}
 		}
 
@@ -286,6 +301,44 @@ public class GrowlingManModVariables {
 		public double InvNumb = 0.0;
 		public double AnimalsKilledShortTime = 0.0;
 
+		public void serialize(ValueOutput output) {
+			output.putDouble("GMEventsTimer", GMEventsTimer);
+			output.putDouble("ScreenShakeTimer", ScreenShakeTimer);
+			output.putDouble("DarkenOverlay", DarkenOverlay);
+			output.putDouble("HoldingBreathTimer", HoldingBreathTimer);
+			output.putBoolean("IsHoldingBreath", IsHoldingBreath);
+			output.putDouble("IsMarked", IsMarked);
+			output.putDouble("cym_overlay_opacity", cym_overlay_opacity);
+			output.putDouble("mtl_overlay_opacity", mtl_overlay_opacity);
+			output.putDouble("gm_inv_opacity", gm_inv_opacity);
+			output.putDouble("AnimalsKilled", AnimalsKilled);
+			output.putDouble("AnimalsKilledResetWait", AnimalsKilledResetWait);
+			output.putDouble("BadActionTimer", BadActionTimer);
+			output.putDouble("RaidTime", RaidTime);
+			output.putDouble("gm_inv_ap", gm_inv_ap);
+			output.putDouble("InvNumb", InvNumb);
+			output.putDouble("AnimalsKilledShortTime", AnimalsKilledShortTime);
+		}
+
+		public void deserialize(ValueInput input) {
+			GMEventsTimer = input.getDoubleOr("GMEventsTimer", 0);
+			ScreenShakeTimer = input.getDoubleOr("ScreenShakeTimer", 0);
+			DarkenOverlay = input.getDoubleOr("DarkenOverlay", 0);
+			HoldingBreathTimer = input.getDoubleOr("HoldingBreathTimer", 0);
+			IsHoldingBreath = input.getBooleanOr("IsHoldingBreath", false);
+			IsMarked = input.getDoubleOr("IsMarked", 0);
+			cym_overlay_opacity = input.getDoubleOr("cym_overlay_opacity", 0);
+			mtl_overlay_opacity = input.getDoubleOr("mtl_overlay_opacity", 0);
+			gm_inv_opacity = input.getDoubleOr("gm_inv_opacity", 0);
+			AnimalsKilled = input.getDoubleOr("AnimalsKilled", 0);
+			AnimalsKilledResetWait = input.getDoubleOr("AnimalsKilledResetWait", 0);
+			BadActionTimer = input.getDoubleOr("BadActionTimer", 0);
+			RaidTime = input.getDoubleOr("RaidTime", 0);
+			gm_inv_ap = input.getDoubleOr("gm_inv_ap", 0);
+			InvNumb = input.getDoubleOr("InvNumb", 0);
+			AnimalsKilledShortTime = input.getDoubleOr("AnimalsKilledShortTime", 0);
+		}
+
 		public CompoundTag serializeNBT(HolderLookup.Provider lookupProvider) {
 			CompoundTag nbt = new CompoundTag();
 			nbt.putDouble("GMEventsTimer", GMEventsTimer);
@@ -308,22 +361,22 @@ public class GrowlingManModVariables {
 		}
 
 		public void deserializeNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
-			GMEventsTimer = nbt.getDouble("GMEventsTimer");
-			ScreenShakeTimer = nbt.getDouble("ScreenShakeTimer");
-			DarkenOverlay = nbt.getDouble("DarkenOverlay");
-			HoldingBreathTimer = nbt.getDouble("HoldingBreathTimer");
-			IsHoldingBreath = nbt.getBoolean("IsHoldingBreath");
-			IsMarked = nbt.getDouble("IsMarked");
-			cym_overlay_opacity = nbt.getDouble("cym_overlay_opacity");
-			mtl_overlay_opacity = nbt.getDouble("mtl_overlay_opacity");
-			gm_inv_opacity = nbt.getDouble("gm_inv_opacity");
-			AnimalsKilled = nbt.getDouble("AnimalsKilled");
-			AnimalsKilledResetWait = nbt.getDouble("AnimalsKilledResetWait");
-			BadActionTimer = nbt.getDouble("BadActionTimer");
-			RaidTime = nbt.getDouble("RaidTime");
-			gm_inv_ap = nbt.getDouble("gm_inv_ap");
-			InvNumb = nbt.getDouble("InvNumb");
-			AnimalsKilledShortTime = nbt.getDouble("AnimalsKilledShortTime");
+			GMEventsTimer = nbt.getDoubleOr("GMEventsTimer", 0);
+			ScreenShakeTimer = nbt.getDoubleOr("ScreenShakeTimer", 0);
+			DarkenOverlay = nbt.getDoubleOr("DarkenOverlay", 0);
+			HoldingBreathTimer = nbt.getDoubleOr("HoldingBreathTimer", 0);
+			IsHoldingBreath = nbt.getBooleanOr("IsHoldingBreath", false);
+			IsMarked = nbt.getDoubleOr("IsMarked", 0);
+			cym_overlay_opacity = nbt.getDoubleOr("cym_overlay_opacity", 0);
+			mtl_overlay_opacity = nbt.getDoubleOr("mtl_overlay_opacity", 0);
+			gm_inv_opacity = nbt.getDoubleOr("gm_inv_opacity", 0);
+			AnimalsKilled = nbt.getDoubleOr("AnimalsKilled", 0);
+			AnimalsKilledResetWait = nbt.getDoubleOr("AnimalsKilledResetWait", 0);
+			BadActionTimer = nbt.getDoubleOr("BadActionTimer", 0);
+			RaidTime = nbt.getDoubleOr("RaidTime", 0);
+			gm_inv_ap = nbt.getDoubleOr("gm_inv_ap", 0);
+			InvNumb = nbt.getDoubleOr("InvNumb", 0);
+			AnimalsKilledShortTime = nbt.getDoubleOr("AnimalsKilledShortTime", 0);
 		}
 
 		public void syncPlayerVariables(Entity entity) {
@@ -333,7 +386,7 @@ public class GrowlingManModVariables {
 	}
 
 	public record PlayerVariablesSyncMessage(PlayerVariables data) implements CustomPacketPayload {
-		public static final Type<PlayerVariablesSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "player_variables_sync"));
+		public static final Type<PlayerVariablesSyncMessage> TYPE = new Type<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, "player_variables_sync"));
 		public static final StreamCodec<RegistryFriendlyByteBuf, PlayerVariablesSyncMessage> STREAM_CODEC = StreamCodec
 				.of((RegistryFriendlyByteBuf buffer, PlayerVariablesSyncMessage message) -> buffer.writeNbt(message.data().serializeNBT(buffer.registryAccess())), (RegistryFriendlyByteBuf buffer) -> {
 					PlayerVariablesSyncMessage message = new PlayerVariablesSyncMessage(new PlayerVariables());

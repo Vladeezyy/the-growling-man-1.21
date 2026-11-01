@@ -9,7 +9,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceKey;
@@ -41,7 +41,7 @@ public final class PortUtil {
 		return Platform.INSTANCE.persistentData(blockEntity);
 	}
 
-	/** 1.20 {@code stack.hurtAndBreak(amount, random, player, onBreak)} / {@code if (stack.hurt(...)) shrink}: 1.21 needs a ServerLevel. */
+	/** 1.20 {@code stack.hurtAndBreak(amount, random, player, onBreak)} / {@code if(stack.hurtOrSimulate(...)) shrink}: 1.21 needs a ServerLevel. */
 	public static void hurtAndBreak(ItemStack stack, int amount, @Nullable LivingEntity entity) {
 		if (stack.isEmpty() || !stack.isDamageableItem())
 			return;
@@ -58,7 +58,7 @@ public final class PortUtil {
 		});
 	}
 
-	/** 1.20 {@code if (stack.hurt(amount, random, player)) ...}: damages the stack and tells whether it broke (1.21 already shrank it). */
+	/** 1.20 {@code if(stack.hurtOrSimulate(amount, random, player)) ...}: damages the stack and tells whether it broke (1.21 already shrank it). */
 	public static boolean hurtAndBreakReports(ItemStack stack, int amount, @Nullable LivingEntity entity) {
 		int before = stack.getCount();
 		hurtAndBreak(stack, amount, entity);

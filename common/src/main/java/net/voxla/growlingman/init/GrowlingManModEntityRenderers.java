@@ -7,7 +7,7 @@ import net.voxla.growlingman.port.bus.SubscribeEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
 import net.voxla.growlingman.client.renderer.GrowlingManRenderer;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class GrowlingManModEntityRenderers {
 	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

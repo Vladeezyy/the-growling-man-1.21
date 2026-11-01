@@ -27,7 +27,7 @@ public class GMCommandsCommand {
 				(LiteralArgumentBuilder)((LiteralArgumentBuilder)((LiteralArgumentBuilder)((LiteralArgumentBuilder)((LiteralArgumentBuilder)((LiteralArgumentBuilder)Commands.literal(
 											"growling_man_dev"
 										)
-										.requires(s -> s.hasPermission(2)))
+										.requires(s -> net.minecraft.commands.Commands.hasPermission(net.minecraft.commands.Commands.LEVEL_GAMEMASTERS).test(s)))
 									.then(
 										Commands.literal("set_mark")
 											.then(Commands.argument("mark_number", DoubleArgumentType.doubleArg(0.0, 144000.0)).executes(arguments -> {

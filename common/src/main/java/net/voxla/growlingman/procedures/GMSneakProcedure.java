@@ -3,7 +3,7 @@ package net.voxla.growlingman.procedures;
 import net.voxla.growlingman.port.GMEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,9 +19,9 @@ public class GMSneakProcedure {
 				&& !world.getBlockState(BlockPos.containing(x, y + 1.0, z)).canOcclude()
 				&& (
 					world.getBlockState(BlockPos.containing(x, y + 2.0, z)).canOcclude()
-						|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+						|| world.getBlockState(BlockPos.containing(x, y + 2.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 						|| world.getBlockState(BlockPos.containing(x, y + 3.0, z)).canOcclude()
-						|| world.getBlockState(BlockPos.containing(x, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, ResourceLocation.parse("minecraft:leaves")))
+						|| world.getBlockState(BlockPos.containing(x, y + 3.0, z)).is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, Identifier.parse("minecraft:leaves")))
 				)
 				&& !(entity instanceof GrowlingManEntity _datEntL8 && (Boolean)_datEntL8.getEntityData().get(GrowlingManEntity.DATA_HorizontalClimbing))) {
 				if (!entity.isShiftKeyDown()) {

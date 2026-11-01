@@ -31,7 +31,7 @@ public class GMClimbingProcedure {
 							&& world.getBlockState(BlockPos.containing(x, y + 1.0, z - 1.0)).canOcclude()
 							&& world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).canOcclude()
 				)
-				&& !entity.isInWaterRainOrBubble()) {
+				&& !entity.isInWaterOrRain()) {
 				if ((entity instanceof Mob _mobEnt ? _mobEnt.getTarget() : null) != null) {
 					Vec3 _center = new Vec3(x, y, z);
 
@@ -46,10 +46,10 @@ public class GMClimbingProcedure {
 						}
 					}
 				}
-			} else if ((world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).canOcclude() || entity.getDirection() != Direction.EAST) && !entity.isInWaterRainOrBubble()) {
-				if ((world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).canOcclude() || entity.getDirection() != Direction.WEST) && !entity.isInWaterRainOrBubble()) {
-					if ((world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).canOcclude() || entity.getDirection() != Direction.SOUTH) && !entity.isInWaterRainOrBubble()) {
-						if ((!world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).canOcclude() && entity.getDirection() == Direction.NORTH || entity.isInWaterRainOrBubble())
+			} else if ((world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).canOcclude() || entity.getDirection() != Direction.EAST) && !entity.isInWaterOrRain()) {
+				if ((world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).canOcclude() || entity.getDirection() != Direction.WEST) && !entity.isInWaterOrRain()) {
+					if ((world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).canOcclude() || entity.getDirection() != Direction.SOUTH) && !entity.isInWaterOrRain()) {
+						if ((!world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).canOcclude() && entity.getDirection() == Direction.NORTH || entity.isInWaterOrRain())
 							&& entity instanceof GrowlingManEntity _datEntSetL) {
 							_datEntSetL.getEntityData().set(GrowlingManEntity.DATA_Climbing, false);
 						}
@@ -69,7 +69,7 @@ public class GMClimbingProcedure {
 						|| world.getBlockState(BlockPos.containing(x + 3.0, y - 1.0, z)).canOcclude()
 				)
 				&& entity.getDirection() == Direction.EAST
-				&& !entity.isInWaterRainOrBubble()) {
+				&& !entity.isInWaterOrRain()) {
 				if (entity instanceof GrowlingManEntity _datEntL47
 					&& (Boolean)_datEntL47.getEntityData().get(GrowlingManEntity.DATA_Climbing)
 					&& world.getBlockState(BlockPos.containing(x, y + 3.6, z)).canOcclude()
@@ -82,7 +82,7 @@ public class GMClimbingProcedure {
 						|| world.getBlockState(BlockPos.containing(x - 3.0, y - 1.0, z)).canOcclude()
 				)
 				&& entity.getDirection() == Direction.WEST
-				&& !entity.isInWaterRainOrBubble()) {
+				&& !entity.isInWaterOrRain()) {
 				if (entity instanceof GrowlingManEntity _datEntL56
 					&& (Boolean)_datEntL56.getEntityData().get(GrowlingManEntity.DATA_Climbing)
 					&& world.getBlockState(BlockPos.containing(x, y + 3.6, z)).canOcclude()
@@ -95,7 +95,7 @@ public class GMClimbingProcedure {
 						|| world.getBlockState(BlockPos.containing(x, y - 1.0, z + 3.0)).canOcclude()
 				)
 				&& entity.getDirection() == Direction.SOUTH
-				&& !entity.isInWaterRainOrBubble()) {
+				&& !entity.isInWaterOrRain()) {
 				if (entity instanceof GrowlingManEntity _datEntL65
 					&& (Boolean)_datEntL65.getEntityData().get(GrowlingManEntity.DATA_Climbing)
 					&& world.getBlockState(BlockPos.containing(x, y + 3.6, z)).canOcclude()
@@ -108,7 +108,7 @@ public class GMClimbingProcedure {
 						|| world.getBlockState(BlockPos.containing(x, y - 1.0, z - 3.0)).canOcclude()
 				)
 				&& entity.getDirection() == Direction.NORTH
-				&& !entity.isInWaterRainOrBubble()) {
+				&& !entity.isInWaterOrRain()) {
 				if (entity instanceof GrowlingManEntity _datEntL74
 					&& (Boolean)_datEntL74.getEntityData().get(GrowlingManEntity.DATA_Climbing)
 					&& world.getBlockState(BlockPos.containing(x, y + 3.6, z)).canOcclude()

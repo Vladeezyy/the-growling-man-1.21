@@ -8,10 +8,6 @@ neoForge {
     version = project.findProperty('neo_version')
     accessTransformers.from(file('src/main/resources/META-INF/accesstransformer.cfg'))
 
-    parchment {
-        minecraftVersion = parchment_minecraft
-        mappingsVersion = parchment_version
-    }
 
     runs {
         configureEach {

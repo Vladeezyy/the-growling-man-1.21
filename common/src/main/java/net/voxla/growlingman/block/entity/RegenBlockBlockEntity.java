@@ -1,5 +1,7 @@
 package net.voxla.growlingman.block.entity;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -31,18 +33,18 @@ public class RegenBlockBlockEntity extends RandomizableContainerBlockEntity impl
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-		super.loadAdditional(compound, lookupProvider);
+	public void loadAdditional(ValueInput compound) {
+		super.loadAdditional(compound);
 		if (!this.tryLoadLootTable(compound))
 			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks, lookupProvider);
+		ContainerHelper.loadAllItems(compound, this.stacks);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-		super.saveAdditional(compound, lookupProvider);
+	public void saveAdditional(ValueOutput compound) {
+		super.saveAdditional(compound);
 		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks, lookupProvider);
+			ContainerHelper.saveAllItems(compound, this.stacks);
 		}
 	}
 

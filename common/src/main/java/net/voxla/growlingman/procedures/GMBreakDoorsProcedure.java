@@ -1,7 +1,7 @@
 package net.voxla.growlingman.procedures;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -60,7 +60,7 @@ public class GMBreakDoorsProcedure {
 							_level.playSound(
 								null,
 								BlockPos.containing(x + 1.0, y + 1.0, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F
@@ -70,7 +70,7 @@ public class GMBreakDoorsProcedure {
 								x + 1.0,
 								y + 1.0,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F,
@@ -95,7 +95,7 @@ public class GMBreakDoorsProcedure {
 								_levelx.playSound(
 									null,
 									BlockPos.containing(x + 1.0, y + 1.0, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -105,7 +105,7 @@ public class GMBreakDoorsProcedure {
 									x + 1.0,
 									y + 1.0,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -119,7 +119,7 @@ public class GMBreakDoorsProcedure {
 								_levelxx.playSound(
 									null,
 									BlockPos.containing(x + 1.0, y + 1.0, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -129,7 +129,7 @@ public class GMBreakDoorsProcedure {
 									x + 1.0,
 									y + 1.0,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -185,7 +185,7 @@ public class GMBreakDoorsProcedure {
 							_levelxxx.playSound(
 								null,
 								BlockPos.containing(x - 1.0, y + 1.0, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F
@@ -195,7 +195,7 @@ public class GMBreakDoorsProcedure {
 								x - 1.0,
 								y + 1.0,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F,
@@ -220,7 +220,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxx.playSound(
 									null,
 									BlockPos.containing(x - 1.0, y + 1.0, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -230,7 +230,7 @@ public class GMBreakDoorsProcedure {
 									x - 1.0,
 									y + 1.0,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -244,7 +244,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxxx.playSound(
 									null,
 									BlockPos.containing(x - 1.0, y + 1.0, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -254,7 +254,7 @@ public class GMBreakDoorsProcedure {
 									x - 1.0,
 									y + 1.0,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -310,7 +310,7 @@ public class GMBreakDoorsProcedure {
 							_levelxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + 1.0, z + 1.0),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F
@@ -320,7 +320,7 @@ public class GMBreakDoorsProcedure {
 								x,
 								y + 1.0,
 								z + 1.0,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F,
@@ -345,7 +345,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + 1.0, z + 1.0),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -355,7 +355,7 @@ public class GMBreakDoorsProcedure {
 									x,
 									y + 1.0,
 									z + 1.0,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -369,7 +369,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + 1.0, z + 1.0),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -379,7 +379,7 @@ public class GMBreakDoorsProcedure {
 									x,
 									y + 1.0,
 									z + 1.0,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -435,7 +435,7 @@ public class GMBreakDoorsProcedure {
 							_levelxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + 1.0, z - 1.0),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F
@@ -445,7 +445,7 @@ public class GMBreakDoorsProcedure {
 								x,
 								y + 1.0,
 								z - 1.0,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 								SoundSource.BLOCKS,
 								1.0F,
 								1.0F,
@@ -470,7 +470,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + 1.0, z - 1.0),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -480,7 +480,7 @@ public class GMBreakDoorsProcedure {
 									x,
 									y + 1.0,
 									z - 1.0,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.attack_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.attack_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,
@@ -494,7 +494,7 @@ public class GMBreakDoorsProcedure {
 								_levelxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + 1.0, z - 1.0),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F
@@ -504,7 +504,7 @@ public class GMBreakDoorsProcedure {
 									x,
 									y + 1.0,
 									z - 1.0,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.zombie.break_wooden_door")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.zombie.break_wooden_door")),
 									SoundSource.BLOCKS,
 									1.0F,
 									1.0F,

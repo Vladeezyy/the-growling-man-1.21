@@ -23,8 +23,8 @@ public class ClearMindKeybindOverlayDisplayOverlayIngameProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 									: false;
 							}
 						}
@@ -36,8 +36,8 @@ public class ClearMindKeybindOverlayDisplayOverlayIngameProcedure {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 							} else {
 								return _ent.level().isClientSide() && _ent instanceof Player _player
-									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+									? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 									: false;
 							}
 						}

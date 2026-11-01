@@ -11,9 +11,9 @@ import net.voxla.growlingman.port.bus.EventBusSubscriber;
 import net.voxla.growlingman.GrowlingManMod;
 import net.voxla.growlingman.network.ClearMindKeyMessage;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class GrowlingManModKeyMappings {
-	public static final KeyMapping CLEAR_MIND_KEY = new KeyMapping("key.growling_man.clear_mind_key", 88, "key.categories.misc") {
+	public static final KeyMapping CLEAR_MIND_KEY = new KeyMapping("key.growling_man.clear_mind_key", 88, KeyMapping.Category.MISC) {
 		private boolean isDownOld = false;
 
 		public void setDown(boolean isDown) {

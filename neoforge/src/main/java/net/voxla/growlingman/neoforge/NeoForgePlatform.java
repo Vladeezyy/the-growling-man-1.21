@@ -14,14 +14,15 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
-import net.minecraft.core.HolderLookup;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,17 +53,18 @@ public final class NeoForgePlatform implements Platform {
 
 	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, GrowlingManMod.MODID);
 	static final Supplier<AttachmentType<GrowlingManModVariables.PlayerVariables>> PLAYER_VARIABLES = ATTACHMENT_TYPES.register(GrowlingManModVariables.PLAYER_VARIABLES_ID.getPath(),
-			() -> AttachmentType.builder(GrowlingManModVariables.PlayerVariables::new).serialize(new IAttachmentSerializer<CompoundTag, GrowlingManModVariables.PlayerVariables>() {
+			() -> AttachmentType.builder(GrowlingManModVariables.PlayerVariables::new).serialize(new IAttachmentSerializer<GrowlingManModVariables.PlayerVariables>() {
 				@Override
-				public GrowlingManModVariables.PlayerVariables read(IAttachmentHolder holder, CompoundTag tag, HolderLookup.Provider provider) {
+				public GrowlingManModVariables.PlayerVariables read(IAttachmentHolder holder, ValueInput input) {
 					GrowlingManModVariables.PlayerVariables variables = new GrowlingManModVariables.PlayerVariables();
-					variables.deserializeNBT(provider, tag);
+					variables.deserialize(input);
 					return variables;
 				}
 
 				@Override
-				public CompoundTag write(GrowlingManModVariables.PlayerVariables variables, HolderLookup.Provider provider) {
-					return variables.serializeNBT(provider);
+				public boolean write(GrowlingManModVariables.PlayerVariables variables, ValueOutput output) {
+					variables.serialize(output);
+					return true;
 				}
 			}).build());
 
@@ -81,7 +83,7 @@ public final class NeoForgePlatform implements Platform {
 	}
 
 	@Override
-	public <R, T extends R> void register(ResourceKey<? extends Registry<R>> registry, ResourceLocation id, Supplier<? extends T> factory) {
+	public <R, T extends R> void register(ResourceKey<? extends Registry<R>> registry, Identifier id, Supplier<? extends T> factory) {
 		registerFor(registry).register(id.getPath(), factory);
 	}
 
@@ -133,7 +135,7 @@ public final class NeoForgePlatform implements Platform {
 
 	@Override
 	public void sendToServer(CustomPacketPayload payload) {
-		PacketDistributor.sendToServer(payload);
+		net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload);
 	}
 
 	@Override

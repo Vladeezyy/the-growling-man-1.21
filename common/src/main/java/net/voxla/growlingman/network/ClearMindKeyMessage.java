@@ -3,7 +3,7 @@ package net.voxla.growlingman.network;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -13,7 +13,7 @@ import net.voxla.growlingman.procedures.HoldBreathKeyOnKeyPressedProcedure;
 import net.voxla.growlingman.procedures.HoldBreathKeyOnKeyReleasedProcedure;
 
 public record ClearMindKeyMessage(int eventType, int pressedms) implements CustomPacketPayload {
-	public static final Type<ClearMindKeyMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "key_clear_mind"));
+	public static final Type<ClearMindKeyMessage> TYPE = new Type<>(Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, "key_clear_mind"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, ClearMindKeyMessage> STREAM_CODEC = StreamCodec.of(
 		(RegistryFriendlyByteBuf buffer, ClearMindKeyMessage message) -> {
 			buffer.writeInt(message.eventType);

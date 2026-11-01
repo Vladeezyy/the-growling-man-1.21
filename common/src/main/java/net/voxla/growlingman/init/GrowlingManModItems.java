@@ -15,6 +15,6 @@ public class GrowlingManModItems {
 	public static final RegistryEntry<Item, Item> REGEN_BLOCK = block(GrowlingManModBlocks.REGEN_BLOCK);
 
 	private static RegistryEntry<Item, Item> block(RegistryEntry<Block, Block> block) {
-		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem((Block)block.get(), new Properties()));
+		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem((Block)block.get(), net.voxla.growlingman.port.platform.Registrar.itemProps().useBlockDescriptionPrefix()));
 	}
 }

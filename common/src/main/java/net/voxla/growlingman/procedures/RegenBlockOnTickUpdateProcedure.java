@@ -3,7 +3,7 @@ package net.voxla.growlingman.procedures;
 import java.util.Locale;
 import java.util.Map.Entry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,21 +18,21 @@ public class RegenBlockOnTickUpdateProcedure {
 		if (!(new Object() {
 			public String getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
-				return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getString(tag) : "";
+				return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getStringOr(tag, "") : "";
 			}
 		}).getValue(world, BlockPos.containing(x, y, z), "BlockName").equals("")) {
 			if ((new Object() {
 				public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
-					return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getBoolean(tag) : false;
+					return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getBooleanOr(tag, false) : false;
 				}
 			}).getValue(world, BlockPos.containing(x, y, z), "IsPane")) {
 				if (!world.isClientSide()) {
 					BlockPos _bp = BlockPos.containing(x, y, z);
-					BlockState _bs = ((Block)BuiltInRegistries.BLOCK.get(ResourceLocation.parse((new Object() {
+					BlockState _bs = ((Block)BuiltInRegistries.BLOCK.getValue(Identifier.parse((new Object() {
 						public String getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);
-							return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getString(tag) : "";
+							return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getStringOr(tag, "") : "";
 						}
 					}).getValue(world, BlockPos.containing(x, y, z), "BlockName").toLowerCase(Locale.ENGLISH)))).defaultBlockState();
 					BlockState _bso = world.getBlockState(_bp);
@@ -82,14 +82,14 @@ public class RegenBlockOnTickUpdateProcedure {
 			} else if (!(new Object() {
 				public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
-					return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getBoolean(tag) : false;
+					return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getBooleanOr(tag, false) : false;
 				}
 			}).getValue(world, BlockPos.containing(x, y, z), "IsPane") && !world.isClientSide()) {
 				BlockPos _bp = BlockPos.containing(x, y, z);
-				BlockState _bs = ((Block)BuiltInRegistries.BLOCK.get(ResourceLocation.parse((new Object() {
+				BlockState _bs = ((Block)BuiltInRegistries.BLOCK.getValue(Identifier.parse((new Object() {
 					public String getValue(LevelAccessor world, BlockPos pos, String tag) {
 						BlockEntity blockEntity = world.getBlockEntity(pos);
-						return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getString(tag) : "";
+						return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getStringOr(tag, "") : "";
 					}
 				}).getValue(world, BlockPos.containing(x, y, z), "BlockName").toLowerCase(Locale.ENGLISH)))).defaultBlockState();
 				BlockState _bso = world.getBlockState(_bp);
@@ -108,7 +108,7 @@ public class RegenBlockOnTickUpdateProcedure {
 		} else if ((new Object() {
 			public String getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
-				return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getString(tag) : "";
+				return blockEntity != null ? net.voxla.growlingman.port.PortUtil.data(blockEntity).getStringOr(tag, "") : "";
 			}
 		}).getValue(world, BlockPos.containing(x, y, z), "BlockName").equals("") && !world.isClientSide()) {
 			BlockPos _bp = BlockPos.containing(x, y, z);

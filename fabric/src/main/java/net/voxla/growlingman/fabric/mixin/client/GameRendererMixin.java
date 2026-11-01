@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(GameRenderer.class)
 abstract class GameRendererMixin {
 	@Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
-	private void growling_man$computeFov(Camera camera, float partialTick, boolean useFovSetting, CallbackInfoReturnable<Double> cir) {
+	private void growling_man$computeFov(Camera camera, float partialTick, boolean useFovSetting, CallbackInfoReturnable<Float> cir) {
 		ViewportEvent.ComputeFov event = new ViewportEvent.ComputeFov(camera, partialTick, cir.getReturnValue(), useFovSetting);
 		GMBus.post(event);
 		if (event.getFOV() != cir.getReturnValue())
-			cir.setReturnValue(event.getFOV());
+			cir.setReturnValue((float) event.getFOV());
 	}
 }

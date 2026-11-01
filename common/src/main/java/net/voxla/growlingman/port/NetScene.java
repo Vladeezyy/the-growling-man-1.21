@@ -49,10 +49,10 @@ public final class NetScene {
 				// NeoForge negotiates the mod's channels when joining; a payload not registered on both sides cannot be sent
 				try {
 					var has = Class.forName("net.neoforged.neoforge.network.registration.NetworkRegistry").getMethod("hasChannel", net.minecraft.network.Connection.class,
-							net.minecraft.network.ConnectionProtocol.class, net.minecraft.resources.ResourceLocation.class);
+							net.minecraft.network.ConnectionProtocol.class, net.minecraft.resources.Identifier.class);
 					java.util.List<String> missing = new java.util.ArrayList<>();
 					for (String id : new String[] {"inventory_screen", "key_clear_mind", "player_variables_sync", "saved_data_sync"})
-						if (!(Boolean) has.invoke(null, mc.getConnection().getConnection(), null, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, id)))
+						if (!(Boolean) has.invoke(null, mc.getConnection().getConnection(), null, net.minecraft.resources.Identifier.fromNamespaceAndPath(GrowlingManMod.MODID, id)))
 							missing.add(id);
 					check("every payload channel negotiated (NeoForge)", missing.isEmpty(), missing);
 				} catch (ClassNotFoundException e) {
@@ -78,7 +78,7 @@ public final class NetScene {
 				check("still connected after " + END / 20 + " s on the server", mc.getConnection() != null && mc.player != null, "disconnected");
 				check("a Growling Man was seen on the client", seen > 0, seen);
 				GrowlingManMod.LOGGER.info("[scene] DONE " + (checks - failures) + "/" + checks + (failures == 0 ? " passed" : " (" + failures + " failed)"));
-				mc.level.disconnect();
+				mc.level.disconnect(net.minecraft.network.chat.Component.empty());
 				mc.stop();
 			}
 			default -> {

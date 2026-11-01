@@ -1,11 +1,12 @@
 package net.voxla.growlingman.client.screens;
 
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.RenderPipelines;
+import com.mojang.blaze3d.platform.DestFactor;
+import com.mojang.blaze3d.platform.SourceFactor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.voxla.growlingman.port.bus.Dist;
@@ -34,27 +35,9 @@ public class ClearMindOverlayOverlay {
 			z = entity.getZ();
 		}
 
-		RenderSystem.disableDepthTest();
-		RenderSystem.depthMask(false);
-		RenderSystem.enableBlend();
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.blendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-		RenderSystem.setShaderColor(
-			1.0F,
-			1.0F,
-			1.0F,
-			(float)GrowlingManModVariables.of(entity)
-					.cym_overlay_opacity
-				/ 150.0F
-		);
 		if (ClearMindOverlayDisplayOverlayIngameProcedure.execute(entity)) {
-			event.getGuiGraphics().blit(ResourceLocation.parse("growling_man:textures/screens/cym_overlay.png"), 0, 0, 0.0F, 0.0F, w, h, w, h);
+			event.getGuiGraphics().blit(RenderPipelines.GUI_TEXTURED, Identifier.parse("growling_man:textures/screens/cym_overlay.png"), 0, 0, 0.0F, 0.0F, w, h, w, h, ARGB.colorFromFloat(Mth.clamp((float)GrowlingManModVariables.of(entity) .cym_overlay_opacity / 150.0F, 0.0F, 1.0F), 1.0F, 1.0F, 1.0F));
 		}
 
-		RenderSystem.depthMask(true);
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
-		RenderSystem.disableBlend();
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 }

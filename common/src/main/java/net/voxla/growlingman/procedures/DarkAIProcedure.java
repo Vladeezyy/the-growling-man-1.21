@@ -21,7 +21,7 @@ public class DarkAIProcedure {
 			if ((entity instanceof GrowlingManEntity _datEntIx ? (Integer)_datEntIx.getEntityData().get(GrowlingManEntity.DATA_ConcealSelf) : 0) == 0
 				&& (entity instanceof GrowlingManEntity _datEntI ? (Integer)_datEntI.getEntityData().get(GrowlingManEntity.DATA_ConcealSelfTimer) : 0) == 0) {
 				if (!(entity instanceof GrowlingManEntity _datEntS ? (String)_datEntS.getEntityData().get(GrowlingManEntity.DATA_WalkTarget) : "").equals("")
-					&& !(entity instanceof LivingEntity _livEnt3 && _livEnt3.hasEffect(MobEffects.MOVEMENT_SLOWDOWN))) {
+					&& !(entity instanceof LivingEntity _livEnt3 && _livEnt3.hasEffect(MobEffects.SLOWNESS))) {
 					Vec3 _center = new Vec3(x, y, z);
 
 					for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.0), e -> true)
@@ -40,7 +40,7 @@ public class DarkAIProcedure {
 				if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 50.0, 50.0, 50.0)).isEmpty()
 					&& entity instanceof LivingEntity _entity
 					&& !_entity.level().isClientSide()) {
-					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 3, 200, false, false));
+					_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 3, 200, false, false));
 				}
 			}
 

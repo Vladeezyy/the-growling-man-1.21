@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -46,8 +46,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -59,8 +59,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -91,7 +91,7 @@ public class RunToRunAwayEventProcedure {
 				}
 
 				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide()) {
-					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 3, 250, false, false));
+					_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 3, 250, false, false));
 				}
 
 				if (world.getLevelData().getGameTime() % 32L == 1L && !world.isClientSide() && world instanceof Level _level) {
@@ -99,7 +99,7 @@ public class RunToRunAwayEventProcedure {
 						_level.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -109,7 +109,7 @@ public class RunToRunAwayEventProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -123,7 +123,7 @@ public class RunToRunAwayEventProcedure {
 						_levelx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -133,7 +133,7 @@ public class RunToRunAwayEventProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -147,7 +147,7 @@ public class RunToRunAwayEventProcedure {
 						_levelxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -157,7 +157,7 @@ public class RunToRunAwayEventProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -171,7 +171,7 @@ public class RunToRunAwayEventProcedure {
 						_levelxxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0)
@@ -181,7 +181,7 @@ public class RunToRunAwayEventProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0),
@@ -207,8 +207,8 @@ public class RunToRunAwayEventProcedure {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 										} else {
 											return _ent.level().isClientSide() && _ent instanceof Player _player
-												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 												: false;
 										}
 									}
@@ -220,8 +220,8 @@ public class RunToRunAwayEventProcedure {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 										} else {
 											return _ent.level().isClientSide() && _ent instanceof Player _player
-												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+												? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 												: false;
 										}
 									}
@@ -289,8 +289,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -302,8 +302,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -418,8 +418,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -431,8 +431,8 @@ public class RunToRunAwayEventProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}

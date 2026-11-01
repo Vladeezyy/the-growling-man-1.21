@@ -1,5 +1,17 @@
 package net.voxla.growlingman.entity;
 
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animation.object.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.state.AnimationTest;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DataTickets;
+import net.voxla.growlingman.port.GeoAnims;
+import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -8,7 +20,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -38,15 +50,6 @@ import net.voxla.growlingman.procedures.GMWanderCondProcedure;
 import net.voxla.growlingman.procedures.GrowlingManAttackRaidProcProcedure;
 import net.voxla.growlingman.procedures.GrowlingManBoundingBoxScaleProcedure;
 import net.voxla.growlingman.procedures.GrowlingManTickHandlerProcedure;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.RawAnimation;
-import software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar;
-import software.bernie.geckolib.animation.AnimationController.State;
-import software.bernie.geckolib.animation.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GrowlingManEntity extends Monster implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(GrowlingManEntity.class, EntityDataSerializers.BOOLEAN);
@@ -286,18 +289,18 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 	}
 
 	public void playStepSound(BlockPos pos, BlockState blockIn) {
-		this.playSound((SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.step")), 0.15F, 1.0F);
+		this.playSound((SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.step")), 0.15F, 1.0F);
 	}
 
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return (SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.hurt"));
+		return (SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.hurt"));
 	}
 
 	public SoundEvent getDeathSound() {
-		return (SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.death"));
+		return (SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.death"));
 	}
 
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
 		if (source.is(DamageTypes.CACTUS)) {
 			return false;
 		} else if (source.is(DamageTypes.LIGHTNING_BOLT)) {
@@ -307,11 +310,11 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		} else if (source.is(DamageTypes.WITHER)) {
 			return false;
 		} else {
-			return source.is(DamageTypes.WITHER_SKULL) ? false : super.hurt(source, amount);
+			return source.is(DamageTypes.WITHER_SKULL) ? false : super.hurtServer(level, source, amount);
 		}
 	}
 
-	public void addAdditionalSaveData(CompoundTag compound) {
+	public void addAdditionalSaveData(ValueOutput compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
 		compound.putBoolean("DataChasing", (Boolean)this.entityData.get(DATA_Chasing));
@@ -365,207 +368,107 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		compound.putString("DataGhostTarget", (String)this.entityData.get(DATA_GhostTarget));
 	}
 
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(ValueInput compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("Texture")) {
-			this.setTexture(compound.getString("Texture"));
-		}
+		compound.getString("Texture").ifPresent(this::setTexture);
 
-		if (compound.contains("DataChasing")) {
-			this.entityData.set(DATA_Chasing, compound.getBoolean("DataChasing"));
-		}
+		compound.read("DataChasing", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_Chasing, value));
 
-		if (compound.contains("DataIsBeingSeen")) {
-			this.entityData.set(DATA_IsBeingSeen, compound.getBoolean("DataIsBeingSeen"));
-		}
+		compound.read("DataIsBeingSeen", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_IsBeingSeen, value));
 
-		if (compound.contains("DataIsBeingLookedAt")) {
-			this.entityData.set(DATA_IsBeingLookedAt, compound.getBoolean("DataIsBeingLookedAt"));
-		}
+		compound.read("DataIsBeingLookedAt", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_IsBeingLookedAt, value));
 
-		if (compound.contains("DataCanSeePlayer")) {
-			this.entityData.set(DATA_CanSeePlayer, compound.getBoolean("DataCanSeePlayer"));
-		}
+		compound.read("DataCanSeePlayer", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_CanSeePlayer, value));
 
-		if (compound.contains("DataAttacking")) {
-			this.entityData.set(DATA_Attacking, compound.getInt("DataAttacking"));
-		}
+		compound.read("DataAttacking", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_Attacking, value));
 
-		if (compound.contains("DataAI")) {
-			this.entityData.set(DATA_AI, compound.getInt("DataAI"));
-		}
+		compound.read("DataAI", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_AI, value));
 
-		if (compound.contains("DataDespawnOverTimeTimer")) {
-			this.entityData.set(DATA_DespawnOverTimeTimer, compound.getInt("DataDespawnOverTimeTimer"));
-		}
+		compound.read("DataDespawnOverTimeTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_DespawnOverTimeTimer, value));
 
-		if (compound.contains("DataChaseTimer")) {
-			this.entityData.set(DATA_ChaseTimer, compound.getInt("DataChaseTimer"));
-		}
+		compound.read("DataChaseTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ChaseTimer, value));
 
-		if (compound.contains("DataClimbing")) {
-			this.entityData.set(DATA_Climbing, compound.getBoolean("DataClimbing"));
-		}
+		compound.read("DataClimbing", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_Climbing, value));
 
-		if (compound.contains("DataAmbientTimer")) {
-			this.entityData.set(DATA_AmbientTimer, compound.getInt("DataAmbientTimer"));
-		}
+		compound.read("DataAmbientTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_AmbientTimer, value));
 
-		if (compound.contains("DataWalkTarget")) {
-			this.entityData.set(DATA_WalkTarget, compound.getString("DataWalkTarget"));
-		}
+		compound.read("DataWalkTarget", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_WalkTarget, value));
 
-		if (compound.contains("DataChaseHurtTarget")) {
-			this.entityData.set(DATA_ChaseHurtTarget, compound.getString("DataChaseHurtTarget"));
-		}
+		compound.read("DataChaseHurtTarget", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_ChaseHurtTarget, value));
 
-		if (compound.contains("DataChaseHurtTargetTimer")) {
-			this.entityData.set(DATA_ChaseHurtTargetTimer, compound.getInt("DataChaseHurtTargetTimer"));
-		}
+		compound.read("DataChaseHurtTargetTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ChaseHurtTargetTimer, value));
 
-		if (compound.contains("DataBreakDoorTimer")) {
-			this.entityData.set(DATA_BreakDoorTimer, compound.getInt("DataBreakDoorTimer"));
-		}
+		compound.read("DataBreakDoorTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_BreakDoorTimer, value));
 
-		if (compound.contains("DataBreakDoorAmount")) {
-			this.entityData.set(DATA_BreakDoorAmount, compound.getInt("DataBreakDoorAmount"));
-		}
+		compound.read("DataBreakDoorAmount", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_BreakDoorAmount, value));
 
-		if (compound.contains("DataManifestTimer")) {
-			this.entityData.set(DATA_ManifestTimer, compound.getInt("DataManifestTimer"));
-		}
+		compound.read("DataManifestTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ManifestTimer, value));
 
-		if (compound.contains("DataDeManifestTimer")) {
-			this.entityData.set(DATA_DeManifestTimer, compound.getInt("DataDeManifestTimer"));
-		}
+		compound.read("DataDeManifestTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_DeManifestTimer, value));
 
-		if (compound.contains("DataPlayerNorth")) {
-			this.entityData.set(DATA_PlayerNorth, compound.getBoolean("DataPlayerNorth"));
-		}
+		compound.read("DataPlayerNorth", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_PlayerNorth, value));
 
-		if (compound.contains("DataPlayerSouth")) {
-			this.entityData.set(DATA_PlayerSouth, compound.getBoolean("DataPlayerSouth"));
-		}
+		compound.read("DataPlayerSouth", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_PlayerSouth, value));
 
-		if (compound.contains("DataPlayerEast")) {
-			this.entityData.set(DATA_PlayerEast, compound.getBoolean("DataPlayerEast"));
-		}
+		compound.read("DataPlayerEast", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_PlayerEast, value));
 
-		if (compound.contains("DataPlayerWest")) {
-			this.entityData.set(DATA_PlayerWest, compound.getBoolean("DataPlayerWest"));
-		}
+		compound.read("DataPlayerWest", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_PlayerWest, value));
 
-		if (compound.contains("DataChaseSection")) {
-			this.entityData.set(DATA_ChaseSection, compound.getInt("DataChaseSection"));
-		}
+		compound.read("DataChaseSection", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ChaseSection, value));
 
-		if (compound.contains("DataChaseAmountRandomizer")) {
-			this.entityData.set(DATA_ChaseAmountRandomizer, compound.getInt("DataChaseAmountRandomizer"));
-		}
+		compound.read("DataChaseAmountRandomizer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ChaseAmountRandomizer, value));
 
-		if (compound.contains("DataRunToX")) {
-			this.entityData.set(DATA_RunToX, compound.getInt("DataRunToX"));
-		}
+		compound.read("DataRunToX", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_RunToX, value));
 
-		if (compound.contains("DataRunToZ")) {
-			this.entityData.set(DATA_RunToZ, compound.getInt("DataRunToZ"));
-		}
+		compound.read("DataRunToZ", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_RunToZ, value));
 
-		if (compound.contains("DataLifeSpanTimer")) {
-			this.entityData.set(DATA_LifeSpanTimer, compound.getInt("DataLifeSpanTimer"));
-		}
+		compound.read("DataLifeSpanTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_LifeSpanTimer, value));
 
-		if (compound.contains("DataPlayEventAnimation")) {
-			this.entityData.set(DATA_PlayEventAnimation, compound.getBoolean("DataPlayEventAnimation"));
-		}
+		compound.read("DataPlayEventAnimation", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_PlayEventAnimation, value));
 
-		if (compound.contains("DataRunningAnimation")) {
-			this.entityData.set(DATA_RunningAnimation, compound.getString("DataRunningAnimation"));
-		}
+		compound.read("DataRunningAnimation", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_RunningAnimation, value));
 
-		if (compound.contains("DataWalkingAnimation")) {
-			this.entityData.set(DATA_WalkingAnimation, compound.getString("DataWalkingAnimation"));
-		}
+		compound.read("DataWalkingAnimation", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_WalkingAnimation, value));
 
-		if (compound.contains("DataIdleAnimation")) {
-			this.entityData.set(DATA_IdleAnimation, compound.getString("DataIdleAnimation"));
-		}
+		compound.read("DataIdleAnimation", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_IdleAnimation, value));
 
-		if (compound.contains("DataEventAnimation")) {
-			this.entityData.set(DATA_EventAnimation, compound.getString("DataEventAnimation"));
-		}
+		compound.read("DataEventAnimation", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_EventAnimation, value));
 
-		if (compound.contains("DataHorizontalClimb")) {
-			this.entityData.set(DATA_HorizontalClimb, compound.getInt("DataHorizontalClimb"));
-		}
+		compound.read("DataHorizontalClimb", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_HorizontalClimb, value));
 
-		if (compound.contains("DataTransparency")) {
-			this.entityData.set(DATA_Transparency, compound.getInt("DataTransparency"));
-		}
+		compound.read("DataTransparency", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_Transparency, value));
 
-		if (compound.contains("DataHorizontalClimbing")) {
-			this.entityData.set(DATA_HorizontalClimbing, compound.getBoolean("DataHorizontalClimbing"));
-		}
+		compound.read("DataHorizontalClimbing", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_HorizontalClimbing, value));
 
-		if (compound.contains("DataGrabbingPlayer")) {
-			this.entityData.set(DATA_GrabbingPlayer, compound.getInt("DataGrabbingPlayer"));
-		}
+		compound.read("DataGrabbingPlayer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_GrabbingPlayer, value));
 
-		if (compound.contains("DataSmackPlayerOffPillar")) {
-			this.entityData.set(DATA_SmackPlayerOffPillar, compound.getInt("DataSmackPlayerOffPillar"));
-		}
+		compound.read("DataSmackPlayerOffPillar", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_SmackPlayerOffPillar, value));
 
-		if (compound.contains("DataGrabPlayerCooldown")) {
-			this.entityData.set(DATA_GrabPlayerCooldown, compound.getInt("DataGrabPlayerCooldown"));
-		}
+		compound.read("DataGrabPlayerCooldown", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_GrabPlayerCooldown, value));
 
-		if (compound.contains("DataDeManifestType")) {
-			this.entityData.set(DATA_DeManifestType, compound.getInt("DataDeManifestType"));
-		}
+		compound.read("DataDeManifestType", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_DeManifestType, value));
 
-		if (compound.contains("DataChaseAmbientTimer")) {
-			this.entityData.set(DATA_ChaseAmbientTimer, compound.getInt("DataChaseAmbientTimer"));
-		}
+		compound.read("DataChaseAmbientTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ChaseAmbientTimer, value));
 
-		if (compound.contains("DataConcealSelf")) {
-			this.entityData.set(DATA_ConcealSelf, compound.getInt("DataConcealSelf"));
-		}
+		compound.read("DataConcealSelf", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ConcealSelf, value));
 
-		if (compound.contains("DataConcealSelfTimer")) {
-			this.entityData.set(DATA_ConcealSelfTimer, compound.getInt("DataConcealSelfTimer"));
-		}
+		compound.read("DataConcealSelfTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_ConcealSelfTimer, value));
 
-		if (compound.contains("DataLookedAtEventRandomizer")) {
-			this.entityData.set(DATA_LookedAtEventRandomizer, compound.getInt("DataLookedAtEventRandomizer"));
-		}
+		compound.read("DataLookedAtEventRandomizer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_LookedAtEventRandomizer, value));
 
-		if (compound.contains("DataRandomLookEventCooldown")) {
-			this.entityData.set(DATA_RandomLookEventCooldown, compound.getInt("DataRandomLookEventCooldown"));
-		}
+		compound.read("DataRandomLookEventCooldown", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_RandomLookEventCooldown, value));
 
-		if (compound.contains("DataRunAtRunAwayEvent")) {
-			this.entityData.set(DATA_RunAtRunAwayEvent, compound.getInt("DataRunAtRunAwayEvent"));
-		}
+		compound.read("DataRunAtRunAwayEvent", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_RunAtRunAwayEvent, value));
 
-		if (compound.contains("DataAIIdleTimer")) {
-			this.entityData.set(DATA_AIIdleTimer, compound.getInt("DataAIIdleTimer"));
-		}
+		compound.read("DataAIIdleTimer", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_AIIdleTimer, value));
 
-		if (compound.contains("DataEnraged")) {
-			this.entityData.set(DATA_Enraged, compound.getBoolean("DataEnraged"));
-		}
+		compound.read("DataEnraged", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_Enraged, value));
 
-		if (compound.contains("DataAggroStared")) {
-			this.entityData.set(DATA_AggroStared, compound.getInt("DataAggroStared"));
-		}
+		compound.read("DataAggroStared", com.mojang.serialization.Codec.INT).ifPresent(value -> this.entityData.set(DATA_AggroStared, value));
 
-		if (compound.contains("DataFoldInArms")) {
-			this.entityData.set(DATA_FoldInArms, compound.getBoolean("DataFoldInArms"));
-		}
+		compound.read("DataFoldInArms", com.mojang.serialization.Codec.BOOL).ifPresent(value -> this.entityData.set(DATA_FoldInArms, value));
 
-		if (compound.contains("DataGhostTarget")) {
-			this.entityData.set(DATA_GhostTarget, compound.getString("DataGhostTarget"));
-		}
+		compound.read("DataGhostTarget", com.mojang.serialization.Codec.STRING).ifPresent(value -> this.entityData.set(DATA_GhostTarget, value));
 	}
 
 	@Override
@@ -606,18 +509,18 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		return builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
 	}
 
-	private PlayState movementPredicate(AnimationState event) {
+	private PlayState movementPredicate(AnimationTest<GrowlingManEntity> event) {
 		if (this.animationprocedure.equals("empty")) {
 			if ((Boolean)this.entityData.get(DATA_PlayEventAnimation)) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop((String)this.entityData.get(DATA_EventAnimation)));
-			} else if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F) || !(event.getLimbSwingAmount() < 0.15F))
+			} else if ((event.isMoving() || !(this.walkAnimation.speed() > -0.15F) || !(this.walkAnimation.speed() < 0.15F))
 				&& !this.isAggressive()
-				&& !this.isInWaterOrBubble()) {
+				&& !this.isInWater()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop((String)this.entityData.get(DATA_WalkingAnimation)));
-			} else if (this.isInWaterOrBubble()) {
+			} else if (this.isInWater()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("animation.growling_man.swim"));
 			} else {
-				return this.isAggressive() && event.isMoving() && !this.isInWaterOrBubble()
+				return this.isAggressive() && event.isMoving() && !this.isInWater()
 					? event.setAndContinue(RawAnimation.begin().thenLoop((String)this.entityData.get(DATA_RunningAnimation)))
 					: event.setAndContinue(RawAnimation.begin().thenLoop((String)this.entityData.get(DATA_IdleAnimation)));
 			}
@@ -626,11 +529,8 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		}
 	}
 
-	private PlayState attackingPredicate(AnimationState event) {
-		double d1 = this.getX() - this.xOld;
-		double d0 = this.getZ() - this.zOld;
-		float velocity = (float)Math.sqrt(d1 * d1 + d0 * d0);
-		if (this.getAttackAnim(event.getPartialTick()) > 0.0F && !this.swinging) {
+	private PlayState attackingPredicate(AnimationTest<GrowlingManEntity> event) {
+		if (this.getAttackAnim(event.getDataOrDefault(DataTickets.PARTIAL_TICK, 0.0F)) > 0.0F && !this.swinging) {
 			this.swinging = true;
 			this.lastSwing = this.level().getGameTime();
 		}
@@ -644,33 +544,24 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 			&& (Integer)this.entityData.get(DATA_GrabbingPlayer) == 0
 			&& (Integer)this.entityData.get(DATA_DeManifestTimer) == 0
 			&& (Integer)this.entityData.get(DATA_ManifestTimer) == 0
-			&& event.getController().getAnimationState() == State.STOPPED) {
-			event.getController().forceAnimationReset();
+			&& (event.controller().getCurrentRawAnimation() == null || event.controller().hasAnimationFinished())) {
+			event.controller().reset();
 			return event.setAndContinue(RawAnimation.begin().thenPlay("animation.growling_man.attack"));
 		} else {
 			return PlayState.CONTINUE;
 		}
 	}
 
-	private PlayState procedurePredicate(AnimationState event) {
-		if (!this.animationprocedure.equals("empty") && event.getController().getAnimationState() == State.STOPPED) {
-			event.getController().setAnimation(RawAnimation.begin().thenPlay(this.animationprocedure));
-			if (event.getController().getAnimationState() == State.STOPPED) {
-				this.animationprocedure = "empty";
-				event.getController().forceAnimationReset();
-			}
-		} else if (this.animationprocedure.equals("empty")) {
-			return PlayState.STOP;
-		}
-
-		return PlayState.CONTINUE;
+	private PlayState procedurePredicate(AnimationTest<GrowlingManEntity> event) {
+		return GeoAnims.procedure(event, this.animationprocedure, animation -> this.animationprocedure = animation);
 	}
 
 	protected void tickDeath() {
 		this.deathTime++;
 		if (this.deathTime == 20) {
 			this.remove(RemovalReason.KILLED);
-			this.dropExperience(null);
+			if (this.level() instanceof ServerLevel _serverLevel)
+				this.dropExperience(_serverLevel, null);
 		}
 	}
 
@@ -682,10 +573,10 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 		this.entityData.set(ANIMATION, animation);
 	}
 
-	public void registerControllers(ControllerRegistrar data) {
-		data.add(new AnimationController[]{new AnimationController(this, "movement", 4, this::movementPredicate)});
-		data.add(new AnimationController[]{new AnimationController(this, "attacking", 4, this::attackingPredicate)});
-		data.add(new AnimationController[]{new AnimationController(this, "procedure", 4, this::procedurePredicate)});
+	public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+		data.add(new GeoAnims.Controller<>("movement", 4, this::movementPredicate));
+		data.add(new GeoAnims.Controller<>("attacking", 4, this::attackingPredicate));
+		data.add(new GeoAnims.Controller<>("procedure", 4, this::procedurePredicate));
 	}
 
 	public AnimatableInstanceCache getAnimatableInstanceCache() {

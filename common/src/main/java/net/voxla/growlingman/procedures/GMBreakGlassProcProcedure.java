@@ -130,7 +130,7 @@ public class GMBreakGlassProcProcedure {
 								BlockEntity var37 = world.getBlockEntity(_bp);
 								if (var37 != null) {
 									try {
-										var37.loadWithComponents(_bnbt, world.registryAccess());
+										var37.loadWithComponents(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, world.registryAccess(), _bnbt));
 									} catch (Exception var25) {
 									}
 								}

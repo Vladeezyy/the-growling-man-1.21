@@ -3,7 +3,7 @@ package net.voxla.growlingman.procedures;
 import java.util.Comparator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -79,8 +79,8 @@ public class KnockPlayerOffPillaringProcedure {
 					entityiterator.hurt(
 						new DamageSource(
 							world.registryAccess()
-								.registryOrThrow(Registries.DAMAGE_TYPE)
-								.getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("growling_man:gm_damage")))
+								.lookupOrThrow(Registries.DAMAGE_TYPE)
+								.getOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.parse("growling_man:gm_damage")))
 						),
 						5.0F
 					);

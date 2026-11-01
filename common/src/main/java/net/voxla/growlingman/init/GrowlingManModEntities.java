@@ -14,7 +14,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.voxla.growlingman.port.platform.RegistryEntry;
 import net.voxla.growlingman.entity.GrowlingManEntity;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class GrowlingManModEntities {
 	public static final Registrar<EntityType<?>> REGISTRY = Registrar.create(Registries.ENTITY_TYPE, "growling_man");
 	public static final RegistryEntry<EntityType<?>, EntityType<GrowlingManEntity>> GROWLING_MAN = register(
@@ -28,7 +28,7 @@ public class GrowlingManModEntities {
 	);
 
 	private static <T extends Entity> RegistryEntry<EntityType<?>, EntityType<T>> register(String registryname, Builder<T> entityTypeBuilder) {
-		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(registryname));
+		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, net.minecraft.resources.Identifier.fromNamespaceAndPath("growling_man", registryname))));
 	}
 
 	@SubscribeEvent

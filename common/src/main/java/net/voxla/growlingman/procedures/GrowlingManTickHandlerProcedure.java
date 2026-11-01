@@ -12,7 +12,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -107,11 +107,11 @@ public class GrowlingManTickHandlerProcedure {
 				}
 
 				if (entity instanceof LivingEntity _livEnt22
-					&& _livEnt22.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)
-					&& (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) ? _livEnt.getEffect(MobEffects.MOVEMENT_SLOWDOWN).getAmplifier() : 0) > 3
+					&& _livEnt22.hasEffect(MobEffects.SLOWNESS)
+					&& (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.SLOWNESS) ? _livEnt.getEffect(MobEffects.SLOWNESS).getAmplifier() : 0) > 3
 					&& (entity instanceof GrowlingManEntity _datEntIxx ? (Integer)_datEntIxx.getEntityData().get(GrowlingManEntity.DATA_DeManifestTimer) : 0) == 0
 					&& entity instanceof LivingEntity _entity) {
-					_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+					_entity.removeEffect(MobEffects.SLOWNESS);
 				}
 
 				if (!world.isClientSide()) {
@@ -223,7 +223,7 @@ public class GrowlingManTickHandlerProcedure {
 							_level.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -233,7 +233,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -247,7 +247,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -257,7 +257,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -273,7 +273,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -283,7 +283,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -297,7 +297,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic_distant")),
 								SoundSource.NEUTRAL,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -307,7 +307,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.erratic_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.erratic_distant")),
 								SoundSource.NEUTRAL,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -323,7 +323,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -333,7 +333,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -347,7 +347,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -357,7 +357,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -373,7 +373,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0)
@@ -383,7 +383,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 								SoundSource.HOSTILE,
 								2.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0),
@@ -397,7 +397,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0)
@@ -407,7 +407,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main_distant")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main_distant")),
 								SoundSource.HOSTILE,
 								4.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0),
@@ -424,7 +424,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + 1.5, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 								SoundSource.HOSTILE,
 								3.0F,
 								0.8F
@@ -434,7 +434,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + 1.5,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 								SoundSource.HOSTILE,
 								3.0F,
 								0.8F,
@@ -474,8 +474,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -487,8 +487,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -523,8 +523,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -536,8 +536,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -558,12 +558,12 @@ public class GrowlingManTickHandlerProcedure {
 					if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()
 						&& entity instanceof LivingEntity _entity
 						&& !_entity.level().isClientSide()) {
-						_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 0, false, false));
+						_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 2, 0, false, false));
 					}
 				} else if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 30.0, 30.0, 30.0)).isEmpty()
 					&& entity instanceof LivingEntity _entity
 					&& !_entity.level().isClientSide()) {
-					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 0, false, false));
+					_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 2, 0, false, false));
 				}
 
 				PlayerCanSeeGMProcedure.execute(world, x, y, z, entity);
@@ -571,7 +571,7 @@ public class GrowlingManTickHandlerProcedure {
 					&& (Boolean)_datEntL126.getEntityData().get(GrowlingManEntity.DATA_Enraged)
 					&& entity instanceof LivingEntity _entity
 					&& !_entity.level().isClientSide()) {
-					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3, 3, false, false));
+					_entity.addEffect(new MobEffectInstance(MobEffects.SPEED, 3, 3, false, false));
 				}
 
 				if (entity instanceof GrowlingManEntity _datEntL128
@@ -591,17 +591,17 @@ public class GrowlingManTickHandlerProcedure {
 					if ((entity instanceof GrowlingManEntity _datEntIxxxx ? (Integer)_datEntIxxxx.getEntityData().get(GrowlingManEntity.DATA_AggroStared) : 0)
 						< 266) {
 						if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide()) {
-							_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10, 250, false, false));
+							_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 10, 250, false, false));
 						}
 					} else if ((
 								entity instanceof GrowlingManEntity _datEntIxxxxx ? (Integer)_datEntIxxxxx.getEntityData().get(GrowlingManEntity.DATA_AggroStared) : 0
 							)
 							>= 266
 						&& Math.random() > 0.1
-						&& !(entity instanceof LivingEntity _livEnt137 && _livEnt137.hasEffect(MobEffects.MOVEMENT_SLOWDOWN))
+						&& !(entity instanceof LivingEntity _livEnt137 && _livEnt137.hasEffect(MobEffects.SLOWNESS))
 						&& entity instanceof LivingEntity _entity
 						&& !_entity.level().isClientSide()) {
-						_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 250, false, false));
+						_entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20, 250, false, false));
 					}
 
 					if (Math.random() > 0.99
@@ -620,7 +620,7 @@ public class GrowlingManTickHandlerProcedure {
 									_levelxxxxxxxxx.playSound(
 										null,
 										BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F
@@ -630,7 +630,7 @@ public class GrowlingManTickHandlerProcedure {
 										x,
 										y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 										z,
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F,
@@ -644,7 +644,7 @@ public class GrowlingManTickHandlerProcedure {
 									_levelxxxxxxxxxx.playSound(
 										null,
 										BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("block.bell.resonate")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("block.bell.resonate")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F
@@ -654,7 +654,7 @@ public class GrowlingManTickHandlerProcedure {
 										x,
 										y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 										z,
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("block.bell.resonate")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("block.bell.resonate")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F,
@@ -668,7 +668,7 @@ public class GrowlingManTickHandlerProcedure {
 									_levelxxxxxxxxxxx.playSound(
 										null,
 										BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F
@@ -678,7 +678,7 @@ public class GrowlingManTickHandlerProcedure {
 										x,
 										y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 										z,
-										(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic")),
+										(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic")),
 										SoundSource.HOSTILE,
 										5.0F,
 										0.5F,
@@ -740,7 +740,7 @@ public class GrowlingManTickHandlerProcedure {
 							_levelxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + 1.7, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient")),
 								SoundSource.HOSTILE,
 								1.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0)
@@ -750,7 +750,7 @@ public class GrowlingManTickHandlerProcedure {
 								x,
 								y + 1.7,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.ambient")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.ambient")),
 								SoundSource.HOSTILE,
 								1.0F,
 								(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0),
@@ -830,8 +830,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.CREATIVE
 											: false;
 									}
 								}
@@ -843,8 +843,8 @@ public class GrowlingManTickHandlerProcedure {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
 									} else {
 										return _ent.level().isClientSide() && _ent instanceof Player _player
-											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR
+											? Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().id()).getGameMode() == GameType.SPECTATOR
 											: false;
 									}
 								}
@@ -1470,7 +1470,7 @@ public class GrowlingManTickHandlerProcedure {
 								new Vec3(x, y, z),
 								Vec2.ZERO,
 								_levelxxxxxxxxxxxxx,
-								4,
+								net.minecraft.server.permissions.LevelBasedPermissionSet.OWNER,
 								"",
 								Component.literal(""),
 								_levelxxxxxxxxxxxxx.getServer(),
@@ -1490,7 +1490,7 @@ public class GrowlingManTickHandlerProcedure {
 					)
 					== 10
 				&& entity.maxUpStep() != 1.2
-				&& !entity.isInWaterOrBubble()) {
+				&& !entity.isInWater()) {
 				if (entity instanceof LivingEntity _stepEntity) {
 					_stepEntity.getAttribute(Attributes.STEP_HEIGHT).setBaseValue(1.2);
 				}
@@ -1525,7 +1525,7 @@ public class GrowlingManTickHandlerProcedure {
 						_levelxxxxxxxxxxxxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0)
@@ -1535,7 +1535,7 @@ public class GrowlingManTickHandlerProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.sporadic_limbs")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.sporadic_limbs")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.9, 1.0),
@@ -1549,7 +1549,7 @@ public class GrowlingManTickHandlerProcedure {
 						_levelxxxxxxxxxxxxxx.playSound(
 							null,
 							BlockPos.containing(x, y + entity.getBbHeight() - entity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0)
@@ -1559,7 +1559,7 @@ public class GrowlingManTickHandlerProcedure {
 							x,
 							y + entity.getBbHeight() - entity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.growling_man.growl_main")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.growling_man.growl_main")),
 							SoundSource.HOSTILE,
 							1.0F,
 							(float)Mth.nextDouble(RandomSource.create(), 0.8, 1.0),

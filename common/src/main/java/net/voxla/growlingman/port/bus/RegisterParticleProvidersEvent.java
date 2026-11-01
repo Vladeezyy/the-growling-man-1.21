@@ -1,6 +1,6 @@
 package net.voxla.growlingman.port.bus;
 
-import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleResources;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 
@@ -11,11 +11,11 @@ public class RegisterParticleProvidersEvent extends Event {
 		this.sink = sink;
 	}
 
-	public <T extends ParticleOptions> void registerSpriteSet(ParticleType<T> type, ParticleEngine.SpriteParticleRegistration<T> registration) {
+	public <T extends ParticleOptions> void registerSpriteSet(ParticleType<T> type, ParticleResources.SpriteParticleRegistration<T> registration) {
 		this.sink.register(type, registration);
 	}
 
 	public interface Sink {
-		<T extends ParticleOptions> void register(ParticleType<T> type, ParticleEngine.SpriteParticleRegistration<T> registration);
+		<T extends ParticleOptions> void register(ParticleType<T> type, ParticleResources.SpriteParticleRegistration<T> registration);
 	}
 }

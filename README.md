@@ -2,12 +2,12 @@
 
 <img src="docs/images/logo.png" width="160" alt="The Growling Man logo">
 
-# The Growling Man — NeoForge + Fabric 1.21.1
+# The Growling Man — NeoForge + Fabric 1.21.11
 
 **He stalks you, and he is drawn to sorrow and grief.**
 
-[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-3c8527)](https://www.minecraft.net)
-[![NeoForge 21.1](https://img.shields.io/badge/NeoForge-21.1.197%2B-e0682b)](https://neoforged.net)
+[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.11-3c8527)](https://www.minecraft.net)
+[![NeoForge 21.1](https://img.shields.io/badge/NeoForge-21.11.48%2B-e0682b)](https://neoforged.net)
 [![Fabric 1.21.1](https://img.shields.io/badge/Fabric-Loader%200.19.5%2B-dbd0b4)](https://fabricmc.net)
 [![GeckoLib 4.9](https://img.shields.io/badge/requires-GeckoLib%204.9%2B-8a2be2)](https://modrinth.com/mod/geckolib)
 [![License LGPL-3.0](https://img.shields.io/badge/license-LGPL--3.0-blue)](LICENSE)

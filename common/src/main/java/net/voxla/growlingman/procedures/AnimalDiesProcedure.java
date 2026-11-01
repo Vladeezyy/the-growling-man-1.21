@@ -1,11 +1,13 @@
 package net.voxla.growlingman.procedures;
 
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.server.permissions.LevelBasedPermissionSet;
 import javax.annotation.Nullable;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -72,7 +74,7 @@ public class AnimalDiesProcedure {
 								.getCommands()
 								.performPrefixedCommand(
 									new CommandSourceStack(
-											CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null
+											CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, LevelBasedPermissionSet.OWNER, "", Component.literal(""), _level.getServer(), null
 										)
 										.withSuppressedOutput(),
 									"/weather thunder 180"
@@ -82,8 +84,8 @@ public class AnimalDiesProcedure {
 						soundx = x + (Math.random() > 0.6 ? Mth.nextInt(RandomSource.create(), -30, -10) : Mth.nextInt(RandomSource.create(), 10, 30));
 						soundz = z + (Math.random() > 0.6 ? Mth.nextInt(RandomSource.create(), -30, -10) : Mth.nextInt(RandomSource.create(), 10, 30));
 						if (world instanceof ServerLevel _level) {
-							LightningBolt entityToSpawn = (LightningBolt)EntityType.LIGHTNING_BOLT.create(_level);
-							entityToSpawn.moveTo(
+							LightningBolt entityToSpawn = (LightningBolt)EntityType.LIGHTNING_BOLT.create(_level, EntitySpawnReason.COMMAND);
+							entityToSpawn.snapTo(
 								Vec3.atBottomCenterOf(BlockPos.containing(soundx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)soundx, (int)soundz), soundz))
 							);
 							_level.addFreshEntity(entityToSpawn);
@@ -104,7 +106,7 @@ public class AnimalDiesProcedure {
 										+ 30.0,
 									soundz
 								),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.lightning_bolt.thunder")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.lightning_bolt.thunder")),
 								SoundSource.WEATHER,
 								5.0F,
 								1.0F
@@ -117,7 +119,7 @@ public class AnimalDiesProcedure {
 									- entity.getBbHeight() / 4.0F
 									+ 30.0,
 								soundz,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("entity.lightning_bolt.thunder")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("entity.lightning_bolt.thunder")),
 								SoundSource.WEATHER,
 								5.0F,
 								1.0F,
@@ -176,7 +178,7 @@ public class AnimalDiesProcedure {
 							_levelx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								1.0F
@@ -186,7 +188,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								1.0F,
@@ -202,7 +204,7 @@ public class AnimalDiesProcedure {
 							_levelxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.9F
@@ -212,7 +214,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.9F,
@@ -228,7 +230,7 @@ public class AnimalDiesProcedure {
 							_levelxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.8F
@@ -238,7 +240,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.8F,
@@ -254,7 +256,7 @@ public class AnimalDiesProcedure {
 							_levelxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -264,7 +266,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -281,7 +283,7 @@ public class AnimalDiesProcedure {
 						_levelxxxxx.playSound(
 							null,
 							BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 							SoundSource.PLAYERS,
 							1.0F,
 							0.5F
@@ -291,7 +293,7 @@ public class AnimalDiesProcedure {
 							x,
 							y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 							z,
-							(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+							(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 							SoundSource.PLAYERS,
 							1.0F,
 							0.5F,
@@ -346,7 +348,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -356,7 +358,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -372,7 +374,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -382,7 +384,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -398,7 +400,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -408,7 +410,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -424,7 +426,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -434,7 +436,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -451,7 +453,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -461,7 +463,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -515,7 +517,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -525,7 +527,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -542,7 +544,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -552,7 +554,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -607,7 +609,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								1.0F
@@ -617,7 +619,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								1.0F,
@@ -634,7 +636,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -644,7 +646,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -661,7 +663,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -671,7 +673,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -688,7 +690,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -698,7 +700,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -714,7 +716,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -724,7 +726,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -741,7 +743,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -751,7 +753,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -768,7 +770,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -778,7 +780,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -794,7 +796,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -804,7 +806,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -821,7 +823,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -831,7 +833,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -848,7 +850,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -858,7 +860,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -874,7 +876,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -884,7 +886,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -900,7 +902,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -910,7 +912,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -927,7 +929,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -937,7 +939,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -954,7 +956,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -964,7 +966,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -980,7 +982,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -990,7 +992,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1006,7 +1008,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1016,7 +1018,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1033,7 +1035,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -1043,7 +1045,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -1060,7 +1062,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1070,7 +1072,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1086,7 +1088,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1096,7 +1098,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1112,7 +1114,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1122,7 +1124,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1139,7 +1141,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F
@@ -1149,7 +1151,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.7F,
@@ -1166,7 +1168,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1176,7 +1178,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1192,7 +1194,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1202,7 +1204,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1218,7 +1220,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1228,7 +1230,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1244,7 +1246,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1254,7 +1256,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1271,7 +1273,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1281,7 +1283,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1298,7 +1300,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1308,7 +1310,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1324,7 +1326,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1334,7 +1336,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1350,7 +1352,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1360,7 +1362,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1376,7 +1378,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1386,7 +1388,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1403,7 +1405,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1413,7 +1415,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1430,7 +1432,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1440,7 +1442,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1456,7 +1458,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1466,7 +1468,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1482,7 +1484,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1492,7 +1494,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1508,7 +1510,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1518,7 +1520,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1535,7 +1537,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1545,7 +1547,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1562,7 +1564,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1572,7 +1574,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1588,7 +1590,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1598,7 +1600,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1614,7 +1616,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1624,7 +1626,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1640,7 +1642,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1650,7 +1652,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1667,7 +1669,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1677,7 +1679,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1694,7 +1696,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1704,7 +1706,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1720,7 +1722,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1730,7 +1732,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1746,7 +1748,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1756,7 +1758,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1772,7 +1774,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1782,7 +1784,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1799,7 +1801,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1809,7 +1811,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1826,7 +1828,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1836,7 +1838,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1852,7 +1854,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1862,7 +1864,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -1878,7 +1880,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -1888,7 +1890,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -1904,7 +1906,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -1914,7 +1916,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -1931,7 +1933,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -1941,7 +1943,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -1958,7 +1960,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -1968,7 +1970,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -1984,7 +1986,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -1994,7 +1996,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -2010,7 +2012,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -2020,7 +2022,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -2036,7 +2038,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -2046,7 +2048,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -2063,7 +2065,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -2073,7 +2075,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -2090,7 +2092,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -2100,7 +2102,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -2116,7 +2118,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -2126,7 +2128,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -2142,7 +2144,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -2152,7 +2154,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -2168,7 +2170,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -2178,7 +2180,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -2195,7 +2197,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -2205,7 +2207,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -2222,7 +2224,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -2232,7 +2234,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -2248,7 +2250,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -2258,7 +2260,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -2274,7 +2276,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -2284,7 +2286,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -2300,7 +2302,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -2310,7 +2312,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -2327,7 +2329,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -2337,7 +2339,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -2354,7 +2356,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -2364,7 +2366,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -2380,7 +2382,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -2390,7 +2392,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -2406,7 +2408,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -2416,7 +2418,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -2432,7 +2434,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -2442,7 +2444,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -2459,7 +2461,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -2469,7 +2471,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
@@ -2486,7 +2488,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F
@@ -2496,7 +2498,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									1.0F,
@@ -2512,7 +2514,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F
@@ -2522,7 +2524,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.9F,
@@ -2538,7 +2540,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F
@@ -2548,7 +2550,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.8F,
@@ -2564,7 +2566,7 @@ public class AnimalDiesProcedure {
 								_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 									null,
 									BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F
@@ -2574,7 +2576,7 @@ public class AnimalDiesProcedure {
 									x,
 									y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 									z,
-									(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+									(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 									SoundSource.PLAYERS,
 									1.0F,
 									0.7F,
@@ -2591,7 +2593,7 @@ public class AnimalDiesProcedure {
 							_levelxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.playSound(
 								null,
 								BlockPos.containing(x, y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F, z),
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F
@@ -2601,7 +2603,7 @@ public class AnimalDiesProcedure {
 								x,
 								y + sourceentity.getBbHeight() - sourceentity.getBbHeight() / 4.0F,
 								z,
-								(SoundEvent)BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse("growling_man:entity.player.kills_too_much")),
+								(SoundEvent)BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse("growling_man:entity.player.kills_too_much")),
 								SoundSource.PLAYERS,
 								1.0F,
 								0.6F,
