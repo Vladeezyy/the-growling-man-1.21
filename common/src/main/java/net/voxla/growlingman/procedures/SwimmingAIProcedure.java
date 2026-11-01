@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
@@ -50,7 +51,7 @@ public class SwimmingAIProcedure {
 									|| world.getBlockState(BlockPos.containing(x, y + 0.5, z)).getBlock() != Blocks.WATER
 							)
 							&& entityiterator.getY() > entity.getY()) {
-							if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0), e -> true).isEmpty()) {
+							if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()) {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 7.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 7.0));
 							} else {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 6.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 6.0));
@@ -60,7 +61,7 @@ public class SwimmingAIProcedure {
 									|| world.getBlockState(BlockPos.containing(x, y + 0.5, z)).getBlock() == Blocks.WATER
 							)
 							&& entityiterator.getY() > entity.getY()) {
-							if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0), e -> true).isEmpty()) {
+							if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()) {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 7.0, entity.getDeltaMovement().y() + 0.1, entity.getLookAngle().z / 7.0));
 							} else {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 6.0, entity.getDeltaMovement().y() + 0.1, entity.getLookAngle().z / 6.0));
@@ -70,13 +71,13 @@ public class SwimmingAIProcedure {
 									|| world.getBlockState(BlockPos.containing(x, y - 0.5, z)).getBlock() == Blocks.WATER
 							)
 							&& entityiterator.getY() < entity.getY()) {
-							if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0), e -> true).isEmpty()) {
+							if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()) {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 7.0, entity.getDeltaMovement().y() + -0.1, entity.getLookAngle().z / 7.0));
 							} else {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 6.0, entity.getDeltaMovement().y() + -0.1, entity.getLookAngle().z / 6.0));
 							}
 						} else if (entityiterator.getY() == entity.getY()) {
-							if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0), e -> true).isEmpty()) {
+							if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()) {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 7.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 7.0));
 							} else {
 								entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 6.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 6.0));
@@ -87,7 +88,7 @@ public class SwimmingAIProcedure {
 								|| world.getBlockState(BlockPos.containing(x, y + 0.5, z)).getBlock() != Blocks.WATER
 						)
 						&& entityiterator.getY() > entity.getY()) {
-						if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0), e -> true).isEmpty()) {
+						if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0)).isEmpty()) {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 4.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 4.0));
 						} else {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 3.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 3.0));
@@ -97,7 +98,7 @@ public class SwimmingAIProcedure {
 								|| world.getBlockState(BlockPos.containing(x, y + 0.5, z)).getBlock() == Blocks.WATER
 						)
 						&& entityiterator.getY() > entity.getY()) {
-						if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0), e -> true).isEmpty()) {
+						if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0)).isEmpty()) {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 4.0, entity.getDeltaMovement().y() + 0.1, entity.getLookAngle().z / 4.0));
 						} else {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 3.0, entity.getDeltaMovement().y() + 0.1, entity.getLookAngle().z / 3.0));
@@ -107,13 +108,13 @@ public class SwimmingAIProcedure {
 								|| world.getBlockState(BlockPos.containing(x, y - 0.5, z)).getBlock() == Blocks.WATER
 						)
 						&& entityiterator.getY() < entity.getY()) {
-						if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0), e -> true).isEmpty()) {
+						if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0)).isEmpty()) {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 4.0, entity.getDeltaMovement().y() + -0.1, entity.getLookAngle().z / 4.0));
 						} else {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 3.0, entity.getDeltaMovement().y() + -0.1, entity.getLookAngle().z / 4.0));
 						}
 					} else if (entityiterator.getY() == entity.getY()) {
-						if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0), e -> true).isEmpty()) {
+						if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 6.0, 6.0, 6.0)).isEmpty()) {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 4.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 4.0));
 						} else {
 							entity.setDeltaMovement(new Vec3(entity.getLookAngle().x / 3.0, entity.getDeltaMovement().y(), entity.getLookAngle().z / 3.0));

@@ -1,5 +1,10 @@
 package net.voxla.growlingman.network;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+import net.voxla.growlingman.port.bus.EventPriority;
+import net.voxla.growlingman.port.bus.GMBus;
+import net.voxla.growlingman.port.bus.ServerTickEvent;
 import net.voxla.growlingman.port.bus.PlayerEvent;
 import net.voxla.growlingman.port.bus.FMLCommonSetupEvent;
 import net.voxla.growlingman.port.bus.EventBusSubscriber;
@@ -27,6 +32,34 @@ import net.voxla.growlingman.port.platform.Platform;
 
 
 public class GrowlingManModVariables {
+	/** port/PerfScene: sync packets sent */
+	public static int syncs;
+
+	// MCreator syncs after every write of a variable, up to several times per tick for one player and every tick for
+	// the spawn timers: the syncs asked for during a server tick are sent once, at its end, with the latest values
+	private static final Set<ServerPlayer> PENDING_PLAYERS = new LinkedHashSet<>();
+	private static final Set<ServerLevel> PENDING_WORLDS = new LinkedHashSet<>();
+	private static MapVariables pendingMap;
+
+	private static void flushSyncs(ServerTickEvent.Post event) {
+		for (ServerPlayer player : PENDING_PLAYERS)
+			if (!player.isRemoved() && !player.hasDisconnected()) {
+				syncs++;
+				Platform.INSTANCE.sendToPlayer(player, new PlayerVariablesSyncMessage(of(player)));
+			}
+		PENDING_PLAYERS.clear();
+		for (ServerLevel level : PENDING_WORLDS) {
+			syncs++;
+			Platform.INSTANCE.sendToPlayersInDimension(level, new SavedDataSyncMessage(1, WorldVariables.get(level)));
+		}
+		PENDING_WORLDS.clear();
+		if (pendingMap != null) {
+			syncs++;
+			Platform.INSTANCE.sendToAllPlayers(new SavedDataSyncMessage(0, pendingMap));
+			pendingMap = null;
+		}
+	}
+
 	/** The id of the player variables attachment (NeoForge and Fabric), as in 1.0.1 */
 	public static final ResourceLocation PLAYER_VARIABLES_ID = ResourceLocation.fromNamespaceAndPath(GrowlingManMod.MODID, "player_variables");
 
@@ -39,6 +72,7 @@ public class GrowlingManModVariables {
 	public static void registerPackets() {
 		Platform.INSTANCE.registerClientbound(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC, SavedDataSyncMessage::handleData);
 		Platform.INSTANCE.registerClientbound(PlayerVariablesSyncMessage.TYPE, PlayerVariablesSyncMessage.STREAM_CODEC, PlayerVariablesSyncMessage::handleData);
+		GMBus.add(ServerTickEvent.Post.class, EventPriority.LOWEST, GrowlingManModVariables::flushSyncs);
 	}
 
 	@EventBusSubscriber
@@ -138,7 +172,7 @@ public class GrowlingManModVariables {
 		public void syncData(LevelAccessor world) {
 			this.setDirty();
 			if (world instanceof ServerLevel level)
-				Platform.INSTANCE.sendToPlayersInDimension(level, new SavedDataSyncMessage(1, this));
+				PENDING_WORLDS.add(level);
 		}
 
 		static WorldVariables clientSide = new WorldVariables();
@@ -182,7 +216,7 @@ public class GrowlingManModVariables {
 		public void syncData(LevelAccessor world) {
 			this.setDirty();
 			if (world instanceof Level && !world.isClientSide())
-				Platform.INSTANCE.sendToAllPlayers(new SavedDataSyncMessage(0, this));
+				pendingMap = this;
 		}
 
 		static MapVariables clientSide = new MapVariables();
@@ -294,7 +328,7 @@ public class GrowlingManModVariables {
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
-				Platform.INSTANCE.sendToPlayer(serverPlayer, new PlayerVariablesSyncMessage(this));
+				PENDING_PLAYERS.add(serverPlayer);
 		}
 	}
 

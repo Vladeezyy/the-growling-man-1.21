@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementHolder;
 
@@ -133,7 +134,7 @@ public class GMCanSpawnProcedure {
 
 								Vec3 _center = new Vec3(x + spawnx, y + YRepeater, z + spawnz);
 
-								for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+								for (Entity entityiterator : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 									.stream()
 									.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 									.toList()) {
@@ -225,7 +226,7 @@ public class GMCanSpawnProcedure {
 											x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater, z + spawnz
 										);
 
-										for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+										for (Entity entityiteratorx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 											.stream()
 											.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 											.toList()) {
@@ -281,7 +282,7 @@ public class GMCanSpawnProcedure {
 
 							Vec3 _center = new Vec3(x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz);
 
-							for (Entity entityiteratorxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+							for (Entity entityiteratorxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 								.stream()
 								.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 								.toList()) {
@@ -349,7 +350,7 @@ public class GMCanSpawnProcedure {
 
 								Vec3 _center = new Vec3(x + spawnx, y + YRepeater, z + spawnz);
 
-								for (Entity entityiteratorxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+								for (Entity entityiteratorxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 									.stream()
 									.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 									.toList()) {
@@ -380,7 +381,7 @@ public class GMCanSpawnProcedure {
 				if (world.isClientSide() && !world.getEntitiesOfClass(GrowlingManEntity.class, AABB.ofSize(new Vec3(x, y, z), 321.0, 321.0, 321.0), e -> true).isEmpty()) {
 					Vec3 _center = new Vec3(x, y, z);
 
-					for (Entity entityiteratorxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.5), e -> true)
+					for (Entity entityiteratorxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(160.5), e -> true)
 						.stream()
 						.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.toList()) {
@@ -955,7 +956,7 @@ public class GMCanSpawnProcedure {
 
 						Vec3 _center = new Vec3(x + entity.getLookAngle().x * 9.0, y, z + entity.getLookAngle().z * 9.0);
 
-						for (Entity entityiteratorxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+						for (Entity entityiteratorxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 							.stream()
 							.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 							.toList()) {
@@ -1039,7 +1040,7 @@ public class GMCanSpawnProcedure {
 						z + entity.getLookAngle().x * 2.0 + entity.getLookAngle().z * 4.0
 					);
 
-					for (Entity entityiteratorxxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+					for (Entity entityiteratorxxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 						.stream()
 						.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.toList()) {
@@ -1245,7 +1246,7 @@ public class GMCanSpawnProcedure {
 												x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater, z + spawnz
 											);
 
-											for (Entity entityiteratorxxxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+											for (Entity entityiteratorxxxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 												.stream()
 												.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 												.toList()) {
@@ -1302,7 +1303,7 @@ public class GMCanSpawnProcedure {
 
 								Vec3 _center = new Vec3(x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz);
 
-								for (Entity entityiteratorxxxxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+								for (Entity entityiteratorxxxxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 									.stream()
 									.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 									.toList()) {
@@ -1591,7 +1592,7 @@ public class GMCanSpawnProcedure {
 													x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)) + YRepeater, z + spawnz
 												);
 
-												for (Entity entityiteratorxxxxxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+												for (Entity entityiteratorxxxxxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 													.stream()
 													.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 													.toList()) {
@@ -1648,7 +1649,7 @@ public class GMCanSpawnProcedure {
 
 									Vec3 _center = new Vec3(x + spawnx, world.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, (int)(x + spawnx), (int)(z + spawnz)), z + spawnz);
 
-									for (Entity entityiteratorxxxxxxxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2.0), e -> true)
+									for (Entity entityiteratorxxxxxxxxxx : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(2.0), e -> true)
 										.stream()
 										.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 										.toList()) {

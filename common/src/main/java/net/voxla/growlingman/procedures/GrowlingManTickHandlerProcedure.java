@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.Comparator;
@@ -82,7 +83,7 @@ public class GrowlingManTickHandlerProcedure {
 				}
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 25.0, 25.0, 25.0), e -> true).isEmpty()
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 25.0, 25.0, 25.0)).isEmpty()
 				&& (
 					(entity instanceof GrowlingManEntity _datEntIxxx ? (Integer)_datEntIxxx.getEntityData().get(GrowlingManEntity.DATA_AI) : 0) == 17
 						|| (entity instanceof GrowlingManEntity _datEntIxx ? (Integer)_datEntIxx.getEntityData().get(GrowlingManEntity.DATA_AI) : 0) == 18
@@ -462,7 +463,7 @@ public class GrowlingManTickHandlerProcedure {
 				GMBreakDoorsProcedure.execute(world, x, y, z, entity);
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.5), e -> true)
+				for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(160.5))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -554,12 +555,12 @@ public class GrowlingManTickHandlerProcedure {
 				}
 
 				if ((entity instanceof GrowlingManEntity _datEntIxx ? (Integer)_datEntIxx.getEntityData().get(GrowlingManEntity.DATA_ChaseTimer) : 0) > 800) {
-					if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0), e -> true).isEmpty()
+					if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 9.0, 9.0, 9.0)).isEmpty()
 						&& entity instanceof LivingEntity _entity
 						&& !_entity.level().isClientSide()) {
 						_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 0, false, false));
 					}
-				} else if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 30.0, 30.0, 30.0), e -> true).isEmpty()
+				} else if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 30.0, 30.0, 30.0)).isEmpty()
 					&& entity instanceof LivingEntity _entity
 					&& !_entity.level().isClientSide()) {
 					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 0, false, false));
@@ -576,7 +577,7 @@ public class GrowlingManTickHandlerProcedure {
 				if (entity instanceof GrowlingManEntity _datEntL128
 					&& (Boolean)_datEntL128.getEntityData().get(GrowlingManEntity.DATA_IsBeingLookedAt)
 					&& (entity instanceof GrowlingManEntity _datEntIxxx ? (Integer)_datEntIxxx.getEntityData().get(GrowlingManEntity.DATA_AggroStared) : 0) < 600
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 8.0, 8.0, 8.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 8.0, 8.0, 8.0)).isEmpty()
 					&& !(entity instanceof GrowlingManEntity _datEntL131 && (Boolean)_datEntL131.getEntityData().get(GrowlingManEntity.DATA_Enraged))) {
 					if (entity instanceof GrowlingManEntity _datEntSetI) {
 						_datEntSetI.getEntityData()
@@ -721,7 +722,7 @@ public class GrowlingManTickHandlerProcedure {
 					AI18ghost2Procedure.execute(world, x, y, z, entity);
 				}
 
-				if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 320.0, 320.0, 320.0), e -> true).isEmpty()) {
+				if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 320.0, 320.0, 320.0)).isEmpty()) {
 					PlayerInGMViewProcedure.execute(world, x, y, z, entity);
 				}
 
@@ -816,7 +817,7 @@ public class GrowlingManTickHandlerProcedure {
 
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiteratorxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.5), e -> true)
+				for (Entity entityiteratorxx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(160.5))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -856,7 +857,7 @@ public class GrowlingManTickHandlerProcedure {
 					}
 				}
 
-				if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 322.0, 322.0, 322.0), e -> true).isEmpty()
+				if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 322.0, 322.0, 322.0)).isEmpty()
 					&& !(entity instanceof GrowlingManEntity _datEntSxxxx ? (String)_datEntSxxxx.getEntityData().get(GrowlingManEntity.DATA_WalkTarget) : "")
 						.equals("")
 					&& entity instanceof GrowlingManEntity _datEntSetS) {
@@ -1097,7 +1098,7 @@ public class GrowlingManTickHandlerProcedure {
 					_datEntSetL.getEntityData().set(GrowlingManEntity.DATA_HorizontalClimbing, false);
 				}
 
-				if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).isEmpty()
+				if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).isEmpty()
 					&& entity.getDeltaMovement().x() == 0.0
 					&& entity.getDeltaMovement().z() == 0.0
 					&& (
@@ -1107,7 +1108,7 @@ public class GrowlingManTickHandlerProcedure {
 						)
 						== 0
 					&& !world.isClientSide()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 						}
@@ -1115,17 +1116,17 @@ public class GrowlingManTickHandlerProcedure {
 					entity.lookAt(
 						Anchor.EYES,
 						new Vec3(
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
 							}).compareDistOf(x, y, z)).findFirst().orElse(null).getX(),
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
 							}).compareDistOf(x, y, z)).findFirst().orElse(null).getY() + 1.7,
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
@@ -1355,7 +1356,7 @@ public class GrowlingManTickHandlerProcedure {
 				_entity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 60, 255, false, false));
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).isEmpty()) {
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).isEmpty()) {
 				if ((
 							entity instanceof GrowlingManEntity _datEntIxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 								? (Integer)_datEntIxxxxxxxxxxxxxxxxxxxxxxxxxxxx.getEntityData().get(GrowlingManEntity.DATA_DespawnOverTimeTimer)
@@ -1387,7 +1388,7 @@ public class GrowlingManTickHandlerProcedure {
 			}
 
 
-			for (Entity entityiteratorxxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(75.0), e -> true)
+			for (Entity entityiteratorxxxx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(75.0))
 				.stream()
 				.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 				.toList()) {
@@ -1433,7 +1434,7 @@ public class GrowlingManTickHandlerProcedure {
 				}
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 151.0, 151.0, 151.0), e -> true).isEmpty()) {
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 151.0, 151.0, 151.0)).isEmpty()) {
 				if (entity instanceof GrowlingManEntity _datEntL349 && (Boolean)_datEntL349.getEntityData().get(GrowlingManEntity.DATA_PlayerEast)) {
 					if (entity instanceof GrowlingManEntity _datEntSetL) {
 						_datEntSetL.getEntityData().set(GrowlingManEntity.DATA_PlayerEast, false);

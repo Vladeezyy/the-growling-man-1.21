@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +22,7 @@ public class AI17ghostProcedure {
 
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(25.0), e -> true)
+				for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(25.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -42,7 +43,7 @@ public class AI17ghostProcedure {
 
 			Vec3 _center = new Vec3(x, y, z);
 
-			for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(5.0), e -> true)
+			for (Entity entityiteratorx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(5.0))
 				.stream()
 				.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 				.toList()) {
@@ -73,7 +74,7 @@ public class AI17ghostProcedure {
 				}
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0), e -> true).isEmpty() && !entity.level().isClientSide()) {
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0)).isEmpty() && !entity.level().isClientSide()) {
 				entity.discard();
 			}
 

@@ -1,56 +1,58 @@
 package net.voxla.growlingman.port;
 
-import net.minecraft.world.level.LevelAccessor;
-
-import net.voxla.growlingman.port.bus.ClientTickEvent;
-import net.voxla.growlingman.port.bus.EventBusSubscriber;
-import net.voxla.growlingman.port.bus.SubscribeEvent;
-import net.voxla.growlingman.port.bus.Dist;
-
-import net.minecraft.world.level.levelgen.presets.WorldPresets;
-import net.minecraft.world.level.levelgen.WorldOptions;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.WorldDataConfiguration;
-import net.minecraft.world.level.LevelSettings;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.Difficulty;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.BlockPos;
-import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.CloudStatus;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LevelSettings;
+import net.minecraft.world.level.WorldDataConfiguration;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.WorldOptions;
+import net.minecraft.world.level.levelgen.presets.WorldPresets;
 import net.voxla.growlingman.GrowlingManMod;
+import net.voxla.growlingman.entity.GrowlingManEntity;
+import net.voxla.growlingman.init.GrowlingManModEntities;
+import net.voxla.growlingman.network.GrowlingManModVariables;
+import net.voxla.growlingman.port.bus.ClientTickEvent;
+import net.voxla.growlingman.port.bus.Dist;
+import net.voxla.growlingman.port.bus.EventBusSubscriber;
+import net.voxla.growlingman.port.bus.GMBus;
+import net.voxla.growlingman.port.bus.SubscribeEvent;
 
-import java.util.function.Consumer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Consumer;
 
 /**
- * Server tick check ({@code ./gradlew runPerf}), inert unless {@code growling_man.perf} is set: a new world in
- * survival mode, then the average server tick time (MSPT) at night with natural spawning in the overworld, in the
- * nether (where players reported the worst lag), and with 20 Lurkers of every kind around the player. Logs
- * {@code [perf] PERF} lines, then quits; {@code -Pjfr} records a flight recording to run/perf.jfr.
+ * Load check ({@code ./gradlew runPerf}, tools/perf.sh), inert unless {@code growling_man.perf} is set: a new survival
+ * world at night, the player marked, a Growling Man hunting nearby and 40 cows around. Windows of 200 ticks alternate
+ * the mod's listeners on and off (GMBus.muted, the baseline in the same world); each window logs the server tick time
+ * (MSPT), the FPS, the sync calls per second and the time of the mod's listeners per event and thread
+ * ({@code [perf] ...}). Then the same without the Growling Man. Quits at the end.
  */
 @EventBusSubscriber(value = Dist.CLIENT)
 public final class PerfScene {
 	private static final boolean ENABLED = System.getProperty("growling_man.perf") != null;
+	private static final int WINDOW = 200;
 	private record Step(int at, Consumer<Minecraft> action) {
 	}
 	private static final List<Step> STEPS = new ArrayList<>();
-	private static boolean opened, measuring;
-	private static int tick, samples;
-	private static long nanos, worst;
+	private static boolean opened;
+	private static int tick, windowStart = -1, serverTicks, fpsSamples, syncsAtStart;
+	private static long mspt, fps;
+	private static String window;
+	private static final Map<String, double[]> RESULTS = new TreeMap<>();
 
 	private static void at(int t, Consumer<Minecraft> action) {
 		STEPS.add(new Step(t, action));
@@ -67,21 +69,54 @@ public final class PerfScene {
 		});
 	}
 
-	private static void start() {
-		nanos = worst = 0;
-		samples = 0;
-		measuring = true;
+	private static void begin(String name, boolean mod) {
+		GMBus.muted = !mod;
+		GMBus.profiling = mod;
+		GMBus.PROFILE.clear();
+		window = name + (mod ? " / mod" : " / base");
+		windowStart = tick;
+		mspt = fps = 0;
+		serverTicks = fpsSamples = 0;
+		syncsAtStart = GrowlingManModVariables.syncs;
 	}
 
-	private static void stop(Minecraft mc, String name) {
-		measuring = false;
-		var server = mc.getSingleplayerServer();
-		int entities = 0;
-		for (ServerLevel level : server.getAllLevels())
-			for (Entity e : level.getAllEntities())
-				entities++;
-		GrowlingManMod.LOGGER.info(String.format("[perf] PERF %s: %.2f ms per server tick (worst 100-tick average %.2f ms), %d entities", name,
-				nanos / (double) Math.max(1, samples) / 1e6, worst / 1e6, entities));
+	private static void end() {
+		double seconds = WINDOW / 20.0;
+		double ms = mspt / (double) Math.max(1, serverTicks) / 1e6;
+		double f = fps / (double) Math.max(1, fpsSamples);
+		double syncs = (GrowlingManModVariables.syncs - syncsAtStart) / seconds;
+		StringBuilder listeners = new StringBuilder();
+		double serverUs = 0, clientUs = 0;
+		for (var e : new TreeMap<>(GMBus.PROFILE).entrySet()) {
+			double us = e.getValue()[0] / 1e3 / WINDOW;
+			if (e.getKey().startsWith("server"))
+				serverUs += us;
+			else
+				clientUs += us;
+			listeners.append(String.format(" | %s %.1f us/tick", e.getKey(), us));
+		}
+		GrowlingManMod.LOGGER.info(String.format("[perf] %s: MSPT %.2f, FPS %.0f, syncs %.1f/s, listeners server %.1f us/tick client %.1f us/tick%s", window, ms, f, syncs,
+				serverUs, clientUs, listeners));
+		double[] r = RESULTS.computeIfAbsent(window, k -> new double[6]);
+		r[0] += ms;
+		r[1] += f;
+		r[2] += syncs;
+		r[3] += serverUs;
+		r[4] += clientUs;
+		r[5]++;
+		windowStart = -1;
+		GMBus.muted = false;
+		GMBus.profiling = false;
+	}
+
+	private static void windows(int from, String name) {
+		int t = from;
+		for (int i = 0; i < 4; i++) {
+			boolean mod = i % 2 == 0;
+			at(t, mc -> begin(name, mod));
+			at(t + WINDOW, mc -> end());
+			t += WINDOW + 20;
+		}
 	}
 
 	static {
@@ -90,80 +125,45 @@ public final class PerfScene {
 			ServerLevel level = p.serverLevel();
 			level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, level.getServer());
 			level.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, level.getServer());
-			level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(true, level.getServer());
+			level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
 			level.setDayTime(18000);
-			// creative: natural spawning happens around the player (not around spectators), nothing hurts the player
-			p.setGameMode(GameType.CREATIVE);
+			p.setGameMode(GameType.SURVIVAL);
 			p.setInvulnerable(true);
 			BlockPos spawn = level.getSharedSpawnPos();
-			p.teleportTo(level, spawn.getX() + 0.5, level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, spawn.getX(), spawn.getZ()) + 2, spawn.getZ() + 0.5, 0, 20);
+			int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, spawn.getX(), spawn.getZ());
+			p.teleportTo(level, spawn.getX() + 0.5, y + 1, spawn.getZ() + 0.5, 0, 10);
+			GrowlingManModVariables.PlayerVariables vars = GrowlingManModVariables.of(p);
+			vars.IsMarked = 1;
+			vars.syncPlayerVariables(p);
+			for (int i = 0; i < 40; i++) {
+				Entity cow = EntityType.COW.create(level);
+				int x = spawn.getX() + (i % 8) * 3 - 12, z = spawn.getZ() + (i / 8) * 3 + 6;
+				cow.moveTo(x + 0.5, level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z), z + 0.5);
+				level.addFreshEntity(cow);
+			}
+			GrowlingManEntity man = GrowlingManModEntities.GROWLING_MAN.get().create(level);
+			man.moveTo(spawn.getX() + 12.5, y + 1, spawn.getZ() + 12.5);
+			man.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.COMMAND, null);
+			level.addFreshEntity(man);
 		}));
-		// chunks load and the first spawns settle before measuring
-		at(t += 600, mc -> start());
-		at(t += 1200, mc -> {
-			stop(mc, "overworld, night, natural spawning");
-			// the natural spawn checks themselves (run once per spawn attempt of these entities), timed directly
-			server(mc, p -> {
-				ServerLevel level = p.serverLevel();
-				double x = p.getX() + 24, y = p.getY(), z = p.getZ() + 24;
-				String[] names = {"MidnightLurker", "MidnightLurkerFakerWatcher", "VoidGateway", "MidnightLurkerShadow"};
-				for (String name : names) {
-					try {
-						var m = Class.forName("net.voxla.growlingman.procedures." + name + "NaturalEntitySpawningConditionProcedure")
-								.getMethod("execute", net.minecraft.world.level.LevelAccessor.class, double.class, double.class, double.class);
-						for (int i = 0; i < 50; i++)
-							m.invoke(null, level, x, y, z);
-						long start = System.nanoTime();
-						for (int i = 0; i < 200; i++)
-							m.invoke(null, level, x + (i % 7), y, z + (i % 5));
-						GrowlingManMod.LOGGER.info(String.format("[perf] PERF spawn check %s: %.1f us per call", name, (System.nanoTime() - start) / 200.0 / 1000.0));
-					} catch (ReflectiveOperationException e) {
-						GrowlingManMod.LOGGER.error("[perf] spawn check {} failed", name, e);
-					}
-				}
-			});
-			server(mc, p -> {
-				ServerLevel nether = p.getServer().getLevel(Level.NETHER);
-				nether.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(true, nether.getServer());
-				BlockPos pos = new BlockPos(0, 64, 0);
-				for (BlockPos q : BlockPos.betweenClosed(pos.offset(-2, -1, -2), pos.offset(2, 3, 2)))
-					nether.setBlock(q, q.getY() == pos.getY() - 1 ? Blocks.NETHERRACK.defaultBlockState() : Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
-				p.teleportTo(nether, 0.5, 64, 0.5, 0, 20);
-			});
-		});
-		// the nether chunks generate first
-		at(t += 900, mc -> start());
-		at(t += 1200, mc -> {
-			stop(mc, "nether, natural spawning");
-			server(mc, p -> {
-				ServerLevel level = p.getServer().overworld();
-				level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
-				// above the spawn: chunks already generated in the first phase
-				BlockPos base = new BlockPos(level.getSharedSpawnPos().getX(), 200, level.getSharedSpawnPos().getZ());
-				for (BlockPos q : BlockPos.betweenClosed(base.offset(-12, -1, -12), base.offset(12, 4, 12)))
-					level.setBlock(q, q.getY() == base.getY() - 1 ? Blocks.STONE.defaultBlockState() : Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
-				p.teleportTo(level, base.getX() + 0.5, base.getY() + 8, base.getZ() + 0.5, 0, 60);
-				List<EntityType<?>> types = new ArrayList<>();
-				for (EntityType<?> type : BuiltInRegistries.ENTITY_TYPE)
-					if (BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath().startsWith("midnight_lurker") || BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath().startsWith("growling_man"))
-						types.add(type);
-				for (int i = 0; i < 20; i++) {
-					Entity e = types.get(i % types.size()).create(level);
-					if (e == null)
-						continue;
-					e.moveTo(base.getX() - 9.5 + (i % 5) * 4, base.getY(), base.getZ() - 8.5 + (i / 5) * 4, 0, 0);
-					if (e instanceof Mob mob) {
-						mob.finalizeSpawn(level, level.getCurrentDifficultyAt(base), MobSpawnType.COMMAND, null);
-						mob.setPersistenceRequired();
-					}
-					level.addFreshEntity(e);
-				}
-				GrowlingManMod.LOGGER.info("[perf] {} Lurker kinds placed", types.size());
-			});
-		});
-		at(t += 400, mc -> start());
-		at(t += 1200, mc -> stop(mc, "20 Lurkers around the player"));
-		at(t += 20, mc -> {
+		// chunks load, the entities settle
+		t += 600;
+		windows(t, "marked, a Growling Man, 40 cows");
+		t += 4 * (WINDOW + 20);
+		at(t, mc -> server(mc, p -> {
+			for (ServerLevel level : p.getServer().getAllLevels())
+				for (Entity e : level.getAllEntities())
+					if (e instanceof GrowlingManEntity)
+						e.discard();
+		}));
+		windows(t += 40, "marked, no Growling Man, 40 cows");
+		t += 4 * (WINDOW + 20);
+		at(t, mc -> {
+			for (var e : RESULTS.entrySet()) {
+				double[] r = e.getValue();
+				GrowlingManMod.LOGGER.info(String.format("[perf] AVG %s: MSPT %.2f, FPS %.0f, syncs %.1f/s, listeners server %.1f us/tick client %.1f us/tick", e.getKey(), r[0] / r[5],
+						r[1] / r[5], r[2] / r[5], r[3] / r[5], r[4] / r[5]));
+			}
 			GrowlingManMod.LOGGER.info("[perf] DONE");
 			mc.level.disconnect();
 			mc.disconnect(new TitleScreen());
@@ -188,8 +188,10 @@ public final class PerfScene {
 			opened = true;
 			mc.options.cloudStatus().set(CloudStatus.OFF);
 			mc.options.pauseOnLostFocus = false;
-			LevelSettings settings = new LevelSettings("ml_perf", GameType.SURVIVAL, false, Difficulty.NORMAL, true, new GameRules(), WorldDataConfiguration.DEFAULT);
-			mc.createWorldOpenFlows().createFreshLevel("ml_perf", settings, new WorldOptions(20261017L, true, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
+			mc.options.framerateLimit().set(260);
+			mc.options.enableVsync().set(false);
+			LevelSettings settings = new LevelSettings("gm_perf", GameType.SURVIVAL, false, Difficulty.NORMAL, true, new GameRules(), WorldDataConfiguration.DEFAULT);
+			mc.createWorldOpenFlows().createFreshLevel("gm_perf", settings, new WorldOptions(20261101L, true, false), WorldPresets::createNormalWorldDimensions, new TitleScreen());
 			return;
 		}
 		if (mc.player == null || mc.getSingleplayerServer() == null)
@@ -197,13 +199,15 @@ public final class PerfScene {
 		mc.options.pauseOnLostFocus = false;
 		if (mc.screen instanceof PauseScreen)
 			mc.setScreen(null);
-		if (measuring) {
-			long avg = mc.getSingleplayerServer().getAverageTickTimeNanos();
-			nanos += avg;
-			worst = Math.max(worst, avg);
-			samples++;
-		}
 		tick++;
+		if (windowStart >= 0 && tick > windowStart) {
+			long[] times = mc.getSingleplayerServer().getTickTimesNanos();
+			// one sample per client tick: the latest server tick
+			mspt += times[(mc.getSingleplayerServer().getTickCount() + times.length - 1) % times.length];
+			serverTicks++;
+			fps += mc.getFps();
+			fpsSamples++;
+		}
 		for (Step step : STEPS)
 			if (step.at() == tick)
 				try {

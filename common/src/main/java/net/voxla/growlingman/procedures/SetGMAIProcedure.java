@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import java.util.Comparator;
@@ -14,7 +15,7 @@ public class SetGMAIProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, CommandContext<CommandSourceStack> arguments) {
 		Vec3 _center = new Vec3(x, y, z);
 
-		for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(75.0), e -> true)
+		for (Entity entityiterator : world.getEntitiesOfClass(GrowlingManEntity.class, new AABB(_center, _center).inflate(75.0), e -> true)
 			.stream()
 			.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 			.toList()) {

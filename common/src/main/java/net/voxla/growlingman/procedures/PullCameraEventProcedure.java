@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +16,7 @@ public class PullCameraEventProcedure {
 			if (entity instanceof GrowlingManEntity) {
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(100.0), e -> true)
+				for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(100.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {

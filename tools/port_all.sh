@@ -13,3 +13,4 @@ python3 -I tools/port_decompiled.py
 python3 -I tools/port_java.py common/src/main/java
 python3 -I tools/port_multiloader.py
 python3 -I tools/port_fixups.py
+python3 -I tools/port_perf.py

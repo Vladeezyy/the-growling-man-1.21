@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +23,7 @@ public class PlayerCanSeeGMProcedure {
 			boolean entity_found = false;
 			Vec3 _center = new Vec3(x, y, z);
 
-			for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.0), e -> true)
+			for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(160.0))
 				.stream()
 				.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 				.toList()) {
@@ -53,65 +54,9 @@ public class PlayerCanSeeGMProcedure {
 							}
 						})
 						.checkGamemode(entityiterator)) {
-					raytrace_distance = 0.0;
+					entity_found = GMEntities.growlingManInView(world, entityiterator);
 
-					for (int index0 = 0; index0 < 160; index0++) {
-						if (!world.getEntitiesOfClass(
-								GrowlingManEntity.class,
-								AABB.ofSize(
-									new Vec3(
-										entityiterator.level()
-											.clip(
-												new ClipContext(
-													entityiterator.getEyePosition(1.0F),
-													entityiterator.getEyePosition(1.0F).add(entityiterator.getViewVector(1.0F).scale(raytrace_distance)),
-													Block.COLLIDER,
-													Fluid.NONE,
-													entityiterator
-												)
-											)
-											.getBlockPos()
-											.getX(),
-										entityiterator.level()
-											.clip(
-												new ClipContext(
-													entityiterator.getEyePosition(1.0F),
-													entityiterator.getEyePosition(1.0F).add(entityiterator.getViewVector(1.0F).scale(raytrace_distance)),
-													Block.COLLIDER,
-													Fluid.NONE,
-													entityiterator
-												)
-											)
-											.getBlockPos()
-											.getY(),
-										entityiterator.level()
-											.clip(
-												new ClipContext(
-													entityiterator.getEyePosition(1.0F),
-													entityiterator.getEyePosition(1.0F).add(entityiterator.getViewVector(1.0F).scale(raytrace_distance)),
-													Block.COLLIDER,
-													Fluid.NONE,
-													entityiterator
-												)
-											)
-											.getBlockPos()
-											.getZ()
-									),
-									1.0,
-									1.0,
-									1.0
-								),
-								e -> true
-							)
-							.isEmpty()) {
-							entity_found = true;
-						} else {
-							entity_found = false;
-							raytrace_distance++;
-						}
-					}
-
-					if (!entity_found && world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0), e -> true).isEmpty()) {
+					if (!entity_found && GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 10.0, 10.0, 10.0)).isEmpty()) {
 						if (entity instanceof GrowlingManEntity _datEntL10
 							&& (Boolean)_datEntL10.getEntityData().get(GrowlingManEntity.DATA_IsBeingLookedAt)
 							&& entity instanceof GrowlingManEntity _datEntSetL) {
@@ -124,9 +69,9 @@ public class PlayerCanSeeGMProcedure {
 				}
 			}
 
-			if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 150.0, 150.0, 150.0), e -> true).isEmpty() && entity instanceof GrowlingManEntity) {
+			if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 150.0, 150.0, 150.0)).isEmpty() && entity instanceof GrowlingManEntity) {
 
-				for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(75.0), e -> true)
+				for (Entity entityiteratorx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(75.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -153,14 +98,14 @@ public class PlayerCanSeeGMProcedure {
 				}
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 200.0, 200.0, 200.0), e -> true).isEmpty()
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 200.0, 200.0, 200.0)).isEmpty()
 				&& entity instanceof GrowlingManEntity _datEntL22
 				&& (Boolean)_datEntL22.getEntityData().get(GrowlingManEntity.DATA_IsBeingLookedAt)
 				&& entity instanceof GrowlingManEntity _datEntSetL) {
 				_datEntSetL.getEntityData().set(GrowlingManEntity.DATA_IsBeingLookedAt, false);
 			}
 
-			if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 150.0, 150.0, 150.0), e -> true).isEmpty()
+			if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 150.0, 150.0, 150.0)).isEmpty()
 				&& entity instanceof GrowlingManEntity _datEntL25
 				&& (Boolean)_datEntL25.getEntityData().get(GrowlingManEntity.DATA_IsBeingSeen)
 				&& entity instanceof GrowlingManEntity _datEntSetL) {

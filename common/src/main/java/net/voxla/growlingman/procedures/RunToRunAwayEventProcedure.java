@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
@@ -34,7 +35,7 @@ public class RunToRunAwayEventProcedure {
 			if ((entity instanceof GrowlingManEntity _datEntI ? (Integer)_datEntI.getEntityData().get(GrowlingManEntity.DATA_RunAtRunAwayEvent) : 0) < 3) {
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(162.5), e -> true)
+				for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(162.5))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -65,11 +66,11 @@ public class RunToRunAwayEventProcedure {
 								}
 							})
 							.checkGamemode(entityiterator)) {
-						if (world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 24.0, 24.0, 24.0), e -> true).isEmpty() && entity instanceof Mob _entity) {
+						if (GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 24.0, 24.0, 24.0)).isEmpty() && entity instanceof Mob _entity) {
 							_entity.getNavigation().moveTo(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ(), 3.0);
 						}
 
-						if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 25.0, 25.0, 25.0), e -> true).isEmpty()
+						if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 25.0, 25.0, 25.0)).isEmpty()
 							&& (entity instanceof GrowlingManEntity _datEntIx ? (Integer)_datEntIx.getEntityData().get(GrowlingManEntity.DATA_RunAtRunAwayEvent) : 0)
 								< 3
 							&& entity instanceof GrowlingManEntity _datEntSetI) {
@@ -195,7 +196,7 @@ public class RunToRunAwayEventProcedure {
 						< 150) {
 					Vec3 _center = new Vec3(x, y, z);
 
-					for (Entity entityiteratorx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(15.0), e -> true)
+					for (Entity entityiteratorx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(15.0))
 						.stream()
 						.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.toList()) {
@@ -246,7 +247,7 @@ public class RunToRunAwayEventProcedure {
 				}
 
 				if (!world.isClientSide()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 						}
@@ -254,17 +255,17 @@ public class RunToRunAwayEventProcedure {
 					entity.lookAt(
 						Anchor.EYES,
 						new Vec3(
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
 							}).compareDistOf(x, y, z)).findFirst().orElse(null).getX(),
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
 							}).compareDistOf(x, y, z)).findFirst().orElse(null).getY() + 1.7,
-							world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0), e -> true).stream().sorted((new Object() {
+							GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 600.0, 600.0, 600.0)).stream().sorted((new Object() {
 								Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 									return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 								}
@@ -277,7 +278,7 @@ public class RunToRunAwayEventProcedure {
 				&& (entity instanceof GrowlingManEntity _datEntI ? (Integer)_datEntI.getEntityData().get(GrowlingManEntity.DATA_RunAtRunAwayEvent) : 0) < 300) {
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiteratorxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(40.0), e -> true)
+				for (Entity entityiteratorxx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(40.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {
@@ -406,7 +407,7 @@ public class RunToRunAwayEventProcedure {
 				&& (entity instanceof GrowlingManEntity _datEntIxx ? (Integer)_datEntIxx.getEntityData().get(GrowlingManEntity.DATA_RunAtRunAwayEvent) : 0) < 550) {
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiteratorxxx : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(40.0), e -> true)
+				for (Entity entityiteratorxxx : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(40.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {

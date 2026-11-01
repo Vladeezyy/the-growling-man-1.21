@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,10 +13,10 @@ import net.voxla.growlingman.entity.GrowlingManEntity;
 public class PlayerInGMViewProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity != null) {
-			if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 320.0, 320.0, 320.0), e -> true).isEmpty() && entity instanceof GrowlingManEntity) {
+			if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 320.0, 320.0, 320.0)).isEmpty() && entity instanceof GrowlingManEntity) {
 				Vec3 _center = new Vec3(x, y, z);
 
-				for (Entity entityiterator : world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(160.0), e -> true)
+				for (Entity entityiterator : GMEntities.playersAsEntities(world, new AABB(_center, _center).inflate(160.0))
 					.stream()
 					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 					.toList()) {

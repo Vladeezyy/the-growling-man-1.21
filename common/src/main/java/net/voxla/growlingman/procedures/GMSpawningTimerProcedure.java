@@ -17,7 +17,10 @@ import net.voxla.growlingman.network.GrowlingManModVariables;
 public class GMSpawningTimerProcedure {
 	@SubscribeEvent
 	public static void onWorldTick(LevelTickEvent.Post event) {
-		execute(event, event.getLevel());
+		// 1.0.1 ran this after the tick of every dimension: the spawn and chase timers (global) went down once per loaded
+		// dimension, three times as fast as the seconds of the config
+		if (event.getLevel().dimension() == Level.OVERWORLD)
+			execute(event, event.getLevel());
 	}
 
 	public static void execute(LevelAccessor world) {

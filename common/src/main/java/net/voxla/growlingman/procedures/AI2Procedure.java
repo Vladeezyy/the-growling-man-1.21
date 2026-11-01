@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -37,7 +38,7 @@ public class AI2Procedure {
 					}
 				}
 
-				if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 80.0, 80.0, 80.0), e -> true).isEmpty()
+				if (!GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 80.0, 80.0, 80.0)).isEmpty()
 					&& entity instanceof LivingEntity _entity
 					&& !_entity.level().isClientSide()) {
 					_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 3, 200, false, false));

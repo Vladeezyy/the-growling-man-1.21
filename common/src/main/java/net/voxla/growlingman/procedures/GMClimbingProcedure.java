@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import java.util.Comparator;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
@@ -243,7 +244,7 @@ public class GMClimbingProcedure {
 				if (world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x + 1.0, y + 1.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.EAST) {
 					if (entity.getDeltaMovement().y() == 0.2) {
 						entity.setYRot(-90.0F);
@@ -260,7 +261,7 @@ public class GMClimbingProcedure {
 				} else if (world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x - 1.0, y + 1.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.WEST) {
 					if (entity.getDeltaMovement().y() == 0.2) {
 						entity.setYRot(90.0F);
@@ -277,7 +278,7 @@ public class GMClimbingProcedure {
 				} else if (world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 1.0, z + 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.SOUTH) {
 					if (entity.getDeltaMovement().y() == 0.2) {
 						entity.setYRot(0.0F);
@@ -294,7 +295,7 @@ public class GMClimbingProcedure {
 				} else if (world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 1.0, z - 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.NORTH
 					&& entity.getDeltaMovement().y() == 0.2) {
 					entity.setYRot(180.0F);
@@ -310,10 +311,10 @@ public class GMClimbingProcedure {
 				}
 
 				if (world.isEmptyBlock(BlockPos.containing(x + 0.5, y + 3.6, z))
-					|| !world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					|| !GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					|| entity.getDirection() != Direction.EAST) {
 					if (!world.isEmptyBlock(BlockPos.containing(x - 0.5, y + 3.6, z))
-						&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+						&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 						&& entity.getDirection() == Direction.WEST) {
 						if (entity.getDeltaMovement().x() == 0.1
 							&& entity instanceof GrowlingManEntity _datEntL230
@@ -330,7 +331,7 @@ public class GMClimbingProcedure {
 							}
 						}
 					} else if (!world.isEmptyBlock(BlockPos.containing(x, y + 3.6, z + 0.5))
-						&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+						&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 						&& entity.getDirection() == Direction.SOUTH) {
 						if (entity.getDeltaMovement().z() == -0.1
 							&& entity instanceof GrowlingManEntity _datEntL238
@@ -347,7 +348,7 @@ public class GMClimbingProcedure {
 							}
 						}
 					} else if (!world.isEmptyBlock(BlockPos.containing(x, y + 3.6, z - 0.5))
-						&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+						&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 						&& entity.getDirection() == Direction.NORTH
 						&& entity.getDeltaMovement().z() == 0.1
 						&& entity instanceof GrowlingManEntity _datEntL246

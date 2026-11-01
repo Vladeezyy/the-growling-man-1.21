@@ -1,5 +1,6 @@
 package net.voxla.growlingman.procedures;
 
+import net.voxla.growlingman.port.GMEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -252,7 +253,7 @@ public class GMSneakProcedure {
 				if (world.getBlockState(BlockPos.containing(x + 1.0, y + 0.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x + 1.0, y + 1.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x + 1.0, y + 2.0, z)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.EAST) {
 					if (entity.getDeltaMovement().y() == 0.2
 						&& entity instanceof GrowlingManEntity _datEntL119
@@ -271,7 +272,7 @@ public class GMSneakProcedure {
 				} else if (world.getBlockState(BlockPos.containing(x - 1.0, y + 0.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x - 1.0, y + 1.0, z)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x - 1.0, y + 2.0, z)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.WEST) {
 					if (entity.getDeltaMovement().y() == 0.2
 						&& entity instanceof GrowlingManEntity _datEntL131
@@ -290,7 +291,7 @@ public class GMSneakProcedure {
 				} else if (world.getBlockState(BlockPos.containing(x, y + 0.0, z + 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 1.0, z + 1.0)).canOcclude()
 					&& world.getBlockState(BlockPos.containing(x, y + 2.0, z + 1.0)).canOcclude()
-					&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					&& entity.getDirection() == Direction.DOWN) {
 					if (entity.getDeltaMovement().y() == 0.2
 						&& entity instanceof GrowlingManEntity _datEntL143
@@ -309,13 +310,13 @@ public class GMSneakProcedure {
 				} else if (!world.getBlockState(BlockPos.containing(x, y + 0.0, z - 1.0)).canOcclude()
 					|| !world.getBlockState(BlockPos.containing(x, y + 1.0, z - 1.0)).canOcclude()
 					|| !world.getBlockState(BlockPos.containing(x, y + 2.0, z - 1.0)).canOcclude()
-					|| !world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+					|| !GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 					|| entity.getDirection() != Direction.NORTH) {
 					if (world.isEmptyBlock(BlockPos.containing(x + 0.5, y + 3.6, z))
-						|| !world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+						|| !GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 						|| entity.getDirection() != Direction.EAST) {
 						if (!world.isEmptyBlock(BlockPos.containing(x - 0.5, y + 3.6, z))
-							&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+							&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 							&& entity.getDirection() == Direction.WEST) {
 							if (entity.getDeltaMovement().x() == -0.1
 								&& entity instanceof GrowlingManEntity _datEntL175
@@ -335,7 +336,7 @@ public class GMSneakProcedure {
 								}
 							}
 						} else if (!world.isEmptyBlock(BlockPos.containing(x, y + 3.6, z + 0.5))
-							&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+							&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 							&& entity.getDirection() == Direction.SOUTH) {
 							if (entity.getDeltaMovement().x() == -0.1
 								&& entity instanceof GrowlingManEntity _datEntL185
@@ -355,7 +356,7 @@ public class GMSneakProcedure {
 								}
 							}
 						} else if (!world.isEmptyBlock(BlockPos.containing(x, y + 3.6, z - 0.5))
-							&& world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0), e -> true).isEmpty()
+							&& GMEntities.players(world, AABB.ofSize(new Vec3(x, y, z), 5.0, 5.0, 5.0)).isEmpty()
 							&& entity.getDirection() == Direction.NORTH) {
 							if (entity.getDeltaMovement().x() == -0.1
 								&& entity instanceof GrowlingManEntity _datEntL195

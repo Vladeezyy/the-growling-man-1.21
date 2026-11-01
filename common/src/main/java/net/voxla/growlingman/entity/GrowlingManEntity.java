@@ -32,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.voxla.growlingman.init.GrowlingManModEntities;
+import net.voxla.growlingman.port.bus.GMBus;
 import net.voxla.growlingman.procedures.GMCanAttackCondProcedure;
 import net.voxla.growlingman.procedures.GMWanderCondProcedure;
 import net.voxla.growlingman.procedures.GrowlingManAttackRaidProcProcedure;
@@ -580,8 +581,11 @@ public class GrowlingManEntity extends Monster implements GeoEntity {
 
 	public void baseTick() {
 		super.baseTick();
+		long start = GMBus.profiling ? System.nanoTime() : 0;
 		GrowlingManTickHandlerProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
 		this.refreshDimensions();
+		if (start != 0)
+			GMBus.record("GrowlingManEntity tick handler", System.nanoTime() - start);
 	}
 
 	public EntityDimensions getDefaultDimensions(Pose p_33597_) {

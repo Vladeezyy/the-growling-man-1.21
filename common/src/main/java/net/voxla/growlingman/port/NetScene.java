@@ -22,6 +22,7 @@ public final class NetScene {
 	private static final boolean ENABLED = System.getProperty("growling_man.netscene") != null;
 	private static final int END = 1500;
 	private static int tick, checks, failures, seen;
+	private static double marked;
 
 	private static void check(String name, boolean ok, Object detail) {
 		checks++;
@@ -41,6 +42,8 @@ public final class NetScene {
 		if (mc.screen instanceof DeathScreen)
 			mc.player.respawn();
 		tick++;
+		if (tick > 40 && tick <= 300)
+			marked = Math.max(marked, GrowlingManModVariables.of(mc.player).IsMarked);
 		switch (tick) {
 			case 20 -> {
 				// NeoForge negotiates the mod's channels when joining; a payload not registered on both sides cannot be sent
@@ -64,8 +67,8 @@ public final class NetScene {
 					mc.player.connection.sendCommand(command);
 			}
 			case 80 -> mc.setScreen(new InventoryScreen(mc.player));
-			// before the night's mobs kill the player: dying resets the mark's timer, as in 1.0.1
-			case 300 -> check("player variables synced (marked)", GrowlingManModVariables.of(mc.player).IsMarked > 0, GrowlingManModVariables.of(mc.player).IsMarked);
+			// the mark of the commands, seen before the night's mobs or the Growling Man end it (as in 1.0.1)
+			case 300 -> check("player variables synced (marked)", marked > 0, marked);
 			case 400 -> {
 				if (mc.screen instanceof InventoryScreen)
 					mc.setScreen(null);
